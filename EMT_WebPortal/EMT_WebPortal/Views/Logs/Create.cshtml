@@ -1,0 +1,53 @@
+﻿@model EMT_WebPortal.Models.Log
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Log</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RunNum" class="control-label"></label>
+                <input asp-for="RunNum" class="form-control" />
+                <span asp-validation-for="RunNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Provider" class="control-label"></label>
+                <input asp-for="Provider" class="form-control" />
+                <span asp-validation-for="Provider" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitNum" class="control-label"></label>
+                <input asp-for="UnitNum" class="form-control" />
+                <span asp-validation-for="UnitNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamLead" class="control-label"></label>
+                <input asp-for="TeamLead" class="form-control" />
+                <span asp-validation-for="TeamLead" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpecialCases" class="control-label"></label>
+                <input asp-for="SpecialCases" class="form-control" />
+                <span asp-validation-for="SpecialCases" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
