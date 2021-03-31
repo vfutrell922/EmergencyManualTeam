@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EMT_WebPortal.Areas.Identity.Data;
 using EMT_WebPortal.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +30,6 @@ namespace EMT_WebPortal
         {
             services.AddControllersWithViews();
             services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
-
             services.AddMvc();
         }
        
@@ -50,6 +51,7 @@ namespace EMT_WebPortal
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
