@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EMT_WebPortal.Data
 {
-    public class EMT_WebPortalContext : IdentityDbContext<EMT_WebPortalUser>
+    public class EMT_WebPortalUserContext : IdentityDbContext<EMT_WebPortalUser>
     {
-        public EMT_WebPortalContext(DbContextOptions<EMT_WebPortalContext> options)
+        public EMT_WebPortalUserContext(DbContextOptions<EMT_WebPortalUserContext> options)
             : base(options)
         {
         }

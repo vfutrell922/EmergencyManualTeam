@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "a7rs1Cm31De4kHPmQ88NcZotBfn9ncMdKmddXUd+lNE0Qb/a336shqhN2mDsdferGNZ/yvS5U5g1n7IoUD+QMQ==",
+  "dgSpecHash": "us1GUR5tdcC6XgK7bTD6gzsV7SPtOKz9ufdZ4A2N0gziidMJA9Mio6hVIMViQUu0FAtUbYlNMiVzJV7lq+U2Xg==",
   "success": true,
   "projectFilePath": "C:\\Users\\vince\\source\\repos\\mollyclare111\\EmergencyManualTeam\\EMT_WebPortal\\EMT_WebPortal\\EMT_WebPortal.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\vince\\.nuget\\packages\\awssdk.core\\3.7.0.4\\awssdk.core.3.7.0.4.nupkg.sha512",
+    "C:\\Users\\vince\\.nuget\\packages\\awssdk.secretsmanager\\3.7.0.3\\awssdk.secretsmanager.3.7.0.3.nupkg.sha512",
     "C:\\Users\\vince\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\vince\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.13\\microsoft.aspnetcore.cryptography.internal.3.1.13.nupkg.sha512",
     "C:\\Users\\vince\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.13\\microsoft.aspnetcore.cryptography.keyderivation.3.1.13.nupkg.sha512",
