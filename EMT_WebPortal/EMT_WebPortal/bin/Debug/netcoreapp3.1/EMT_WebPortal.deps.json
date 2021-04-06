@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "EMT_WebPortal/1.0.0": {
         "dependencies": {
+          "AWSSDK.SecretsManager": "3.7.0.3",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.13",
           "Microsoft.AspNetCore.Identity.UI": "3.1.13",
           "Microsoft.EntityFrameworkCore": "5.0.4",
@@ -290,6 +291,31 @@
         },
         "compile": {
           "EMT_WebPortal.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.0.4": {
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.0.4"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.SecretsManager/3.7.0.3": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.0.4"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.SecretsManager.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.0.3"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/AWSSDK.SecretsManager.dll": {}
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -4035,6 +4061,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/3.7.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-V4bg471WLZ7vitDCv6zxGLz2sp89iTm3bCLpVCnIdC1dKOhP5QYQDe2gZnuMHFFJ1024Bd1IlPuKou412uYAlw==",
+      "path": "awssdk.core/3.7.0.4",
+      "hashPath": "awssdk.core.3.7.0.4.nupkg.sha512"
+    },
+    "AWSSDK.SecretsManager/3.7.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q1l0g8ZDYSaN05AqxxjcqPvZUnm/I+CU9/Riru+Xdjci1vthqL/alGVroUDOPgQqw/o4muY09bJ12HQkdcM5eA==",
+      "path": "awssdk.secretsmanager/3.7.0.3",
+      "hashPath": "awssdk.secretsmanager.3.7.0.3.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

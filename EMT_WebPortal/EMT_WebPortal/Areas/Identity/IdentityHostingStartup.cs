@@ -16,23 +16,12 @@ namespace EMT_WebPortal.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<EMT_WebPortalContext>(options =>
+                services.AddDbContext<EMT_WebPortalUserContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("EMT_WebPortalContextConnection")));
+                        context.Configuration.GetConnectionString("EMT_WebPortalUserContextConnection")));
 
                 services.AddDefaultIdentity<EMT_WebPortalUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<EMT_WebPortalContext>();
-
-                services.Configure<IdentityOptions>(options =>
-                {
-                    options.Password.RequireDigit = true;
-                    options.Password.RequireLowercase = true;
-                    options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequiredLength = 8;
-
-                    options.User.RequireUniqueEmail = true;
-                });
+                    .AddEntityFrameworkStores<EMT_WebPortalUserContext>();
             });
         }
     }
