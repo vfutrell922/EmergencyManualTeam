@@ -21,7 +21,7 @@ namespace EMT_WebPortal.Areas.Identity
                         context.Configuration.GetConnectionString("EMT_WebPortalUserContextConnection")));
 
                 services.AddDefaultIdentity<EMT_WebPortalUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<EMT_WebPortalUserContext>();
+                .AddRoles<IdentityRole>().AddEntityFrameworkStores<EMT_WebPortalUserContext>();
             });
         }
     }

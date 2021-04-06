@@ -19,50 +19,27 @@ namespace EMT_WebPortal.Areas.Identity.Data
 
             context.Database.EnsureCreated();
 
-            if (roleManager.Roles.ToArray().Count() > 0) 
+            if (context.Users.Any()) 
             {
                 return;
             }
 
-            var role1 = new IdentityRole();
-            var role2 = new IdentityRole();
-            var role3 = new IdentityRole();
+            roleManager.CreateAsync(new IdentityRole("CareGiver")).Wait();
+            roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
+            roleManager.CreateAsync(new IdentityRole("WebMaster")).Wait();
 
-            role1.Name = "CareGiver";
-            role2.Name = "Administrator";
-            role3.Name = "WebMaster";
+            var user1 = new EMT_WebPortalUser { UserName = "caregiver", Email = "caregiver@us.com", EmailConfirmed = true, };
+            var user2 = new EMT_WebPortalUser { UserName = "admin", Email = "admin@us.com", EmailConfirmed = true};
+            var user3 = new EMT_WebPortalUser { UserName = "webmaster", Email = "webmaster@us.com", EmailConfirmed = true};
 
-            if (!await roleManager.RoleExistsAsync(role1.Name))
-            {
-                await roleManager.CreateAsync(role1);
-            }
-            if (!await roleManager.RoleExistsAsync(role2.Name))
-            {
-                await roleManager.CreateAsync(role2);
-            }
-            if (!await roleManager.RoleExistsAsync(role3.Name))
-            {
-                await roleManager.CreateAsync(role3);
-            }
+            string password = "Abcdefgh!2";
+            userManager.CreateAsync(user1, password).Wait();
+            userManager.CreateAsync(user2, password).Wait();
+            userManager.CreateAsync(user3, password).Wait();
 
-            context.SaveChanges();
-
-            var user1 = new EMT_WebPortalUser { UserName = "caregiver@us.com", Email = "caregiver@us.com", EmailConfirmed = true, Name="John"};
-            var user2 = new EMT_WebPortalUser { UserName = "admin@us.com", Email = "admin@us.com", EmailConfirmed = true, Name = "Jane" };
-            var user3 = new EMT_WebPortalUser { UserName = "webmaster@us.com", Email = "webmaster@us.com", EmailConfirmed = true, Name = "Jim" };
-
-            string password = "abcdefgh";
-            await userManager.CreateAsync(user1, password);
-            await userManager.CreateAsync(user2, password);
-            await userManager.CreateAsync(user3, password);
-
-            context.SaveChanges();
-
-            await userManager.CreateAsync(user1, "CareGiver");
-            await userManager.CreateAsync(user2, "Administrator");
-            await userManager.CreateAsync(user3, "WebMaster");
-
-            context.SaveChanges();
+            userManager.AddToRoleAsync(user1, "CareGiver").Wait();
+            userManager.AddToRoleAsync(user2, "Administrator").Wait();
+            userManager.AddToRoleAsync(user3, "WebMaster").Wait();
         }
     }
 }

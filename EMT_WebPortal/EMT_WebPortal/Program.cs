@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using EMT_WebPortal.Data;
 using Microsoft.Extensions.DependencyInjection;
+using EMT_WebPortal.Areas.Identity.Data;
 
 namespace EMT_WebPortal
 {
@@ -32,6 +33,7 @@ namespace EMT_WebPortal
                 {
                     var context = services.GetRequiredService<EMTManualContext>();
                     DbInitializer.Initialize(context);
+                    SeedEMT_WebPortalDB.Initialize(services).Wait();
                 }
                 catch (Exception ex) 
                 {

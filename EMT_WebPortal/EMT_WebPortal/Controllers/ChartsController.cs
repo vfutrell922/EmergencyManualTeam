@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
 using EMT_WebPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EMT_WebPortal.Controllers
 {
@@ -20,12 +21,14 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts
+        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Charts.ToListAsync());
         }
 
         // GET: Charts/Details/5
+        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Create
+        [Authorize(Roles ="Administrator,WebMaster")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Create([Bind("ID,Photo,IsQuickLink")] Chart chart)
         {
             if (ModelState.IsValid)
@@ -66,6 +71,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Edit/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Photo,IsQuickLink")] Chart chart)
         {
             if (id != chart.ID)
@@ -117,6 +124,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Delete/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

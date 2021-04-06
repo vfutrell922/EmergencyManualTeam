@@ -9,6 +9,5 @@ namespace EMT_WebPortal.Areas.Identity.Data
     // Add profile data for application users by adding properties to the EMT_WebPortalUser class
     public class EMT_WebPortalUser : IdentityUser
     {
-        public string Name { get; set; }
     }
 }

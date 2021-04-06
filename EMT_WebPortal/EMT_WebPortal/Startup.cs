@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Amazon;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
+using EMT_WebPortal.Areas.Identity.Data;
 
 namespace EMT_WebPortal
 {
