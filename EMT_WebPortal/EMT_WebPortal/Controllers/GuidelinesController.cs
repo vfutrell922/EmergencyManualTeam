@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
 using EMT_WebPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EMT_WebPortal.Controllers
 {
@@ -20,12 +21,14 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Guidelines
+        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Guidelines.ToListAsync());
         }
 
         // GET: Guidelines/Details/5
+        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Guidelines/Create
+        [Authorize(Roles = "Administrator,WebMaster")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Create([Bind("Id,Name,Background,Checklist")] Guideline guideline)
         {
             if (ModelState.IsValid)
@@ -66,6 +71,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Guidelines/Edit/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Background,Checklist")] Guideline guideline)
         {
             if (id != guideline.Id)
@@ -117,6 +124,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Guidelines/Delete/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +143,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // POST: Guidelines/Delete/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
