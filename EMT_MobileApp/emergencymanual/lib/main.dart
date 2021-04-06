@@ -11,17 +11,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'EMT Manual',
-      home: Navigation(),
+      home: HomePage(),
     );
   }
 }
 
-class Navigation extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _NavigationState createState() => _NavigationState();
+  _HomeState createState() => _HomeState();
 }
 
-class _NavigationState extends State<Navigation> {
+class _HomeState extends State<HomePage> {
   int dummy = 0;
   void newLogPressed() {
     setState(() {
@@ -40,11 +40,14 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Emergency Manual'),
+        centerTitle: true,
+        backgroundColor: Color(0xFFFFFF),
       ),
       body: new Center(
           child: new Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+            Image.asset('assets/images/logo.png', height: 300, width: 300),
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
