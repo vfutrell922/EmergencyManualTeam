@@ -1,13 +1,122 @@
 import 'package:flutter/material.dart';
 
-class SearchProtocolsPage extends StatelessWidget {
+class SearchProtocolsPage extends StatefulWidget {
   @override
-  Widget build(BuildContext ctxt) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Search Protocols"),
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchProtocolsPage> {
+  // controls the text label we use as a search bar
+  final TextEditingController _filter = new TextEditingController();
+
+  String _searchText = "";
+
+  List protocols = []; // protocols from the database
+
+  List filteredProtocols = []; // protocols filtered from the search
+
+  Icon _searchIcon = new Icon(Icons.search);
+
+  Widget _appBarTitle = new Text('Search');
+
+  @override
+  void initState() {
+    this._getProtocols();
+    super.initState();
+  }
+
+  _SearchPageState() {
+    _filter.addListener(() {
+      if (_filter.text.isEmpty) {
+        setState(() {
+          _searchText = "";
+          filteredProtocols = protocols;
+        });
+      } else {
+        setState(() {
+          _searchText = _filter.text;
+        });
+      }
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Protocol Glossary'),
+        centerTitle: true,
+        backgroundColor: Color(0xFFFFFF),
       ),
-      body: new Text("Search Protocols page...."),
+      body: Scaffold(
+        appBar: _buildSearchBar(context),
+        body: Container(
+          child: _buildResultsList(),
+        ),
+        resizeToAvoidBottomInset: false,
+      ),
     );
+  }
+
+  Widget _buildSearchBar(BuildContext context) {
+    return new AppBar(
+      centerTitle: true,
+      title: _appBarTitle,
+      backgroundColor: Color(0xFFFFFF),
+      leading: new IconButton(
+        icon: _searchIcon,
+        onPressed: _searchPressed,
+      ),
+    );
+  }
+
+  Widget _buildResultsList() {
+    if (!(_searchText.isEmpty)) {
+      List tempList = new List();
+      for (int i = 0; i < filteredProtocols.length; i++) {
+        if (filteredProtocols[i]['name']
+            .toLowerCase()
+            .contains(_searchText.toLowerCase())) {
+          tempList.add(filteredProtocols[i]);
+        }
+      }
+      filteredProtocols = tempList;
+    }
+    return ListView.builder(
+      itemCount: protocols == null ? 0 : filteredProtocols.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new ListTile(
+          title: Text(filteredProtocols[index]['name']),
+          onTap: () => print(filteredProtocols[index]['name']),
+        );
+      },
+    );
+  }
+
+  void _getProtocols() async {
+    //TODO: Where we will actually fetch from the database
+    List tempList = [];
+
+    setState(() {
+      protocols = tempList;
+      filteredProtocols = protocols;
+    });
+  }
+
+  void _searchPressed() {
+    setState(() {
+      if (this._searchIcon.icon == Icons.search) {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = new TextField(
+          controller: _filter,
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search), hintText: 'Search...'),
+        );
+      } else {
+        this._searchIcon = new Icon(Icons.search);
+        this._appBarTitle = new Text('');
+        filteredProtocols = protocols;
+        _filter.clear();
+      }
+    });
   }
 }
