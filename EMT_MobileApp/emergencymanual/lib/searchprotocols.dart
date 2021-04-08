@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//reference for basic search app
+// https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
+
 class SearchProtocolsPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -10,6 +13,8 @@ class _SearchPageState extends State<SearchProtocolsPage> {
   final TextEditingController _filter = new TextEditingController();
 
   String _searchText = "";
+
+  List guidelines = [];
 
   List protocols = []; // protocols from the database
 
@@ -52,7 +57,6 @@ class _SearchPageState extends State<SearchProtocolsPage> {
         body: Container(
           child: _buildResultsList(),
         ),
-        resizeToAvoidBottomInset: false,
       ),
     );
   }
@@ -70,10 +74,10 @@ class _SearchPageState extends State<SearchProtocolsPage> {
   }
 
   Widget _buildResultsList() {
-    if (!(_searchText.isEmpty)) {
+    if (_searchText.isNotEmpty) {
       List tempList = new List();
       for (int i = 0; i < filteredProtocols.length; i++) {
-        if (filteredProtocols[i]['name']
+        if (filteredProtocols[i]
             .toLowerCase()
             .contains(_searchText.toLowerCase())) {
           tempList.add(filteredProtocols[i]);
@@ -85,8 +89,8 @@ class _SearchPageState extends State<SearchProtocolsPage> {
       itemCount: protocols == null ? 0 : filteredProtocols.length,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
-          title: Text(filteredProtocols[index]['name']),
-          onTap: () => print(filteredProtocols[index]['name']),
+          title: Text(filteredProtocols[index]),
+          onTap: () => print(filteredProtocols[index]),
         );
       },
     );
@@ -94,10 +98,17 @@ class _SearchPageState extends State<SearchProtocolsPage> {
 
   void _getProtocols() async {
     //TODO: Where we will actually fetch from the database
-    List tempList = [];
+    List tempList = [
+      "General Patient Care",
+      "Cardiac Arrest",
+      "Medical Patient Care",
+      "Trauma Field Triage and Transport",
+      "Appendix 1: EMS Medication Cards"
+    ];
 
     setState(() {
       protocols = tempList;
+      protocols.shuffle();
       filteredProtocols = protocols;
     });
   }
