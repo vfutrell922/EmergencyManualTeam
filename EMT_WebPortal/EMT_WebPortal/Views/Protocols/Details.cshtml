@@ -1,4 +1,11 @@
-﻿@model EMT_WebPortal.Models.Protocol
+﻿<!--
+    Author: Vincent Futrell
+    Date Last Modified: 04/12/2021
+    Description: This is the view page for the details of an individual protocol. This page contains razor
+    code to display certain information from the database and depending upon the current role of the user, will
+    or will not display the link to the edit page.
+-->
+@model EMT_WebPortal.Models.Protocol
 
 @{
     ViewData["Title"] = "Details";
@@ -25,14 +32,35 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PatientType)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PatientType)
+        <dd class="col-sm-10">
+            @{
+                int patientType = Model.PatientType;
+                if (patientType == 1)
+                {
+                    string displayText = "All"; @Html.DisplayFor(model => displayText) }
+                else if (patientType == 2)
+                {
+                    string displayText = "Adult"; @Html.DisplayFor(model => displayText) }
+                else
+                {
+                    string displayText = "Pediatric"; @Html.DisplayFor(model => displayText) }
+            }
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.HasAssociatedMedication)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HasAssociatedMedication)
+        <dd class="col-sm-10">
+            @{if (Model.HasAssociatedMedication)
+                {
+                    string displayText = " : Yes";
+                    @Html.DisplayFor(model => displayText)
+                }
+                else
+                {
+                    string displayText = " : No";
+                    @Html.DisplayFor(model => displayText)
+                }
+            }
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OtherInformation)
@@ -50,11 +78,14 @@
             @Html.DisplayNameFor(model => model.Guideline)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Guideline.Id)
+            @Html.DisplayFor(model => model.Guideline.Name)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>
