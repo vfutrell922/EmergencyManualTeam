@@ -1,4 +1,11 @@
-﻿@model EMT_WebPortal.Models.Guideline
+﻿<!--
+    Author: Vincent Futrell
+    Date Last Modified: 04/12/2021
+    Description: This is the view page for the details of an individual protocol. This page contains razor
+    code to display certain information from the database and depending upon the current role of the user, will
+    or will not display the link to the edit page.
+-->
+@model EMT_WebPortal.Models.Guideline
 
 @{
     ViewData["Title"] = "Details";
@@ -31,6 +38,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
+    | <a asp-action="Index">Back to List</a>
 </div>
