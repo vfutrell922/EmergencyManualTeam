@@ -103,12 +103,12 @@ class _SearchPageState extends State<SearchProtocolsPage> {
       "Cardiac Arrest",
       "Medical Patient Care",
       "Trauma Field Triage and Transport",
-      "Appendix 1: EMS Medication Cards"
+      "Appendix 1: EMS Medication Cards",
+      "Laryngoscopy",
     ];
 
     setState(() {
       protocols = tempList;
-      protocols.shuffle();
       filteredProtocols = protocols;
     });
   }
