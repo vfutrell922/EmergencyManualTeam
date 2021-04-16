@@ -15,6 +15,7 @@ namespace EMT_WebPortal.Models
         public string Name { get; set; }
         [MaxLength(4)]
         public string Certification { get; set; }
+        [Range(1,3)]
         public int PatientType { get; set; }
         public bool HasAssociatedMedication { get; set; }
         public List<Medication> Medications { get; set; }

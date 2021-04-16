@@ -1,4 +1,11 @@
-﻿@model IEnumerable<EMT_WebPortal.Models.Guideline>
+﻿<!--
+    Author: Vincent Futrell
+    Date Last Modified: 04/12/2021
+    Description: This is the view page that lists all Guidelines existing in the database. This page
+    contains razor code to display certain data and depending upon the role of the current user will
+    or will not display the links to the create, edit, and delete pages.
+-->
+@model IEnumerable<EMT_WebPortal.Models.Guideline>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +14,10 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
+    {
+        <a asp-action="Create">Create New</a>
+    }
 </p>
 <table class="table">
     <thead>
@@ -31,15 +41,36 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Background)
+                @{if (item.Background != null)
+                    {
+                        string displayText = item.Background.ToString().Substring(0, 100) + " ...";
+                        @Html.DisplayFor(modelItem => displayText)
+                    }
+                    else
+                    {
+                        string displayText = "No Background Entered.";
+                        @Html.DisplayFor(modelItem => displayText) }
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Checklist)
+                @{if (item.Checklist != null)
+                    {
+                        string displayText = item.Checklist.ToString().Substring(0, 100) + " ...";
+                        @Html.DisplayFor(modelItem => displayText)
+                    }
+                    else
+                    {
+                        string displayText = "No Information Entered.";
+                        @Html.DisplayFor(modelItem => displayText) }
+                }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
             </td>
         </tr>
 }

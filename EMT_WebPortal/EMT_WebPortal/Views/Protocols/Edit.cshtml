@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
 
 <h1>Edit</h1>
 
@@ -34,14 +37,14 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="OtherInformation" class="control-label"></label>
-                <input asp-for="OtherInformation" class="form-control" />
-                <span asp-validation-for="OtherInformation" class="text-danger"></span>
+                <label asp-for="OtherInformation" class="control-label block-display"></label>
+                <textarea rows="10" cols="250" style="width:600px;" asp-for="OtherInformation" class="form-control block-display"></textarea>
+                <span asp-validation-for="OtherInformation" class="text-danger block-display"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TreatmentPlan" class="control-label"></label>
-                <input asp-for="TreatmentPlan" class="form-control" />
-                <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
+                <label asp-for="TreatmentPlan" class="control-label block-display"></label>
+                <textarea rows="10" cols="250" style="width:600px;" asp-for="TreatmentPlan" class="block-display form-control"></textarea>
+                <span asp-validation-for="TreatmentPlan" class="text-danger block-display"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GuidelineId" class="control-label"></label>
