@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sql_server_socket';
+
+import 'sqlconnection.dart';
 
 //reference for basic search app
 // https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
@@ -101,8 +102,9 @@ class _SearchPageState extends State<SearchProtocolsPage> {
     //TODO: Where we will actually fetch from the database
     //
     // creates a connection
+    String address = "";
     var conn = new SqlConnection(
-        "SERVER=localhost;Database=mydb;Trusted_connection=yes");
+        "SERVER=localhost;Database=mydb;Trusted_connection=yes", address);
 
 // open connection
     await conn.open();
