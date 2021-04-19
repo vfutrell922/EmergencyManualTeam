@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_server_socket';
 
 //reference for basic search app
 // https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
@@ -98,6 +99,35 @@ class _SearchPageState extends State<SearchProtocolsPage> {
 
   void _getProtocols() async {
     //TODO: Where we will actually fetch from the database
+    //
+    // creates a connection
+    var conn = new SqlConnection(
+        "SERVER=localhost;Database=mydb;Trusted_connection=yes");
+
+// open connection
+    await conn.open();
+
+// runs a query returning a single value
+    var howmany = await conn.queryValue("SELECT COUNT(*) FROM Customers");
+
+// runs a query returning a single row
+    var myFirstCustomer =
+        await conn.querySingle("SELECT name,age FROM Custormers");
+    print(myFirstCustomer["name"]);
+
+// runs a query returning all rows
+    var customers = await conn.query("SELECT TOP 10 name,age FROM Custormers");
+    for (var customer in customers) {
+      print(customer["name"]);
+    }
+
+// execute a command, returning the number of rows affected
+    var n = await conn.execute("UPDATE Customers SET age=0");
+    print("zeroed $n customers");
+
+// disconnect
+    await conn.close();
+
     List tempList = [
       "General Patient Care",
       "Cardiac Arrest",
