@@ -29,8 +29,10 @@ class SqlConnection {
   /// connects to sql server database using the specified connection string
   Future<bool> open() async {
     try {
+      print("trying to connect");
       this._socket = await Socket.connect(_address, _port);
-      //print("Connected to: ${_socket.remoteAddress.address}:${_socket.remotePort}");
+      print(
+          "Connected to: ${_socket.remoteAddress.address}:${_socket.remotePort}");
     } catch (ex) {
       throw "can't connect to ${_address}:${_port} -- $ex";
     }

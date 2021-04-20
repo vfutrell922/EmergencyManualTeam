@@ -77,7 +77,7 @@ class _SearchPageState extends State<SearchProtocolsPage> {
 
   Widget _buildResultsList() {
     if (_searchText.isNotEmpty) {
-      List tempList = new List();
+      List tempList = [];
       for (int i = 0; i < filteredProtocols.length; i++) {
         if (filteredProtocols[i]
             .toLowerCase()
@@ -102,35 +102,37 @@ class _SearchPageState extends State<SearchProtocolsPage> {
     //TODO: Where we will actually fetch from the database
     //
     // creates a connection
-    String address = "";
+    String address = "3.135.224.240";
     var conn = new SqlConnection(
-        "SERVER=localhost;Database=mydb;Trusted_connection=yes", address);
+        "Data Source=localhost;Database=EMTManualContext;User ID=EMTManual;Password=password",
+        address);
 
 // open connection
     await conn.open();
 
 // runs a query returning a single value
-    var howmany = await conn.queryValue("SELECT COUNT(*) FROM Customers");
+    var namecount = await conn.queryValue("SELECT NAME(*) FROM Protocol");
 
-// runs a query returning a single row
-    var myFirstCustomer =
-        await conn.querySingle("SELECT name,age FROM Custormers");
-    print(myFirstCustomer["name"]);
+// // runs a query returning a single row
+//     var myFirstCustomer =
+//         await conn.querySingle("SELECT name,age FROM Custormers");
+//     print(myFirstCustomer["name"]);
 
-// runs a query returning all rows
-    var customers = await conn.query("SELECT TOP 10 name,age FROM Custormers");
-    for (var customer in customers) {
-      print(customer["name"]);
-    }
+// // runs a query returning all rows
+//     var customers = await conn.query("SELECT TOP 10 name,age FROM Custormers");
+//     for (var customer in customers) {
+//       print(customer["name"]);
+//     }
 
-// execute a command, returning the number of rows affected
-    var n = await conn.execute("UPDATE Customers SET age=0");
-    print("zeroed $n customers");
+// // execute a command, returning the number of rows affected
+//     var n = await conn.execute("UPDATE Customers SET age=0");
+//     print("zeroed $n customers");
 
 // disconnect
     await conn.close();
 
     List tempList = [
+      namecount,
       "General Patient Care",
       "Cardiac Arrest",
       "Medical Patient Care",
