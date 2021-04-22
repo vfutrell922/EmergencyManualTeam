@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'quicklinks.dart';
 import 'oldlogs.dart';
@@ -24,15 +26,55 @@ class _HomeState extends State<HomePage> {
 class HomePagePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = (screenWidth - (screenWidth * .1)) / 2;
+    double buttonHeight = buttonWidth * 0.5;
     return new Center(
         child: new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
           Image.asset('assets/images/logo.png', height: 300, width: 300),
           new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                new ElevatedButton(
+                new SizedBox(
+                  width: buttonWidth,
+                  height: buttonHeight,
+                  child: new ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => new SearchProtocolsPage()),
+                      );
+                    },
+                    child: new Text("Start New Log"),
+                  ),
+                ),
+                new SizedBox(
+                  width: buttonWidth,
+                  height: buttonHeight,
+                  child: new ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => new OldLogsPage()),
+                      );
+                    },
+                    child: new Text(
+                      "View Old Logs",
+                    ),
+                  ),
+                ),
+              ]),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new SizedBox(
+                width: buttonWidth,
+                height: buttonHeight,
+                child: new ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -41,47 +83,24 @@ class HomePagePanel extends StatelessWidget {
                     );
                   },
                   child: new Text(
-                    "Start New Log",
+                    "Protocols",
                   ),
                 ),
-                new ElevatedButton(
+              ),
+              new SizedBox(
+                width: buttonWidth,
+                height: buttonHeight,
+                child: new ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new OldLogsPage()),
+                          builder: (context) => new QuickLinksPage()),
                     );
                   },
                   child: new Text(
-                    "View Old Logs",
+                    "Quick Links",
                   ),
-                ),
-              ]),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              new ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new SearchProtocolsPage()),
-                  );
-                },
-                child: new Text(
-                  "Protocols",
-                ),
-              ),
-              new ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new QuickLinksPage()),
-                  );
-                },
-                child: new Text(
-                  "Quick Links",
                 ),
               )
             ],
