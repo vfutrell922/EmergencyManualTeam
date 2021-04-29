@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'quicklinks.dart';
 import 'oldlogs.dart';
@@ -35,7 +33,7 @@ class HomePagePanel extends StatelessWidget {
             children: <Widget>[
           Image.asset('assets/images/logo.png', height: 300, width: 300),
           new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 new SizedBox(
                   width: buttonWidth,
