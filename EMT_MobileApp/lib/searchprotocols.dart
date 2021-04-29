@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'protocol.dart';
 
 import 'sqlconnection.dart';
 
@@ -92,7 +93,12 @@ class _SearchPageState extends State<SearchProtocolsPage> {
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
           title: Text(filteredProtocols[index]),
-          onTap: () => print(filteredProtocols[index]),
+          onTap: () => {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => new ProtocolPage())),
+          },
         );
       },
     );
@@ -102,37 +108,36 @@ class _SearchPageState extends State<SearchProtocolsPage> {
     //TODO: Where we will actually fetch from the database
     //
     // creates a connection
-    String address = "3.135.224.240";
-    var conn = new SqlConnection(
-        "Data Source=localhost;Database=EMTManualContext;User ID=EMTManual;Password=password",
-        address);
+//     String address = "3.135.224.240";
+//     var conn = new SqlConnection(
+//         "SERVER=localhost;Database=EMTManualContext;User ID=EMTManual;Password=password",
+//         address);
 
-// open connection
-    await conn.open();
+// // open connection
+//     await conn.open();
 
-// runs a query returning a single value
-    var namecount = await conn.queryValue("SELECT NAME(*) FROM Protocol");
+// // runs a query returning a single value
+//     var namecount = await conn.queryValue("SELECT NAME FROM Protocol");
 
-// // runs a query returning a single row
-//     var myFirstCustomer =
-//         await conn.querySingle("SELECT name,age FROM Custormers");
-//     print(myFirstCustomer["name"]);
+// // // runs a query returning a single row
+// //     var myFirstCustomer =
+// //         await conn.querySingle("SELECT name,age FROM Custormers");
+// //     print(myFirstCustomer["name"]);
 
-// // runs a query returning all rows
-//     var customers = await conn.query("SELECT TOP 10 name,age FROM Custormers");
-//     for (var customer in customers) {
-//       print(customer["name"]);
-//     }
+// // // runs a query returning all rows
+// //     var customers = await conn.query("SELECT TOP 10 name,age FROM Custormers");
+// //     for (var customer in customers) {
+// //       print(customer["name"]);
+// //     }
 
-// // execute a command, returning the number of rows affected
-//     var n = await conn.execute("UPDATE Customers SET age=0");
-//     print("zeroed $n customers");
+// // // execute a command, returning the number of rows affected
+// //     var n = await conn.execute("UPDATE Customers SET age=0");
+// //     print("zeroed $n customers");
 
-// disconnect
-    await conn.close();
+// // disconnect
+//     await conn.close();
 
     List tempList = [
-      namecount,
       "General Patient Care",
       "Cardiac Arrest",
       "Medical Patient Care",

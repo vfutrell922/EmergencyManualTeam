@@ -27,10 +27,10 @@ class SqlConnection {
   bool get connected => _connected;
 
   /// connects to sql server database using the specified connection string
-  Future<bool> open() async {
+  Future<dynamic> open() async {
     try {
       print("trying to connect");
-      this._socket = await Socket.connect(_address, _port);
+      this._socket = await Socket.connect(_address, 10980);
       print(
           "Connected to: ${_socket.remoteAddress.address}:${_socket.remotePort}");
     } catch (ex) {
@@ -49,6 +49,7 @@ class SqlConnection {
     String json = jsonEncode({"type": "open", "text": _connectionString});
 
     _SendCommand(json).then((result) {
+      print("in the then statement.. $result");
       var res = _parseResult(result);
       if (res is _OkResult) {
         _connected = true;
@@ -59,6 +60,7 @@ class SqlConnection {
       } else
         throw "unknown response";
     }).catchError((err) {
+      print("error sending connection command $_connectionString");
       _connected = false;
       connectCompleter.completeError(err);
     });
@@ -239,7 +241,7 @@ class SqlConnection {
   }
 
   /// formats and write a command to the socket
-  Future<String> _SendCommand(String command) {
+  Future<dynamic> _SendCommand(String command) {
     // prepare buffer for response
     _receiveBuffer = new StringBuffer();
 
@@ -247,7 +249,10 @@ class SqlConnection {
     String cmd = command.length.toString() + "\r\n" + command;
     _socket.write(cmd);
 
-    return _completer.future;
+    print(command);
+    Future<dynamic> retval = _completer.future;
+
+    return retval;
   }
 
   void _onDone() {
@@ -267,12 +272,15 @@ class SqlConnection {
     _receiveBuffer.write(data);
 
     String content = _receiveBuffer.toString();
+    print(content);
 
     if (content.indexOf("\r\n") > 0) {
       int x = content.indexOf("\r\n");
       int len = int.parse(content.substring(0, x)); // size of command string
-
+      print(len);
+      print(x);
       String cmd = content.substring(x + 2);
+      print(cmd);
       if (cmd.length == len) {
         _completer.complete(cmd);
       }
