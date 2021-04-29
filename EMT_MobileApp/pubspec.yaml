@@ -58,6 +58,10 @@ flutter:
     - assets/images/health4.png
     - assets/images/health5.png
     - assets/images/health6.png 
+    - assets/images/pulselessDeterminationCriteria.png
+    - assets/images/STEMI.png
+    - assets/images/Hypoglycemia.png
+    - assets/images/Agitation.png
 
   fonts:
    - family:  MyFlutterApp
