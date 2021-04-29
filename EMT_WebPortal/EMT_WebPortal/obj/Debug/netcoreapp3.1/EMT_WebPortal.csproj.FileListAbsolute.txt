@@ -218,3 +218,5 @@ C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\WebMaster\Main.cshtml.g.cs

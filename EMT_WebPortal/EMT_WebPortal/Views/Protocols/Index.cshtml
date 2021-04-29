@@ -88,7 +88,9 @@
             <td>
                 @{if (item.OtherInformation != null)
                     {
-                        string displayText = item.OtherInformation.ToString().Substring(0, 100) + " ...";
+                        string displayText = "";
+                        if (item.OtherInformation.Length < 100) { displayText = item.OtherInformation.ToString(); }
+                        else { displayText = item.OtherInformation.ToString().Substring(0, 99) + " ..."; }
                         @Html.DisplayFor(modelItem => displayText)
                     }
                     else {
@@ -99,7 +101,9 @@
             <td>
                 @{if (item.TreatmentPlan != null)
                     {
-                        string displayText = item.TreatmentPlan.ToString().Substring(0, 100) + " ...";
+                        string displayText = "";
+                        if (item.TreatmentPlan.Length < 100) { displayText = item.TreatmentPlan.ToString(); }
+                        else { displayText = item.TreatmentPlan.ToString().Substring(0, 99) + " ..."; }
                         @Html.DisplayFor(modelItem => displayText)
                     }
                     else {
