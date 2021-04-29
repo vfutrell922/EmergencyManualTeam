@@ -52,6 +52,17 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/logo.png
+    - assets/images/health1.png
+    - assets/images/health2.png
+    - assets/images/health3.png
+    - assets/images/health4.png
+    - assets/images/health5.png
+    - assets/images/health6.png 
+
+  fonts:
+   - family:  MyFlutterApp
+     fonts:
+      - asset: assets/MyFlutterApp.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
