@@ -45,7 +45,7 @@ namespace EMT_WebPortal
             //If in the production environment, get the DB connection string from AWS Secrets manager.
             else 
             {
-                services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString(GetEMTManualConnectionString())));
+                services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
             }
             services.AddMvc();
         }

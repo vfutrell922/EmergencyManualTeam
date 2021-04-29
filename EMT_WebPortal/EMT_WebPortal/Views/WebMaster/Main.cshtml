@@ -1,0 +1,14 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@using EMT_WebPortal.Areas.Identity.Data
+
+@inject SignInManager<EMT_WebPortalUser> SignInManager
+@inject UserManager<EMT_WebPortalUser> UserManager
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a id="RoleManage" class="nav-link text-dark" asp-area="Identity" asp-page="/WebMaster/RoleManage">Role Manager</a>
+    </li>
+    <li class="nav-item">
+        <a id="CreateAccount" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create New Account</a>
+    </li>
+</ul> 

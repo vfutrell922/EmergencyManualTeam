@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using EMT_WebPortal.Areas.Identity.Data
+
+@inject SignInManager<EMT_WebPortalUser> SignInManager
+@inject UserManager<EMT_WebPortalUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -36,6 +41,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Charts" asp-action="Index">Charts</a>
                         </li>
+                        @if(SignInManager.IsSignedIn(User) && User.IsInRole("WebMaster")) 
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="WebMaster" asp-action="Main">Web Master Controls</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <partial name="_LoginPartial" />
