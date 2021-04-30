@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'protocol.dart';
 
-import 'sqlconnection.dart';
-
 //reference for basic search app
 // https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
 
