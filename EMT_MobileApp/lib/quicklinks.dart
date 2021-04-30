@@ -75,7 +75,7 @@ class QuickLinksPanel extends StatelessWidget {
                         child: Center(
                           child: Column(
                             children: [
-                              Icon(data.icon, size: 75),
+                              Icon(data.icon, size: 45),
                               Text(data.title,
                                   style: TextStyle(
                                       fontSize: 22, color: Colors.black),
