@@ -23,17 +23,36 @@ namespace EMT_WebPortal.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            var eMTManualContext = _context.Protocols.Include(p => p.Guideline);
-            foreach line in 
+            string allProtocols = "";
+
+            foreach(Protocol p in _context.Protocols) 
+            {
+                allProtocols += JsonConvert.SerializeObject(p);
+            }
+
+            return allProtocols;
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(int? id)
         {
-            return "value";
+
+            if (id == null)
+            {
+                return "404 ID Cannot be null" ;
+            }
+
+            Protocol p = _context.Protocols.Find(id);
+
+            if (p == null)
+            {
+                return "404 No such protocol linked to this ID";
+            }
+
+            return JsonConvert.SerializeObject(p);
         }
     }
 }

@@ -221,3 +221,6 @@ C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\System.Web.Http.WebHost.dll
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.csproj.CoreCompileInputs.cache
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.MvcApplicationPartsAssemblyInfo.cache
