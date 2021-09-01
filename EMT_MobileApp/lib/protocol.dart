@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'httpservice.dart';
+import 'postmodel.dart';
 
 class ProtocolPage extends StatefulWidget {
   @override
@@ -6,6 +8,7 @@ class ProtocolPage extends StatefulWidget {
 }
 
 class _ProtocolState extends State<ProtocolPage> {
+  final HttpService httpService = HttpService();
   Widget build(BuildContext context) {
     return DefaultTabController(
         initialIndex: 1,
@@ -51,69 +54,18 @@ class _ProtocolState extends State<ProtocolPage> {
                   ),
                 ],
               )),
-          body: TabBarView(
-            children: <Widget>[
-              Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.yellow,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "General",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                body: Text('This is general info about cardiac arrest.'),
-              ),
-              Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "EMT",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                body: Text('This is EMT info about cardiac arrest.'),
-              ),
-              Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "AEMT",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                body: Text('This is AEMT info about cardiac arrest.'),
-              ),
-              Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "Paramedic",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                body: Text('This is Paramedic info about cardiac arrest.'),
-              ),
-              Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.grey,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "Charts",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                body: Text('These are relevant charts for cardiac arrest'),
-              ),
-            ],
+          body: FutureBuilder(
+            future: httpService.getPosts(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.hasData) {
+                String posts = snapshot.data;
+                return ListView(children: <Widget>[
+                  Text(posts),
+                ]);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
           ),
         ));
   }
