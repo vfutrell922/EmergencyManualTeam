@@ -4,7 +4,7 @@ class IconApp {
   IconApp._();
 
   static const _kFontFam = 'MyFlutterApp';
-  static const String _kFontPkg = null;
+  static const String? _kFontPkg = null;
 
   static const IconData user_md =
       IconData(0xf0f0, fontFamily: _kFontFam, fontPackage: _kFontPkg);

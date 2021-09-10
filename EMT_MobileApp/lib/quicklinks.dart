@@ -5,7 +5,7 @@ class GridLayout {
   final String title;
   final IconData icon;
 
-  GridLayout({this.title, this.icon});
+  GridLayout({required this.title, required this.icon});
 }
 
 List<GridLayout> iconOptions = [

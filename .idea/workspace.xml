@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="71f5926f-e642-493f-8037-636c27c103a1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/EMT_MobileApp/lib/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/EMT_MobileApp/lib/homepage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EMT_MobileApp/lib/quicklinks.dart" beforeDir="false" afterPath="$PROJECT_DIR$/EMT_MobileApp/lib/quicklinks.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/EmergencyManualTeam.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EmergencyManualTeam.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/EmergencyManualTeam/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/EmergencyManualTeam/v16/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/EmergencyManualTeam/v16/Browse.VC.db" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/EmergencyManualTeam/v16/Browse.VC.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EMT_MobileApp/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/EMT_MobileApp/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EMT_MobileApp/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/EMT_MobileApp/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +29,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
