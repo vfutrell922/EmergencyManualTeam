@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchProtocolsPage> {
     );
   }
 
-  Widget _buildSearchBar(BuildContext context) {
+  AppBar _buildSearchBar(BuildContext context) {
     return new AppBar(
       centerTitle: true,
       title: _appBarTitle,
