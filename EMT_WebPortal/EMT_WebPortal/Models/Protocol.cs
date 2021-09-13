@@ -39,4 +39,6 @@ namespace EMT_WebPortal.Models
         PEDIATRIC
     };
 
+    //TODO add an enum for guideline types
+
 }
