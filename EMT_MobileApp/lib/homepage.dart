@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'quicklinks.dart';
 import 'oldlogs.dart';
 import 'searchprotocols.dart';
+import 'newlog.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class HomePagePanel extends StatelessWidget {
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => new SearchProtocolsPage()),
+                            builder: (context) => new LogPage()),
                       );
                     },
                     child: new Text("Start New Log"),
