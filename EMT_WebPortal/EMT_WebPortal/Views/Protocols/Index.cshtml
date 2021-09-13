@@ -59,18 +59,7 @@
                 @Html.DisplayFor(modelItem => item.Certification)
             </td>
             <td>
-                @{
-                    int patientType = item.PatientType;
-                    if (patientType == 1)
-                    {
-                        string displayText = "All"; @Html.DisplayFor(modelItem => displayText) }
-                    else if (patientType == 2)
-                    {
-                        string displayText = "Adult"; @Html.DisplayFor(modelItem => displayText) }
-                    else
-                    {
-                        string displayText = "Pediatric"; @Html.DisplayFor(modelItem => displayText) }
-                }
+                @Html.DisplayFor(modelItem => item.PatientType)
             </td>
             <td>
                 @{if (item.HasAssociatedMedication)
