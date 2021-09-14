@@ -17,6 +17,7 @@ using Amazon;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 using EMT_WebPortal.Areas.Identity.Data;
+using Microsoft.AspNetCore.Routing;
 
 namespace EMT_WebPortal
 {
@@ -105,7 +106,9 @@ namespace EMT_WebPortal
             {
                 response = client.GetSecretValueAsync(request).Result;
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (DecryptionFailureException e)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
                 // Deal with the exception here, and/or rethrow at your discretion.

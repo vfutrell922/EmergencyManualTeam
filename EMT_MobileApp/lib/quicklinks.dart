@@ -1,4 +1,22 @@
+import 'package:emergencymanual/icons.dart';
 import 'package:flutter/material.dart';
+
+class GridLayout {
+  final String title;
+  final IconData icon;
+
+  GridLayout({required this.title, required this.icon});
+}
+
+List<GridLayout> iconOptions = [
+  GridLayout(
+      title: 'Pulseless Determination Criteria', icon: IconApp.heartbeat),
+  GridLayout(title: 'Air Medical Prehospital Triage', icon: IconApp.ambulance),
+  GridLayout(title: 'Prehospital Agitation', icon: IconApp.h_sigh),
+  GridLayout(title: 'Post-ROSC Care Checklist', icon: IconApp.medkit),
+  GridLayout(title: 'STEMI Bypass Protocol', icon: IconApp.stethoscope),
+  GridLayout(title: 'Field Management of Hypoglycemia', icon: IconApp.user_md),
+];
 
 class QuickLinksPage extends StatefulWidget {
   @override
@@ -18,53 +36,59 @@ class _QuickLinksState extends State<QuickLinksPage> {
   }
 }
 
+class ImageDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        width: 400,
+        height: 500,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: ExactAssetImage(
+                    'assets/images/pulselessDeterminationCriteria.png'),
+                fit: BoxFit.cover)),
+      ),
+    );
+  }
+}
+
 class QuickLinksPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new GridView.count(
-      primary: false,
-      padding: const EdgeInsets.all(20),
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      crossAxisCount: 2,
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(8),
-          child:
-              Image.asset('assets/images/health1.png', height: 300, width: 300),
-          color: Colors.teal[200],
+    return new GridView.custom(
+        padding: EdgeInsets.all(10.0),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          childAspectRatio: (2 / 2),
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child:
-              Image.asset('assets/images/health2.png', height: 300, width: 300),
-          color: Colors.teal[200],
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child:
-              Image.asset('assets/images/health3.png', height: 300, width: 300),
-          color: Colors.teal[200],
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child:
-              Image.asset('assets/images/health4.png', height: 300, width: 300),
-          color: Colors.teal[200],
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child:
-              Image.asset('assets/images/health5.png', height: 300, width: 300),
-          color: Colors.teal[200],
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child:
-              Image.asset('assets/images/health6.png', height: 300, width: 300),
-          color: Colors.teal[200],
-        ),
-      ],
-    );
+        childrenDelegate: SliverChildListDelegate(
+          iconOptions
+              .map((data) => GestureDetector(
+                  onTap: () {},
+                  child: GestureDetector(
+                    child: Container(
+                        padding: const EdgeInsets.all(16),
+                        color: Colors.teal[200],
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Icon(data.icon, size: 45),
+                              Text(data.title,
+                                  style: TextStyle(
+                                      fontSize: 22, color: Colors.black),
+                                  textAlign: TextAlign.center)
+                            ],
+                          ),
+                        )),
+                    onTap: () {
+                      showDialog(
+                          context: context, builder: (_) => ImageDialog());
+                    },
+                  )))
+              .toList(),
+        ));
   }
 }
