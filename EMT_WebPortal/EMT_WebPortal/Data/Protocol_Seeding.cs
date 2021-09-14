@@ -106,13 +106,7 @@ namespace EMT_WebPortal.Data
             context.Users.AddRange(users);
             context.SaveChanges();
 
-           
-
-            var logs = new Log[]
-            {
-                new Log{RunNum=2103, Provider="Test User", UnitNum=1, TeamLead="Test Team Lead", SpecialCases="None"}
-            };
-            context.Logs.AddRange(logs);
+          
             context.SaveChanges();
 
         }

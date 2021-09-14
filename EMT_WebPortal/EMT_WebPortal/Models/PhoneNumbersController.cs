@@ -6,29 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
-using EMT_WebPortal.Models;
-using Microsoft.AspNetCore.Authorization;
 
-namespace EMT_WebPortal.Controllers
+namespace EMT_WebPortal.Models
 {
-    public class LogsController : Controller
+    public class PhoneNumbersController : Controller
     {
         private readonly EMTManualContext _context;
 
-        public LogsController(EMTManualContext context)
+        public PhoneNumbersController(EMTManualContext context)
         {
             _context = context;
         }
 
-        // GET: Logs
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        // GET: PhoneNumbers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Logs.ToListAsync());
+            return View(await _context.PhoneNumber.ToListAsync());
         }
 
-        // GET: Logs/Details/5
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        // GET: PhoneNumbers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,42 +32,39 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            var log = await _context.Logs
-                .FirstOrDefaultAsync(m => m.RunNum == id);
-            if (log == null)
+            var phoneNumber = await _context.PhoneNumber
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (phoneNumber == null)
             {
                 return NotFound();
             }
 
-            return View(log);
+            return View(phoneNumber);
         }
 
-        // GET: Logs/Create
-        [Authorize(Roles = "Administrator,WebMaster")]
+        // GET: PhoneNumbers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Logs/Create
+        // POST: PhoneNumbers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator,WebMaster")]
-        public async Task<IActionResult> Create([Bind("RunNum,Provider,UnitNum,TeamLead,SpecialCases")] Log log)
+        public async Task<IActionResult> Create([Bind("Id,hospitalName,phoneNumber")] PhoneNumber phoneNumber)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(log);
+                _context.Add(phoneNumber);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(log);
+            return View(phoneNumber);
         }
 
-        // GET: Logs/Edit/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        // GET: PhoneNumbers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,23 +72,22 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            var log = await _context.Logs.FindAsync(id);
-            if (log == null)
+            var phoneNumber = await _context.PhoneNumber.FindAsync(id);
+            if (phoneNumber == null)
             {
                 return NotFound();
             }
-            return View(log);
+            return View(phoneNumber);
         }
 
-        // POST: Logs/Edit/5
+        // POST: PhoneNumbers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator,WebMaster")]
-        public async Task<IActionResult> Edit(int id, [Bind("RunNum,Provider,UnitNum,TeamLead,SpecialCases")] Log log)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,hospitalName,phoneNumber")] PhoneNumber phoneNumber)
         {
-            if (id != log.RunNum)
+            if (id != phoneNumber.Id)
             {
                 return NotFound();
             }
@@ -104,12 +96,12 @@ namespace EMT_WebPortal.Controllers
             {
                 try
                 {
-                    _context.Update(log);
+                    _context.Update(phoneNumber);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LogExists(log.RunNum))
+                    if (!PhoneNumberExists(phoneNumber.Id))
                     {
                         return NotFound();
                     }
@@ -120,11 +112,10 @@ namespace EMT_WebPortal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(log);
+            return View(phoneNumber);
         }
 
-        // GET: Logs/Delete/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        // GET: PhoneNumbers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,32 +123,30 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            var log = await _context.Logs
-                .FirstOrDefaultAsync(m => m.RunNum == id);
-            if (log == null)
+            var phoneNumber = await _context.PhoneNumber
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (phoneNumber == null)
             {
                 return NotFound();
             }
 
-            return View(log);
+            return View(phoneNumber);
         }
 
-        // POST: Logs/Delete/5
-
-        [Authorize(Roles = "Administrator,WebMaster")]
+        // POST: PhoneNumbers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var log = await _context.Logs.FindAsync(id);
-            _context.Logs.Remove(log);
+            var phoneNumber = await _context.PhoneNumber.FindAsync(id);
+            _context.PhoneNumber.Remove(phoneNumber);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LogExists(int id)
+        private bool PhoneNumberExists(int id)
         {
-            return _context.Logs.Any(e => e.RunNum == id);
+            return _context.PhoneNumber.Any(e => e.Id == id);
         }
     }
 }

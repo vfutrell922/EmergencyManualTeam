@@ -180,11 +180,6 @@ C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Guidelines\Details.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Guidelines\Edit.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Guidelines\Index.cshtml.g.cs
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Logs\Create.cshtml.g.cs
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Logs\Delete.cshtml.g.cs
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Logs\Details.cshtml.g.cs
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Logs\Edit.cshtml.g.cs
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Logs\Index.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Medications\Create.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Medications\Delete.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\Medications\Details.cshtml.g.cs
