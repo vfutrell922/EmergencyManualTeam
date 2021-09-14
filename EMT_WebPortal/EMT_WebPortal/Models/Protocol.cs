@@ -25,5 +25,6 @@ namespace EMT_WebPortal.Models
 
         public int GuidelineId { get; set; }
         public Guideline Guideline { get; set; }
+        public bool OLMCRequired { get; set; }
     }
 }

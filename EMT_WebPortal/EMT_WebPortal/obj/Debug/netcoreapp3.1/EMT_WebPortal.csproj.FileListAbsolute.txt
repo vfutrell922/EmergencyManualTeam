@@ -446,3 +446,8 @@ C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPorta
 C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.dll
 C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.pdb
 C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.genruntimeconfig.cache
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Create.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Delete.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Details.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Edit.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Index.cshtml.g.cs

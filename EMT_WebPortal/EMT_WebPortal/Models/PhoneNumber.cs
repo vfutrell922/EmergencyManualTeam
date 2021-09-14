@@ -9,6 +9,6 @@ namespace EMT_WebPortal.Models
     {
         public int Id { get; set; }
         public string hospitalName { get; set; }
-        public string phoneNumber { get; set; }
+        public string numberString { get; set; }
     }
 }

@@ -77,11 +77,12 @@ namespace EMT_WebPortal.Data
                     "Disconnect the ventilator and assist ventilations with BVM if the patient is apneic, unresponsive, or has severe respiratory distress. (Disconnecting a vent poses a very HIGH risk for body fluid exposure and can be dangerous to the patient if done incorrectly, don appropriate PPE, and see appendix for more details), " +
                     "If unable to ventilate, suction the tracheostomy, then reattempt ventilatory efforts, " +
                     "If still unable to ventilate, attempt traditional BVM," +
-                    "If there is difficulty ventilating a tracheostomy patient, consider “D.O.P.E.” (Dislodged ? Obstruction ? Pneumothorax ? Equipment failure ?)"},
+                    "If there is difficulty ventilating a tracheostomy patient, consider “D.O.P.E.” (Dislodged ? Obstruction ? Pneumothorax ? Equipment failure ?)",
+                OLMCRequired = true},
 
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="EMT", GuidelineId=1, PatientType=2, Chart=null, HasAssociatedMedication=false, Medications=null, 
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="EMT", GuidelineId=1, PatientType=2, Chart=null, HasAssociatedMedication=false, Medications=null,
                  OtherInformation=null, TreatmentPlan= "Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
-                     "Avoid hyperventilation: maintain a ventilatory rate of 10-12 breaths per minute" },
+                     "Avoid hyperventilation: maintain a ventilatory rate of 10-12 breaths per minute", OLMCRequired = false },
 
                 new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="EMT", GuidelineId=1, PatientType=3, Chart=null, HasAssociatedMedication=false, Medications=null,
                 OtherInformation=null, TreatmentPlan="Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
@@ -89,7 +90,8 @@ namespace EMT_WebPortal.Data
                     "Infant (0-12 month): 25 breaths per minute, " +
                     "1 - 3 yrs: 20 breaths per minute, " +
                     "4 - 6 yrs: 15 breaths per minute, " +
-                    "> 6 years: 12(Same as adult)"
+                    "> 6 years: 12(Same as adult)",
+                OLMCRequired = true
                 }
             };
 
@@ -106,7 +108,11 @@ namespace EMT_WebPortal.Data
             context.Users.AddRange(users);
             context.SaveChanges();
 
-          
+            var phoneNumbers = new PhoneNumber[]
+            {
+                new PhoneNumber{hospitalName="General Hospital", numberString="555-555-5555"}
+            };
+            context.PhoneNumbers.AddRange(phoneNumbers);
             context.SaveChanges();
 
         }

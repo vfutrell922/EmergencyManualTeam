@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
+using EMT_WebPortal.Models;
 
-namespace EMT_WebPortal.Models
+namespace EMT_WebPortal.Controllers
 {
     public class PhoneNumbersController : Controller
     {
@@ -21,7 +22,7 @@ namespace EMT_WebPortal.Models
         // GET: PhoneNumbers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PhoneNumber.ToListAsync());
+            return View(await _context.PhoneNumbers.ToListAsync());
         }
 
         // GET: PhoneNumbers/Details/5
@@ -32,7 +33,7 @@ namespace EMT_WebPortal.Models
                 return NotFound();
             }
 
-            var phoneNumber = await _context.PhoneNumber
+            var phoneNumber = await _context.PhoneNumbers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (phoneNumber == null)
             {
@@ -53,7 +54,7 @@ namespace EMT_WebPortal.Models
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,hospitalName,phoneNumber")] PhoneNumber phoneNumber)
+        public async Task<IActionResult> Create([Bind("Id,hospitalName,numberString")] PhoneNumber phoneNumber)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +73,7 @@ namespace EMT_WebPortal.Models
                 return NotFound();
             }
 
-            var phoneNumber = await _context.PhoneNumber.FindAsync(id);
+            var phoneNumber = await _context.PhoneNumbers.FindAsync(id);
             if (phoneNumber == null)
             {
                 return NotFound();
@@ -85,7 +86,7 @@ namespace EMT_WebPortal.Models
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,hospitalName,phoneNumber")] PhoneNumber phoneNumber)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,hospitalName,numberString")] PhoneNumber phoneNumber)
         {
             if (id != phoneNumber.Id)
             {
@@ -123,7 +124,7 @@ namespace EMT_WebPortal.Models
                 return NotFound();
             }
 
-            var phoneNumber = await _context.PhoneNumber
+            var phoneNumber = await _context.PhoneNumbers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (phoneNumber == null)
             {
@@ -138,15 +139,15 @@ namespace EMT_WebPortal.Models
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var phoneNumber = await _context.PhoneNumber.FindAsync(id);
-            _context.PhoneNumber.Remove(phoneNumber);
+            var phoneNumber = await _context.PhoneNumbers.FindAsync(id);
+            _context.PhoneNumbers.Remove(phoneNumber);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PhoneNumberExists(int id)
         {
-            return _context.PhoneNumber.Any(e => e.Id == id);
+            return _context.PhoneNumbers.Any(e => e.Id == id);
         }
     }
 }
