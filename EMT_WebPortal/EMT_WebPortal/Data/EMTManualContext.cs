@@ -14,7 +14,6 @@ namespace EMT_WebPortal.Data
 
         public DbSet<Chart> Charts { get; set; }
         public DbSet<Guideline> Guidelines { get; set; }
-        public DbSet<Log> Logs { get; set; }
         public DbSet<Medication> Medications { get; set; }
         public DbSet<Protocol> Protocols { get; set; }
         public DbSet<User> Users { get; set; }
@@ -24,10 +23,12 @@ namespace EMT_WebPortal.Data
         {
             modelBuilder.Entity<Chart>().ToTable("Chart");
             modelBuilder.Entity<Guideline>().ToTable("Guideline");
-            modelBuilder.Entity<Log>().ToTable("Log");
             modelBuilder.Entity<Medication>().ToTable("Medication");
             modelBuilder.Entity<Protocol>().ToTable("Protocol");
             modelBuilder.Entity<User>().ToTable("User");
         }
+
+ 
+        public DbSet<EMT_WebPortal.Models.PhoneNumber> PhoneNumber { get; set; }
     }
 }
