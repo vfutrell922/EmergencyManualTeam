@@ -58,7 +58,7 @@ class _ProtocolState extends State<ProtocolPage> {
             future: httpService.getPosts(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               if (snapshot.hasData) {
-                String posts = snapshot.data;
+                String posts = snapshot.data.toString();
                 return ListView(children: <Widget>[
                   Text(posts),
                 ]);
