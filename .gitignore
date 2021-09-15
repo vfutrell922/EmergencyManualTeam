@@ -1,0 +1,46 @@
+# Miscellaneous
+EMT_MobileAPP/*.class
+EMT_MobileAPP/*.log
+EMT_MobileAPP/*.pyc
+EMT_MobileAPP/*.swp
+EMT_MobileAPP/.DS_Store
+EMT_MobileAPP/.atom/
+EMT_MobileAPP/.buildlog/
+EMT_MobileAPP/.history
+EMT_MobileAPP/.svn/
+
+# IntelliJ related
+EMT_MobileAPP/*.iml
+EMT_MobileAPP/*.ipr
+EMT_MobileAPP/*.iws
+EMT_MobileAPP/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+EMT_MobileAPP/.flutter-plugins
+EMT_MobileAPP/.flutter-plugins-dependencies
+EMT_MobileAPP/.packages
+EMT_MobileAPP/.pub-cache/
+EMT_MobileAPP/.pub/
+EMT_MobileAPP/build/
+
+# Web related
+EMT_MobileAPP/lib/generated_plugin_registrant.dart
+
+# Symbolication related
+EMT_MobileAPP/app.*.symbols
+
+# Obfuscation related
+EMT_MobileAPP/app.*.map.json
+
+# Android Studio will place build artifacts here
+EMT_MobileAPP/android/app/debug
+EMT_MobileAPP/android/app/profile
+EMT_MobileAPP/android/app/release
