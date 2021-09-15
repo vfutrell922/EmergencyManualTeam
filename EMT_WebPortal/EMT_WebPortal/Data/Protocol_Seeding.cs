@@ -33,15 +33,6 @@ namespace EMT_WebPortal.Data
             context.SaveChanges();
 
 
-            //Seed chart table
-            //TODO: Change when adding image uploads
-            var charts = new Chart[]
-            {
-                new Chart{IsQuickLink=true, Photo="Directory to the stored location of the photo"}
-            };
-            context.Charts.AddRange(charts);
-            context.SaveChanges();
-
             //Seed Guideline table
             var guidelines = new Guideline[]
             {

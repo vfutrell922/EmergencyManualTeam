@@ -216,9 +216,6 @@ C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\System.Web.Http.WebHost.dll
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.csproj.CoreCompileInputs.cache
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\molly\Documents\Capstone\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\appsettings.Production.json
@@ -451,3 +448,12 @@ C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Details.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Edit.cshtml.g.cs
 C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\Razor\Views\PhoneNumbers\Index.cshtml.g.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.BrowserLink.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.csproj.CoreCompileInputs.cache
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\vince\source\repos\mollyclare111\EmergencyManualTeam\EMT_WebPortal\EMT_WebPortal\obj\Debug\netcoreapp3.1\EMT_WebPortal.MvcApplicationPartsAssemblyInfo.cache
