@@ -4,15 +4,28 @@
 
 import 'package:flutter/material.dart';
 import 'homepage.dart';
+import 'httpservice.dart';
+import 'postmodel.dart';
+import 'package:flutter/foundation.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final HttpService httpService = HttpService();
   @override
   Widget build(BuildContext context) {
+    collectHandbook();
     return MaterialApp(
       title: 'EMT Manual',
       home: HomePage(),
     );
+  }
+
+  bool collectHandbook() {
+    httpService.getProtocols().then((String protocols) {
+      debugPrint(protocols);
+    });
+
+    return true;
   }
 }
