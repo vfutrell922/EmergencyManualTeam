@@ -16,6 +16,5 @@ namespace EMT_WebPortal.Models
         public bool Admin { get; set; }
         [RegularExpression("[a-zA-Z0-9 ]*", ErrorMessage = "Only alphanumeric characters may be used")]
         public string Certification { get; set; }
-        public ICollection<Log> Logs { get; set; }
     }
 }
