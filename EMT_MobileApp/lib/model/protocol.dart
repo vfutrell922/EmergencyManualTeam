@@ -6,10 +6,10 @@ class ProtocolFields {
     Name,
     Certification,
     PatientType,
-    HasAssociatedMedication,
     GuidelineId,
     Guideline,
     OLMCRequired,
+    HasAssociatedMedication,
     Medications,
     Chart,
     OtherInformation,
@@ -20,10 +20,10 @@ class ProtocolFields {
   static final String Name = 'Name';
   static final String Certification = 'Certification';
   static final String PatientType = 'PatientType';
-  static final String HasAssociatedMedication = 'HasAssociatedMedication';
   static final String GuidelineId = 'GuidelineId';
   static final String Guideline = 'Guideline';
   static final String OLMCRequired = 'OLMCRequired';
+  static final String HasAssociatedMedication = 'HasAssociatedMedication';
   static final String Medications = 'Medications';
   static final String Chart = 'Chart';
   static final String OtherInformation = 'OtherInformation';
@@ -35,10 +35,11 @@ class Protocol {
   final String Name;
   final String Certification;
   final int PatientType;
-  final bool? HasAssociatedMedication;
   final int GuidelineId;
   final String Guideline;
   final bool OLMCRequired;
+  final bool? HasAssociatedMedication;
+  //TODO: These types are not correct, filler
   final List<String>? Medications;
   final String? Chart;
   final String? OtherInformation;
