@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'httpservice.dart';
-import 'postmodel.dart';
+import 'model/httppost.dart';
 import 'package:flutter/foundation.dart';
 
 void main() => runApp(MyApp());

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:emergencymanual/model/log.dart';
+import 'package:emergencymanual/model/protocol.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
