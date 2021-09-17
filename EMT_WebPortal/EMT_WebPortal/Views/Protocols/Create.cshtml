@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-<head>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
+
 <h1>Create</h1>
 
 <h4>Protocol</h4>
@@ -33,18 +31,23 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="OtherInformation" class="control-label block-display"></label>
-                <textarea rows="10" cols="250" style="width:600px;" asp-for="OtherInformation" class="form-control block-display"></textarea>
-                <span asp-validation-for="OtherInformation" class="text-danger block-display"></span>
+                <label asp-for="OtherInformation" class="control-label"></label>
+                <input asp-for="OtherInformation" class="form-control" />
+                <span asp-validation-for="OtherInformation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TreatmentPlan" class="control-label block-display"></label>
-                <textarea rows="10" cols="250" style="width:600px;" asp-for="TreatmentPlan" class="form-control block-display"></textarea>
-                <span asp-validation-for="TreatmentPlan" class="text-danger block-display"></span>
+                <label asp-for="TreatmentPlan" class="control-label"></label>
+                <input asp-for="TreatmentPlan" class="form-control" />
+                <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GuidelineId" class="control-label"></label>
                 <select asp-for="GuidelineId" class ="form-control" asp-items="ViewBag.GuidelineId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="OLMCRequired" /> @Html.DisplayNameFor(model => model.OLMCRequired)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

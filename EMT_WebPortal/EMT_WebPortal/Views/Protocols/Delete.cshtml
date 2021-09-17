@@ -1,11 +1,4 @@
-﻿<!--
-    Author: Vincent Futrell
-    Date Last Modified: 04/12/2021
-    Description: This is the view for the delete page of an individual protocol. This page contains razor
-    code to display certain information from the database. Since Authorization has already been performed
-    several times to reach this page, all links are displayed.
--->
-@model EMT_WebPortal.Models.Protocol
+﻿@model EMT_WebPortal.Models.Protocol
 
 @{
     ViewData["Title"] = "Delete";
@@ -33,24 +26,18 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PatientType)
         </dt>
+<<<<<<< HEAD
         <dd class="col-sm-10">
+=======
+        <dd class = "col-sm-10">
+>>>>>>> main
             @Html.DisplayFor(model => model.PatientType)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.HasAssociatedMedication)
         </dt>
-        <dd class="col-sm-10">
-            @{if (Model.HasAssociatedMedication)
-                {
-                    string displayText = " : Yes";
-                    @Html.DisplayFor(model => displayText)
-                }
-                else
-                {
-                    string displayText = " : No";
-                    @Html.DisplayFor(model => displayText)
-                }
-            }
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HasAssociatedMedication)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OtherInformation)
@@ -68,8 +55,14 @@
             @Html.DisplayNameFor(model => model.Guideline)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Guideline.Name)
+            @Html.DisplayFor(model => model.Guideline.Id)
         </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OLMCRequired)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OLMCRequired)
+        </dd>
     </dl>
     
     <form asp-action="Delete">

@@ -1,11 +1,4 @@
-﻿<!--
-    Author: Vincent Futrell
-    Date Last Modified: 04/12/2021
-    Description: This is the view page that lists all of the protocols existing in the database. This page
-    contains razor code to display certain data and depending upon the role of the current user will or will
-    not display the links to the create, edit, and delete pages.
--->
-@model IEnumerable<EMT_WebPortal.Models.Protocol>
+﻿@model IEnumerable<EMT_WebPortal.Models.Protocol>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,10 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
-    {
-        <a asp-action="Create">Create New</a>
-    }
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -43,14 +33,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Guideline)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OLMCRequired)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
-{
-
-
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -62,56 +52,24 @@
                 @Html.DisplayFor(modelItem => item.PatientType)
             </td>
             <td>
-                @{if (item.HasAssociatedMedication)
-                    {
-                        string displayText = "Yes";
-                        @Html.DisplayFor(modelItem => displayText)
-                    }
-                    else 
-                    {
-                        string displayText = "No";
-                        @Html.DisplayFor(modelItem => displayText)
-                    }
-                  }
+                @Html.DisplayFor(modelItem => item.HasAssociatedMedication)
             </td>
             <td>
-                @{if (item.OtherInformation != null)
-                    {
-                        string displayText = "";
-                        if (item.OtherInformation.Length < 100) { displayText = item.OtherInformation.ToString(); }
-                        else { displayText = item.OtherInformation.ToString().Substring(0, 99) + " ..."; }
-                        @Html.DisplayFor(modelItem => displayText)
-                    }
-                    else {
-                        string displayText = "No Extra Information.";
-                        @Html.DisplayFor(modelItem => displayText) }
-                }
+                @Html.DisplayFor(modelItem => item.OtherInformation)
             </td>
             <td>
-                @{if (item.TreatmentPlan != null)
-                    {
-                        string displayText = "";
-                        if (item.TreatmentPlan.Length < 100) { displayText = item.TreatmentPlan.ToString(); }
-                        else { displayText = item.TreatmentPlan.ToString().Substring(0, 99) + " ..."; }
-                        @Html.DisplayFor(modelItem => displayText)
-                    }
-                    else {
-                        string displayText = "No treatment plan has been entered for this protocol.";
-                        @Html.DisplayFor(modelItem => displayText)
-                    }
-
-                }
+                @Html.DisplayFor(modelItem => item.TreatmentPlan)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Guideline.Name)
+                @Html.DisplayFor(modelItem => item.Guideline.Id)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
-                @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster")) 
-                { 
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                }
+                @Html.DisplayFor(modelItem => item.OLMCRequired)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }
