@@ -46,9 +46,9 @@ EMT_MobileAPP/android/app/profile
 EMT_MobileAPP/android/app/release
 
 # User-specific files
-*.suo
-*.user
-*.sln.docstates
+ EMT_WebPortal/EMT_WebPortal/*.suo
+ EMT_WebPortal/EMT_WebPortal/*.user
+ EMT_WebPortal/EMT_WebPortal/*.sln.docstates
 
 # Build results
 [Dd]ebug/
