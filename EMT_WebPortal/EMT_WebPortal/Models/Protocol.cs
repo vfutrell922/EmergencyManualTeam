@@ -14,10 +14,6 @@ namespace EMT_WebPortal.Models
         [Required]
         [MaxLength(100, ErrorMessage = "Protocol name must be less than 30 characters"), MinLength(1, ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
-<<<<<<< HEAD
-        public Certifications Certification { get; set; }
-        public PatientTypes PatientType { get; set; }
-=======
         [Required]
         [MaxLength(4)]
         public string Certification { get; set; }
@@ -25,17 +21,13 @@ namespace EMT_WebPortal.Models
         [Range(1,3)]
         public int PatientType { get; set; }
         [Required]
->>>>>>> main
         public bool HasAssociatedMedication { get; set; }
         public List<Medication> Medications { get; set; }
         public Chart Chart { get; set; }
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
-<<<<<<< HEAD
-=======
 
         [Required]
->>>>>>> main
         public int GuidelineId { get; set; }
         [Required]
         public Guideline Guideline { get; set; }
