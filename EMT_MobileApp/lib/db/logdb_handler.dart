@@ -6,12 +6,12 @@ import 'package:emergencymanual/model/protocol.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class logDatabase {
-  static final logDatabase instance = logDatabase._init();
+class EmtAppDatabase {
+  static final EmtAppDatabase instance = EmtAppDatabase._init();
 
   static Database? _database;
 
-  logDatabase._init();
+  EmtAppDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -35,6 +35,9 @@ class logDatabase {
     CREATE TABLE $tableLogs (
       ${LogFields.id} $idType,
       ${LogFields.logData} $logDataType
+    )
+    CREATE TABLE $tableProtocols (
+      
     )
     ''');
   }
