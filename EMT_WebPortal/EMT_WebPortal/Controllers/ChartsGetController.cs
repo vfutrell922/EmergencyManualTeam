@@ -25,7 +25,17 @@ namespace EMT_WebPortal.Controllers
         [HttpGet]
         public string Get()
         {
-            return "Not Implemented";
+            int chartCount = _context.Charts.Count();
+            Chart[] allCharts = new Chart[chartCount];
+            int x = 0;
+
+            foreach(Chart c in _context.Charts)
+            {
+                allCharts[x] = c;
+                x++;
+            }
+
+            return JsonConvert.SerializeObject(allCharts);
         }
 
         // GET api/<controller>/5
