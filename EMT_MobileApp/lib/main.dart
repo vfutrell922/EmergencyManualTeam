@@ -22,8 +22,9 @@ class MyApp extends StatelessWidget {
   }
 
   bool collectHandbook() {
+    debugPrint("Getting protocols");
     httpService.getProtocols().then((String protocols) {
-      debugPrint(protocols);
+      debugPrint("<<<" + protocols);
     });
 
     return true;
