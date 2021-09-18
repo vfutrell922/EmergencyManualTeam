@@ -77,7 +77,7 @@ class EmtAppDatabase {
   Future<Protocol> addProtocol(Protocol protocol) async {
     final db = await instance.database;
 
-    final id = await db.insert(tableLogs, protocol.toJson());
+    final id = await db.insert(tableProtocols, protocol.toJson());
 
     return protocol.copy(id: id);
   }
