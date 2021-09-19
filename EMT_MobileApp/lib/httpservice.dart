@@ -1,17 +1,26 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'model/protocol.dart';
+
+import 'package:flutter/foundation.dart';
 
 class HttpService {
   final String protocolsURL =
-      "http://ec2-3-144-121-87.us-east-2.compute.amazonaws.com/api/protocolsget";
+      "http://ec2-3-134-244-102.us-east-2.compute.amazonaws.com/api/protocolsget";
 
-  Future<String> getProtocols() async {
+  Future<List<Protocol>> getProtocols() async {
     Response res = await get(protocolsURL);
 
     if (res.statusCode == 200) {
-      String body = res.body;
+      Iterable l = json.decode(res.body);
 
-      return body;
+      List<Protocol> protocols =
+          List<Protocol>.from(l.map((model) => Protocol.fromJson(model)));
+
+      for (var i = 0; i < protocols.length; i++) {
+        debugPrint("Protocol Entry >>> " + protocols[i].Name);
+      }
+      return protocols;
     } else {
       throw "Unable to retrieve protocols.";
     }

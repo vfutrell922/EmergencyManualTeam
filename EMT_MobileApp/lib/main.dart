@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'httpservice.dart';
-import 'model/httppost.dart';
+import 'model/protocol.dart';
 import 'package:flutter/foundation.dart';
 
 void main() => runApp(MyApp());
@@ -23,9 +23,7 @@ class MyApp extends StatelessWidget {
 
   bool collectHandbook() {
     debugPrint("Getting protocols");
-    httpService.getProtocols().then((String protocols) {
-      debugPrint("<<<" + protocols);
-    });
+    httpService.getProtocols().then((List<Protocol> protocols) {});
 
     return true;
   }
