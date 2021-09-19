@@ -25,14 +25,17 @@ namespace EMT_WebPortal.Controllers
         [HttpGet]
         public string Get()
         {
-            string allProtocols = "";
+            int protocolCount = _context.Protocols.Count();
+            Protocol[] allProtocols = new Protocol[protocolCount];
+            int x = 0;
 
             foreach(Protocol p in _context.Protocols) 
             {
-                allProtocols += JsonConvert.SerializeObject(p);
+                allProtocols[x] = p;
+                x++;
             }
 
-            return allProtocols;
+            return JsonConvert.SerializeObject(allProtocols);
         }
 
         // GET api/<controller>/5
