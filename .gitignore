@@ -33,7 +33,8 @@ EMT_MobileAPP/build/
 
 # Web related
 EMT_MobileAPP/lib/generated_plugin_registrant.dart
-*.dll.config
+# TODO did this mess it all up?
+# *.dll.config
 
 # Symbolication related
 EMT_MobileAPP/app.*.symbols
