@@ -33,6 +33,7 @@ EMT_MobileAPP/build/
 
 # Web related
 EMT_MobileAPP/lib/generated_plugin_registrant.dart
+*.dll.config
 
 # Symbolication related
 EMT_MobileAPP/app.*.symbols
@@ -46,9 +47,9 @@ EMT_MobileAPP/android/app/profile
 EMT_MobileAPP/android/app/release
 
 # User-specific files
- EMT_WebPortal/EMT_WebPortal/*.suo
- EMT_WebPortal/EMT_WebPortal/*.user
- EMT_WebPortal/EMT_WebPortal/*.sln.docstates
+ *.suo
+ *.user
+ EMT_WebPortal/*.sln.docstates
 
 # Build results
 [Dd]ebug/
