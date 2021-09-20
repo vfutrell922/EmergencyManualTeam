@@ -16,10 +16,6 @@ class HttpService {
 
       List<Protocol> protocols =
           List<Protocol>.from(l.map((model) => Protocol.fromJson(model)));
-
-      for (var i = 0; i < protocols.length; i++) {
-        debugPrint("Protocol Entry >>> " + protocols[i].Name);
-      }
       return protocols;
     } else {
       throw "Unable to retrieve protocols.";

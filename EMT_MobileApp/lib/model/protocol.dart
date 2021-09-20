@@ -31,14 +31,14 @@ class ProtocolFields {
 }
 
 class Protocol {
-  final int id;
+  final int? id;
   final String Name;
   final String Certification;
   final int PatientType;
   final int GuidelineId;
-  final String Guideline;
-  final bool OLMCRequired;
-  final bool? HasAssociatedMedication;
+  final String? Guideline;
+  final int OLMCRequired;
+  final int? HasAssociatedMedication;
   //TODO: These types are not correct, filler
   final List<String>? Medications;
   final String? Chart;
@@ -46,12 +46,12 @@ class Protocol {
   final String? TreatmentPlan;
 
   const Protocol({
-    required this.id,
+    this.id,
     required this.Name,
     required this.Certification,
     required this.PatientType,
     required this.GuidelineId,
-    required this.Guideline,
+    this.Guideline,
     required this.OLMCRequired,
     this.HasAssociatedMedication,
     this.Medications,
@@ -65,10 +65,10 @@ class Protocol {
     String? Name,
     String? Certification,
     int? PatientType,
-    bool? HasAssociatedMedication,
+    int? HasAssociatedMedication,
     int? GuidelineId,
     String? Guideline,
-    bool? OLMCRequired,
+    int? OLMCRequired,
     List<String>? Medications,
     String? Chart,
     String? OtherInformation,
@@ -90,15 +90,19 @@ class Protocol {
       );
 
   static Protocol fromJson(Map<String, Object?> json) => Protocol(
-        id: json[ProtocolFields.id] as int,
+        id: json[ProtocolFields.id] as int?,
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as String,
         PatientType: json[ProtocolFields.PatientType] as int,
         GuidelineId: json[ProtocolFields.GuidelineId] as int,
-        Guideline: json[ProtocolFields.Guideline] as String,
-        OLMCRequired: json[ProtocolFields.OLMCRequired] as bool,
+        Guideline: json[ProtocolFields.Guideline] as String?,
+        OLMCRequired: ((json[ProtocolFields.OLMCRequired] as bool) ? 1 : 0),
         HasAssociatedMedication:
-            json[ProtocolFields.HasAssociatedMedication] as bool?,
+            ((json[ProtocolFields.HasAssociatedMedication] as bool?) == null
+                ? null
+                : (json[ProtocolFields.HasAssociatedMedication] as bool)
+                    ? 1
+                    : 0),
         Medications: json[ProtocolFields.Medications] as List<String>?,
         OtherInformation: json[ProtocolFields.OtherInformation] as String?,
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,

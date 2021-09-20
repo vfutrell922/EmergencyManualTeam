@@ -6,12 +6,12 @@ import 'package:emergencymanual/model/protocol.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class EmtAppDatabase {
-  static final EmtAppDatabase instance = EmtAppDatabase._init();
+class EMTAppDatabase {
+  static final EMTAppDatabase instance = EMTAppDatabase._init();
 
   static Database? _database;
 
-  EmtAppDatabase._init();
+  EMTAppDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -35,21 +35,22 @@ class EmtAppDatabase {
     final CertificationType = 'TEXT NOT NULL';
     final PatientTypeType = 'INTEGER NOT NULL';
     final GuidelineIdType = 'INTEGER NOT NULL';
-    final GuidelineType = 'TEXT NOT NULL';
-    final OLMCRequiredType = 'BOOL NOT NULL';
-    final HasAssociatedMedicationType = 'BOOL';
+    final GuidelineType = 'TEXT';
+    final OLMCRequiredType = 'INTEGER NOT NULL';
+    final HasAssociatedMedicationType = 'INTEGER';
     //TODO: is this right?
-    final MedicationsType = 'LIST OF TEXT';
+    final MedicationsType = 'TEXT';
     final ChartType = 'TEXT';
     final OtherInformationType = 'TEXT';
     final TreatmentPlanType = 'TEXT';
 
     await db.execute('''
-    CREATE TABLE $tableLogs (
+    CREATE TABLE IF NOT EXISTS $tableLogs (
       ${LogFields.id} $idType,
       ${LogFields.logData} $logDataType
-    )
-    CREATE TABLE $tableProtocols (
+    );''');
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS $tableProtocols (
       ${ProtocolFields.id} $idType,
       ${ProtocolFields.Name} $NameType,
       ${ProtocolFields.Certification} $CertificationType,
@@ -62,8 +63,7 @@ class EmtAppDatabase {
       ${ProtocolFields.Chart} $ChartType,
       ${ProtocolFields.OtherInformation} $OtherInformationType,
       ${ProtocolFields.TreatmentPlan} $TreatmentPlanType
-    )
-    ''');
+    );''');
   }
 
   Future<Log> addLog(Log log) async {
