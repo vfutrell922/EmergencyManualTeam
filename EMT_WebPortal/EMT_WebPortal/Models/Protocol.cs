@@ -33,22 +33,4 @@ namespace EMT_WebPortal.Models
         [Required]
         public bool OLMCRequired { get; set; }
     }
-
-    public enum Certifications
-    {
-        ALL,
-        EMT,
-        AEMT, 
-        PARAMEDIC,
-    };
-
-    public enum PatientTypes
-    {
-        ALL,
-        ADULT,
-        PEDIATRIC
-    };
-
-    //TODO add an enum for guideline types
-
 }
