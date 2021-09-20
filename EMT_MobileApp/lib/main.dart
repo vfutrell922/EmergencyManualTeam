@@ -1,8 +1,9 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// EMT Medic Manual App for Mountain West Ambulance
+// by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
+// for their Senior Project 2021 at the University of Utah.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'homepage.dart';
 
 void main() => runApp(MyApp());

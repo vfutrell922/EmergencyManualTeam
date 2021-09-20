@@ -19,9 +19,7 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
+                <img src="data:image;base64,@System.Convert.ToBase64String(Model.Photo)" />
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
