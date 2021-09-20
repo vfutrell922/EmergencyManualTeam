@@ -16,17 +16,16 @@ namespace EMT_WebPortal.Models
         public string Name { get; set; }
         [Required]
         [MaxLength(4)]
-        public string Certification { get; set; }
+        public Certifications Certification { get; set; }
         [Required]
         [Range(1,3)]
-        public int PatientType { get; set; }
+        public PatientTypes PatientType { get; set; }
         [Required]
         public bool HasAssociatedMedication { get; set; }
         public List<Medication> Medications { get; set; }
         public Chart Chart { get; set; }
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
-
         [Required]
         public int GuidelineId { get; set; }
         [Required]

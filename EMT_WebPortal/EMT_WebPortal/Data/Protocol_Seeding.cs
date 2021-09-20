@@ -71,7 +71,7 @@ namespace EMT_WebPortal.Data
                     "If there is difficulty ventilating a tracheostomy patient, consider “D.O.P.E.” (Dislodged ? Obstruction ? Pneumothorax ? Equipment failure ?)",
                 OLMCRequired = true},
 
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="EMT", GuidelineId=1, PatientType=2, Chart=null, HasAssociatedMedication=false, Medications=null,
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, GuidelineId=1, PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, Medications=null,
                  OtherInformation=null, TreatmentPlan= "Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
                      "Avoid hyperventilation: maintain a ventilatory rate of 10-12 breaths per minute", OLMCRequired = false },
 
