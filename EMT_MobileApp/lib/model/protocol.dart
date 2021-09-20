@@ -33,7 +33,7 @@ class ProtocolFields {
 class Protocol {
   final int? id;
   final String Name;
-  final String Certification;
+  final int Certification;
   final int PatientType;
   final int GuidelineId;
   final String? Guideline;
@@ -63,7 +63,7 @@ class Protocol {
   Protocol copy({
     int? id,
     String? Name,
-    String? Certification,
+    int? Certification,
     int? PatientType,
     int? HasAssociatedMedication,
     int? GuidelineId,
@@ -92,7 +92,7 @@ class Protocol {
   static Protocol fromJson(Map<String, Object?> json) => Protocol(
         id: json[ProtocolFields.id] as int?,
         Name: json[ProtocolFields.Name] as String,
-        Certification: json[ProtocolFields.Certification] as String,
+        Certification: json[ProtocolFields.Certification] as int,
         PatientType: json[ProtocolFields.PatientType] as int,
         GuidelineId: json[ProtocolFields.GuidelineId] as int,
         Guideline: json[ProtocolFields.Guideline] as String?,
