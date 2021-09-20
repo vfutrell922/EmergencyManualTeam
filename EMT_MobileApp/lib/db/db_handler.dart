@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import 'package:emergencymanual/model/log.dart';
 import 'package:emergencymanual/model/protocol.dart';
@@ -16,7 +17,7 @@ class EMTAppDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('log_database.db');
+    _database = await _initDB('EMT_database.db');
 
     return _database!;
   }
