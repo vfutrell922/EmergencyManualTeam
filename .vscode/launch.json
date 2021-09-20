@@ -8,14 +8,21 @@
             "name": "EMT_MobileApp",
             "cwd": "EMT_MobileApp",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--no-sound-null-safety"
+               ]
         },
         {
             "name": "EMT_MobileApp (profile mode)",
             "cwd": "EMT_MobileApp",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": [
+                "--no-sound-null-safety"
+               ]
         }
+        
     ]
 }

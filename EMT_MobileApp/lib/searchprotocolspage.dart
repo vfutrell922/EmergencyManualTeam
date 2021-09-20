@@ -2,7 +2,7 @@
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
 import 'package:flutter/material.dart';
-import 'protocol.dart';
+import 'protocolpage.dart';
 
 //reference for basic search app
 // https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
