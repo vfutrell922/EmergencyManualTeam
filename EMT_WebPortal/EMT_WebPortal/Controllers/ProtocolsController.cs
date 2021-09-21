@@ -65,6 +65,10 @@ namespace EMT_WebPortal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var errors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .Select(x => new { x.Key, x.Value.Errors })
+                .ToArray();
             ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id", protocol.GuidelineId);
             return View(protocol);
         }

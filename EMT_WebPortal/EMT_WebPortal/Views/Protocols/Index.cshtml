@@ -65,7 +65,7 @@
                 }
             </td>
             <td>
-                @if (item.TreatmentPlan.Length <= 100)
+                @if (item.TreatmentPlan == null || item.TreatmentPlan.Length <= 100)
                 {
                     @Html.DisplayFor(modelItem => item.TreatmentPlan)
                 }
