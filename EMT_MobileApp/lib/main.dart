@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
 
   Future<bool> collectHandbook() async {
     debugPrint("Getting protocols");
+    EMTAppDatabase.instance.deleteDB();
     httpService.getProtocols().then((List<Protocol> protocols) async {
       for (var i = 0; i < protocols.length; i++) {
         debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());

@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'protocolpage.dart';
 
+import 'db/db_handler.dart';
+
 //reference for basic search app
 // https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
 
@@ -108,44 +110,10 @@ class _SearchPageState extends State<SearchProtocolsPage> {
   void _getProtocols() async {
     //TODO: Where we will actually fetch from the database
     //
-    // creates a connection
-//     String address = "3.135.224.240";
-//     var conn = new SqlConnection(
-//         "SERVER=localhost;Database=EMTManualContext;User ID=EMTManual;Password=password",
-//         address);
 
-// // open connection
-//     await conn.open();
-
-// // runs a query returning a single value
-//     var namecount = await conn.queryValue("SELECT NAME FROM Protocol");
-
-// // // runs a query returning a single row
-// //     var myFirstCustomer =
-// //         await conn.querySingle("SELECT name,age FROM Custormers");
-// //     print(myFirstCustomer["name"]);
-
-// // // runs a query returning all rows
-// //     var customers = await conn.query("SELECT TOP 10 name,age FROM Custormers");
-// //     for (var customer in customers) {
-// //       print(customer["name"]);
-// //     }
-
-// // // execute a command, returning the number of rows affected
-// //     var n = await conn.execute("UPDATE Customers SET age=0");
-// //     print("zeroed $n customers");
-
-// // disconnect
-//     await conn.close();
-
-    List tempList = [
-      "General Patient Care",
-      "Cardiac Arrest",
-      "Medical Patient Care",
-      "Trauma Field Triage and Transport",
-      "Appendix 1: EMS Medication Cards",
-      "Laryngoscopy",
-    ];
+    List tempList =
+        await EMTAppDatabase.instance.readNonRepeatingProtocolNames();
+    debugPrint(tempList.toString());
 
     setState(() {
       protocols = tempList;

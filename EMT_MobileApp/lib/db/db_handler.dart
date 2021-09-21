@@ -12,28 +12,36 @@ class EMTAppDatabase {
 
   static Database? _database;
 
+  final String dbfilePath = 'EMT_database.db';
+
   EMTAppDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('EMT_database.db');
+    _database = await _initDB();
 
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async {
+  Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+    final path = join(dbPath, dbfilePath);
 
     return await openDatabase(path, version: 1, onCreate: _createDB);
+  }
+
+  void deleteDB() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, dbfilePath);
+    await deleteDatabase(path);
   }
 
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final logDataType = 'TEXT NOT NULL';
     final NameType = 'TEXT NOT NULL';
-    final CertificationType = 'TEXT NOT NULL';
+    final CertificationType = 'INTEGER NOT NULL';
     final PatientTypeType = 'INTEGER NOT NULL';
     final GuidelineIdType = 'INTEGER NOT NULL';
     final GuidelineType = 'TEXT';
@@ -100,7 +108,7 @@ class EMTAppDatabase {
     }
   }
 
-  Future<Log> readProtocol(int id) async {
+  Future<Protocol> readProtocol(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -111,7 +119,7 @@ class EMTAppDatabase {
     );
 
     if (maps.isNotEmpty) {
-      return Log.fromJson(maps.first);
+      return Protocol.fromJson(maps.first);
     } else {
       throw Exception('ID $id not found');
     }
@@ -127,14 +135,31 @@ class EMTAppDatabase {
     return result.map((json) => Log.fromJson(json)).toList();
   }
 
-  Future<List<Log>> readAllProtocols() async {
+  Future<List<Protocol>> readAllProtocols() async {
     final db = await instance.database;
 
     final orderBy = '${ProtocolFields.id} ASC';
 
     final result = await db.query(tableProtocols, orderBy: orderBy);
 
-    return result.map((json) => Log.fromJson(json)).toList();
+    return result.map((json) => Protocol.fromJson(json)).toList();
+  }
+
+  Future<List<String>> readNonRepeatingProtocolNames() async {
+    final db = await instance.database;
+
+    final orderBy = '${ProtocolFields.id} ASC';
+
+    final result =
+        await db.query(tableProtocols, columns: ['Name'], orderBy: orderBy);
+    List<String> ret = [];
+    for (var obj in result) {
+      String name = obj["Name"].toString();
+      if (!ret.contains(name)) {
+        ret.add(obj["Name"].toString());
+      }
+    }
+    return ret;
   }
 
   Future<int> updateLog(Log log) async {

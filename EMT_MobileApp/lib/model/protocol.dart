@@ -89,7 +89,7 @@ class Protocol {
         TreatmentPlan: TreatmentPlan ?? this.TreatmentPlan,
       );
 
-  static Protocol fromJson(Map<String, Object?> json) => Protocol(
+  static Protocol fromWebJson(Map<String, Object?> json) => Protocol(
         id: json[ProtocolFields.id] as int?,
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as int,
@@ -103,6 +103,21 @@ class Protocol {
                 : (json[ProtocolFields.HasAssociatedMedication] as bool)
                     ? 1
                     : 0),
+        Medications: json[ProtocolFields.Medications] as List<String>?,
+        OtherInformation: json[ProtocolFields.OtherInformation] as String?,
+        TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,
+      );
+
+  static Protocol fromJson(Map<String, Object?> json) => Protocol(
+        id: json[ProtocolFields.id] as int?,
+        Name: json[ProtocolFields.Name] as String,
+        Certification: json[ProtocolFields.Certification] as int,
+        PatientType: json[ProtocolFields.PatientType] as int,
+        GuidelineId: json[ProtocolFields.GuidelineId] as int,
+        Guideline: json[ProtocolFields.Guideline] as String?,
+        OLMCRequired: (json[ProtocolFields.OLMCRequired] as int),
+        HasAssociatedMedication:
+            (json[ProtocolFields.HasAssociatedMedication] as int?),
         Medications: json[ProtocolFields.Medications] as List<String>?,
         OtherInformation: json[ProtocolFields.OtherInformation] as String?,
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,

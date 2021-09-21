@@ -15,7 +15,7 @@ class HttpService {
       Iterable l = json.decode(res.body);
 
       List<Protocol> protocols =
-          List<Protocol>.from(l.map((model) => Protocol.fromJson(model)));
+          List<Protocol>.from(l.map((model) => Protocol.fromWebJson(model)));
       return protocols;
     } else {
       throw "Unable to retrieve protocols.";
