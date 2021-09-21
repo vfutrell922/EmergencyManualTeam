@@ -48,8 +48,8 @@ EMT_MobileAPP/android/app/profile
 EMT_MobileAPP/android/app/release
 
 # User-specific files
- *.suo
- *.user
+*.suo
+*.user
  EMT_WebPortal/*.sln.docstates
 
 # Build results
