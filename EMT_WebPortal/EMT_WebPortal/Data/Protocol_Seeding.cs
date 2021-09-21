@@ -50,7 +50,7 @@ namespace EMT_WebPortal.Data
             //Seed protocol table
             var protocols = new Protocol[]
             {
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="All", GuidelineId=1, PatientType=1, Chart=null, HasAssociatedMedication=false, Medications=null,
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, GuidelineId=1, PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, Medications=null,
                 OtherInformation="Focused history and physical exam: " +
                 "Assess ABC’s for evidence of current apnea, airway reflex compromise or difficulty in ventilatory effort, " +
                 "Assess medical conditions, burns or traumatic injuries that may have or will compromise the airway, "+
@@ -71,11 +71,11 @@ namespace EMT_WebPortal.Data
                     "If there is difficulty ventilating a tracheostomy patient, consider “D.O.P.E.” (Dislodged ? Obstruction ? Pneumothorax ? Equipment failure ?)",
                 OLMCRequired = true},
 
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="EMT", GuidelineId=1, PatientType=2, Chart=null, HasAssociatedMedication=false, Medications=null,
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, GuidelineId=1, PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, Medications=null,
                  OtherInformation=null, TreatmentPlan= "Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
                      "Avoid hyperventilation: maintain a ventilatory rate of 10-12 breaths per minute", OLMCRequired = false },
 
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification="EMT", GuidelineId=1, PatientType=3, Chart=null, HasAssociatedMedication=false, Medications=null,
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, GuidelineId=1, PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, Medications=null,
                 OtherInformation=null, TreatmentPlan="Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
                     "Avoid hyperventilation - recommended pediatric ventilatory rates:, " +
                     "Infant (0-12 month): 25 breaths per minute, " +

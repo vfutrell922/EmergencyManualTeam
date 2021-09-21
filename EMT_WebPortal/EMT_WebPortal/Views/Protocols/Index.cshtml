@@ -55,10 +55,24 @@
                 @Html.DisplayFor(modelItem => item.HasAssociatedMedication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OtherInformation)
+                @if (item.OtherInformation == null || item.OtherInformation.Length <= 100)
+                {
+                    @Html.DisplayFor(modelItem => item.OtherInformation)
+                }
+                else
+                {
+                    @(item.OtherInformation.ToString().Substring(0,100) + "...")
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TreatmentPlan)
+                @if (item.TreatmentPlan == null || item.TreatmentPlan.Length <= 100)
+                {
+                    @Html.DisplayFor(modelItem => item.TreatmentPlan)
+                }
+                else
+                {
+                    @(item.TreatmentPlan.ToString().Substring(0,100) + "...")
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Guideline.Id)
