@@ -1,7 +1,49 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity;
+@using EMT_WebPortal.Areas.Identity.Data;
+@inject UserManager<EMT_WebPortalUser> userManager
 @{
     ViewData["Title"] = "AccountManager";
 }
 
-<h1>AccountManager</h1>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <td>Username</td>
+            <td>Current Role</td>
+            <td>New Role</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody class="table-bordered">
+        @{List<EMT_WebPortalUser> allUsers = userManager.Users.ToList();
+            foreach (EMT_WebPortalUser u in allUsers)
+            {
+                IList<string> roles = await userManager.GetRolesAsync(u);
+                <tr>
+                    <td>@u.UserName</td>
+                    <td>@roles.ElementAt(0);</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown button
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Caregiver</a>
+                                <a class="dropdown-item" href="#">Administrator</a>
+                                <a class="dropdown-item" href="#">WebMaster</a>
+                            </div>
+                            <button class="btn btn-secondary" type="button" id="submitChangeButton">
+                                Submit Change
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-secondary" type="button" id="deleteButton">Delete</button>
+                    </td>
+                </tr>
+                }
+            }
+    </tbody>
+
+</table>
 
