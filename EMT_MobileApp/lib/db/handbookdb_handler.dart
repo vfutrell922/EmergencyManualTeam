@@ -1,20 +1,18 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-
-import 'package:emergencymanual/model/log.dart';
 import 'package:emergencymanual/model/protocol.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class EMTAppDatabase {
-  static final EMTAppDatabase instance = EMTAppDatabase._init();
+class HandbookDatabase {
+  static final HandbookDatabase instance = HandbookDatabase._init();
 
   static Database? _database;
 
-  final String dbfilePath = 'EMT_database.db';
+  final String dbfilePath = 'handbook_database.db';
 
-  EMTAppDatabase._init();
+  HandbookDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -31,15 +29,17 @@ class EMTAppDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  void deleteDB() async {
+  void clearProtocolTable() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, dbfilePath);
-    await deleteDatabase(path);
+
+    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+
+    await db.execute("DELETE FROM $tableProtocols");
   }
 
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final logDataType = 'TEXT NOT NULL';
     final NameType = 'TEXT NOT NULL';
     final CertificationType = 'INTEGER NOT NULL';
     final PatientTypeType = 'INTEGER NOT NULL';
@@ -53,11 +53,6 @@ class EMTAppDatabase {
     final OtherInformationType = 'TEXT';
     final TreatmentPlanType = 'TEXT';
 
-    await db.execute('''
-    CREATE TABLE IF NOT EXISTS $tableLogs (
-      ${LogFields.id} $idType,
-      ${LogFields.logData} $logDataType
-    );''');
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
       ${ProtocolFields.id} $idType,
@@ -75,15 +70,7 @@ class EMTAppDatabase {
     );''');
   }
 
-  Future<Log> addLog(Log log) async {
-    final db = await instance.database;
-
-    final id = await db.insert(tableLogs, log.toJson());
-
-    return log.copy(id: id);
-  }
-
-  Future<Protocol> addProtocol(Protocol protocol) async {
+  Future<Protocol> add(Protocol protocol) async {
     final db = await instance.database;
 
     final id = await db.insert(tableProtocols, protocol.toJson());
@@ -91,28 +78,11 @@ class EMTAppDatabase {
     return protocol.copy(id: id);
   }
 
-  Future<Log> readLog(int id) async {
+  Future<Protocol> read(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
-      tableLogs,
-      columns: LogFields.values,
-      where: '${LogFields.id} = ? ',
-      whereArgs: [id],
-    );
-
-    if (maps.isNotEmpty) {
-      return Log.fromJson(maps.first);
-    } else {
-      throw Exception('ID $id not found');
-    }
-  }
-
-  Future<Protocol> readProtocol(int id) async {
-    final db = await instance.database;
-
-    final maps = await db.query(
-      tableLogs,
+      tableProtocols,
       columns: ProtocolFields.values,
       where: '${ProtocolFields.id} = ? ',
       whereArgs: [id],
@@ -125,17 +95,7 @@ class EMTAppDatabase {
     }
   }
 
-  Future<List<Log>> readAllLogs() async {
-    final db = await instance.database;
-
-    final orderBy = '${LogFields.id} ASC';
-
-    final result = await db.query(tableLogs, orderBy: orderBy);
-
-    return result.map((json) => Log.fromJson(json)).toList();
-  }
-
-  Future<List<Protocol>> readAllProtocols() async {
+  Future<List<Protocol>> readAll() async {
     final db = await instance.database;
 
     final orderBy = '${ProtocolFields.id} ASC';
@@ -145,7 +105,7 @@ class EMTAppDatabase {
     return result.map((json) => Protocol.fromJson(json)).toList();
   }
 
-  Future<List<String>> readNonRepeatingProtocolNames() async {
+  Future<List<String>> readNonRepeatingNames() async {
     final db = await instance.database;
 
     final orderBy = '${ProtocolFields.id} ASC';
@@ -162,25 +122,11 @@ class EMTAppDatabase {
     return ret;
   }
 
-  Future<int> updateLog(Log log) async {
-    final db = await instance.database;
-
-    return db.update(tableLogs, log.toJson(),
-        where: '$LogFields.id} = ?', whereArgs: [log.id]);
-  }
-
-  Future<int> updateProtocol(Protocol protocol) async {
+  Future<int> update(Protocol protocol) async {
     final db = await instance.database;
 
     return db.update(tableProtocols, protocol.toJson(),
         where: '$ProtocolFields.id} = ?', whereArgs: [protocol.id]);
-  }
-
-  Future<int> deleteLog(int id) async {
-    final db = await instance.database;
-
-    return await db
-        .delete(tableLogs, where: '${LogFields.id} = ?', whereArgs: [id]);
   }
 
   Future close() async {

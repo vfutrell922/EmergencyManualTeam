@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'protocolpage.dart';
 
-import 'db/db_handler.dart';
+import 'db/handbookdb_handler.dart';
 
 //reference for basic search app
 // https://github.com/ahmed-alzahrani/Flutter_Search_Example/blob/master/lib/main.dart
@@ -111,8 +111,7 @@ class _SearchPageState extends State<SearchProtocolsPage> {
     //TODO: Where we will actually fetch from the database
     //
 
-    List tempList =
-        await EMTAppDatabase.instance.readNonRepeatingProtocolNames();
+    List tempList = await HandbookDatabase.instance.readNonRepeatingNames();
     debugPrint(tempList.toString());
 
     setState(() {
