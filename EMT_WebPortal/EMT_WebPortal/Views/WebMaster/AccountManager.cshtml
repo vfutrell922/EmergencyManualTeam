@@ -5,6 +5,7 @@
     ViewData["Title"] = "AccountManager";
 }
 
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -19,26 +20,27 @@
             foreach (EMT_WebPortalUser u in allUsers)
             {
                 IList<string> roles = await userManager.GetRolesAsync(u);
+                string user = u.UserName;
                 <tr>
-                    <td>@u.UserName</td>
-                    <td>@roles.ElementAt(0);</td>
+                    <td>@user</td>
+                    <td>@roles.ElementAt(0)</td>
                     <td>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown button
+                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton @Html.Raw(user)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select Role
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Caregiver</a>
-                                <a class="dropdown-item" href="#">Administrator</a>
-                                <a class="dropdown-item" href="#">WebMaster</a>
+                                <button class="dropdown-item btn btn-light" onclick="selectCaregiver()" data-arg1="@user">Caregiver</button>
+                                <button class="dropdown-item btn btn-light" onclick="selectAdministrator()" data-arg1="@user">Administrator</button>
+                                <button class="dropdown-item btn btn-light" onclick="selectWebMaster()" data-arg1="@user">WebMaster</button>
                             </div>
-                            <button class="btn btn-secondary" type="button" id="submitChangeButton">
+                            <button class="btn btn-primary" type="button" id="submitChangeButton">
                                 Submit Change
                             </button>
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-secondary" type="button" id="deleteButton">Delete</button>
+                        <button class="btn btn-danger" type="button" id="deleteButton">Delete</button>
                     </td>
                 </tr>
                 }
@@ -46,4 +48,4 @@
     </tbody>
 
 </table>
-
+<script type="text/javascript" src="~/js/AccountManager.js"></script>
