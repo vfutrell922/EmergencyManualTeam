@@ -122,6 +122,36 @@ class HandbookDatabase {
     return ret;
   }
 
+  Future<List<Protocol>> getProtocolsWithName(String name) async {
+    final db = await instance.database;
+    String whereString = '${ProtocolFields.Name} =?';
+    List<dynamic> whereArguments = [name];
+    final result = await db.query(tableProtocols,
+        where: whereString, whereArgs: whereArguments);
+
+    List<Protocol> protocols =
+        List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
+    debugPrint("Protocols with the specified name: " + protocols.toString());
+    return protocols;
+  }
+
+  Future<String> getProtocolWithNameAndCertification(
+      String name, int certification) async {
+    final db = await instance.database;
+    // String whereString = '${ProtocolFields.Name} =?';
+    // List<dynamic> whereArguments = [name];
+    // final result = await db.query(tableProtocols,
+    //     where: whereString, whereArgs: whereArguments);
+    final result = await db.rawQuery(
+        'SELECT * FROM ${tableProtocols} WHERE ${ProtocolFields.Name}=? AND ${ProtocolFields.Certification}=?',
+        [name, certification]);
+
+    List<Protocol> protocols =
+        List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
+    debugPrint("Protocols with the specified name: " + protocols.toString());
+    return "";
+  }
+
   Future<int> update(Protocol protocol) async {
     final db = await instance.database;
 

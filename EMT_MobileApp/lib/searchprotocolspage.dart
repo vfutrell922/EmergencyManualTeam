@@ -100,7 +100,8 @@ class _SearchPageState extends State<SearchProtocolsPage> {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (context) => new ProtocolPage())),
+                    builder: (context) =>
+                        new ProtocolPage(filteredProtocols[index]))),
           },
         );
       },
