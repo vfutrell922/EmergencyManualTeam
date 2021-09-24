@@ -47,7 +47,7 @@ class HomePagePanel extends StatelessWidget {
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => new SearchProtocolsPage()),
+                            builder: (context) => new LogPage()),
                       );
                     },
                     child: new Text("Start New Log"),
