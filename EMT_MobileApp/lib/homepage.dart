@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'quicklinkspage.dart';
 import 'oldlogspage.dart';
 import 'searchprotocolspage.dart';
+import 'newlog.dart';
 
 class HomePage extends StatefulWidget {
   @override

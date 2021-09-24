@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../db/logdb_handler.dart';
-import '../model/log.dart';
+import 'db/logdb_handler.dart';
+import 'model/log.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class LogPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class _LogPageState extends State<LogPage> {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer(); // Create instance.
 
   Future readLog(int id) async {
-    return await logDatabase.instance.readLog(id);
+    return await LogDatabase.instance.read(id);
   }
 
   @override
@@ -118,6 +118,6 @@ class _LogPageState extends State<LogPage> {
       logData: _stopWatchTimer.rawTime.value.toString(),
     );
 
-    await logDatabase.instance.create(log);
+    await LogDatabase.instance.add(log);
   }
 }
