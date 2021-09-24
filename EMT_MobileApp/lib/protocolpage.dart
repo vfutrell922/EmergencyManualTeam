@@ -24,9 +24,29 @@ class _ProtocolState extends State<ProtocolPage> {
     return protocols;
   }
 
-  Future<String> findProtocolWithCertification(int certification) async {
-    String protocol = await HandbookDatabase.instance
-        .getProtocolWithNameAndCertification(widget.name, certification);
+  String findProtocolWithCertification(int certification) {
+    String protocol = "";
+    _protocols.forEach((element) {
+      if (element.Certification == certification) {
+        if (element.PatientType == 0) {
+          protocol += "Adult\n\n";
+        } else if (element.PatientType == 1) {
+          protocol += "Pediatric\n\n";
+        } else if (element.PatientType == 2) {
+          protocol += "All Ages\n\n";
+        }
+        if (element.TreatmentPlan != Null) {
+          protocol += ("Treatment Plan\n\n" +
+              element.TreatmentPlan.toString() +
+              "\n\n");
+        }
+        if (element.OtherInformation != Null) {
+          protocol += ("Other Information\n\n" +
+              element.OtherInformation.toString() +
+              "\n\n");
+        }
+      }
+    });
     return protocol;
   }
 
@@ -113,8 +133,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(""),
-                // body: Text((await findProtocolForCertification(3))),
+                body: Text(findProtocolWithCertification(3)),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -126,8 +145,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(""),
-                // body: Text(findProtocolForCertification(0)),
+                body: Text(findProtocolWithCertification(0)),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -139,8 +157,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(""),
-                // body: Text(findProtocolForCertification(1)),
+                body: Text(findProtocolWithCertification(1)),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -152,8 +169,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(""),
-                // body: Text(findProtocolForCertification(2)),
+                body: Text(findProtocolWithCertification(2)),
               ),
               Scaffold(
                 appBar: AppBar(
