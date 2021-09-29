@@ -114,7 +114,7 @@ class _LogPageState extends State<LogPage> {
 
   Future addLog() async {
     final log = Log(
-      id: 2,
+      id: 6,
       logData: _stopWatchTimer.rawTime.value.toString(),
     );
 

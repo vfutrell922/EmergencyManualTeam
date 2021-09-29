@@ -2,6 +2,8 @@
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
 import 'package:flutter/material.dart';
+import 'db/logdb_handler.dart';
+import 'model/log.dart';
 
 class OldLogsPage extends StatefulWidget {
   @override
@@ -9,7 +11,7 @@ class OldLogsPage extends StatefulWidget {
 }
 
 class _OldLogsPageState extends State<OldLogsPage> {
-  List logs = [];
+  List<Log> logs = [];
 
   @override
   void initState() {
@@ -33,20 +35,25 @@ class _OldLogsPageState extends State<OldLogsPage> {
   void _getLogs() async {
     //TODO: Where we will actually fetch from the database
     //dummmy data right now
-    List tempList = ["Nov 10, 2020", "Nov 11, 2020", "Nov 12, 2020"];
+    //List tempList = ["Nov 10, 2020", "Nov 11, 2020", "Nov 12, 2020"];
+
+    List<Log> dbList = await LogDatabase.instance.readAll();
 
     setState(() {
-      logs = tempList;
+      logs = dbList;
     });
   }
 
   Widget _buildLogsList() {
     return ListView.builder(
-      itemCount: logs == null ? 0 : logs.length,
+      //itemCount: logs == null ? 0 : logs.length,
+      itemCount: logs.length,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
-          title: Text(logs[index]),
-          onTap: () => print(logs[index]),
+          title: Text('Run ID: ${logs[index].id}'),
+          subtitle: Text('Run Time: ${logs[index].logData}'),
+          //TODO Trailing icon here, check yaml file
+          onTap: () => print(logs.length),
         );
       },
     );
