@@ -31,4 +31,6 @@ class Log {
 
   Map<String, Object?> toJson() =>
       {LogFields.id: id, LogFields.logData: logData};
+
+  //TODO sierra make a function to translate datetime back into correct format
 }

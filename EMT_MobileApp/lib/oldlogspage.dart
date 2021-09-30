@@ -1,6 +1,8 @@
 // EMT Medic Manual App for Mountain West Ambulance
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
+import 'package:emergencymanual/logdetailspage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
@@ -52,8 +54,16 @@ class _OldLogsPageState extends State<OldLogsPage> {
         return new ListTile(
           title: Text('Run ID: ${logs[index].id}'),
           subtitle: Text('Run Time: ${logs[index].logData}'),
-          //TODO Trailing icon here, check yaml file
-          onTap: () => print(logs.length),
+          //TODO sierra Trailing icon here, check yaml file
+          onTap: () {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  //TODO sierra example //TODO sierra !!!!
+                  builder: (context) =>
+                      new LogDetailsPage(curLog: logs[index])),
+            );
+          },
         );
       },
     );
