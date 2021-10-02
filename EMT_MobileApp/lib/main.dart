@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'homepage.dart';
 import 'httpservice.dart';
 import 'model/protocol.dart';
+import 'model/chart.dart';
 import 'db/handbookdb_handler.dart';
 import 'package:flutter/foundation.dart';
 
@@ -29,10 +30,18 @@ class MyApp extends StatelessWidget {
     httpService.getProtocols().then((List<Protocol> protocols) async {
       for (var i = 0; i < protocols.length; i++) {
         debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
-        await HandbookDatabase.instance.add(protocols[i]);
+        await HandbookDatabase.instance.addProtocol(protocols[i]);
       }
     });
 
+    debugPrint("Getting charts");
+    HandbookDatabase.instance.clearChartTable();
+    httpService.getCharts().then((List<Chart> protocols) async {
+      for (var i = 0; i < protocols.length; i++) {
+        debugPrint("Chart Entry >>> " + protocols[i].toJson().toString());
+        await HandbookDatabase.instance.addChart(protocols[i]);
+      }
+    });
     return true;
   }
 }
