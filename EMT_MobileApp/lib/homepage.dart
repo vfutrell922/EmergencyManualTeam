@@ -48,6 +48,7 @@ class HomePagePanel extends StatelessWidget {
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
+                            //TODO sierra example
                             builder: (context) => new LogPage()),
                       );
                     },

@@ -1,7 +1,7 @@
 // EMT Medic Manual App for Mountain West Ambulance
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
-import 'package:emergencymanual/icons.dart';
+import 'package:emergencymanual/icons.dart'; //TODO sierra
 import 'package:flutter/material.dart';
 
 class GridLayout {
@@ -47,6 +47,7 @@ class ImageDialog extends StatelessWidget {
         width: 400,
         height: 500,
         decoration: BoxDecoration(
+            //TODO sierra
             image: DecorationImage(
                 image: ExactAssetImage(
                     'assets/images/pulselessDeterminationCriteria.png'),
