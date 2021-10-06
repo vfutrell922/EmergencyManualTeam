@@ -3,6 +3,7 @@
 // for their Senior Project 2021 at the University of Utah.
 
 import 'package:flutter/material.dart';
+import 'package:emergencymanual/icons.dart';
 import 'model/log.dart';
 
 class LogDetailsPage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _LogDetailsState extends State<LogDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Testing'),
+          title: Text('Run Number: ${curLog.id}'),
           centerTitle: true,
           backgroundColor: Color(0xFFFFFF),
         ),
@@ -34,15 +35,18 @@ class _LogDetailsState extends State<LogDetailsPage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                // TODO here is where we will put the other info too
+                children: [new Text("123: ${curLog.additionalData}")],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  new Text("12"),
                   ElevatedButton(
-                    child: new Text("testing ${curLog.id}"),
+                    child: new Text(
+                        "Edit ${curLog.patientID} and testing ${curLog.unitNum}"),
                     // 3
-                    onPressed: () => {
-                      setState(() {
-                        Colors.green[50];
-                      })
-                    },
+                    onPressed: () => {setState(() {})},
                   )
                 ],
               ),
