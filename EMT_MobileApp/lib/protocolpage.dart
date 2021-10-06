@@ -133,7 +133,10 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(findProtocolWithCertification(3)),
+                body: new SingleChildScrollView(
+                  scrollDirection: Axis.vertical, //.horizontal
+                  child: new Text(findProtocolWithCertification(3)),
+                ),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -145,7 +148,10 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(findProtocolWithCertification(0)),
+                body: new SingleChildScrollView(
+                  scrollDirection: Axis.vertical, //.horizontal
+                  child: new Text(findProtocolWithCertification(0)),
+                ),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -157,7 +163,10 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(findProtocolWithCertification(1)),
+                body: new SingleChildScrollView(
+                  scrollDirection: Axis.vertical, //.horizontal
+                  child: new Text(findProtocolWithCertification(1)),
+                ),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -169,7 +178,10 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text(findProtocolWithCertification(2)),
+                body: new SingleChildScrollView(
+                  scrollDirection: Axis.vertical, //.horizontal
+                  child: new Text(findProtocolWithCertification(2)),
+                ),
               ),
               Scaffold(
                 appBar: AppBar(
@@ -181,7 +193,11 @@ class _ProtocolState extends State<ProtocolPage> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                body: Text('These are relevant charts for cardiac arrest'),
+                body: new SingleChildScrollView(
+                  scrollDirection: Axis.vertical, //.horizontal
+                  child:
+                      new Text('These are relevant charts for cardiac arrest'),
+                ),
               ),
             ],
           ),

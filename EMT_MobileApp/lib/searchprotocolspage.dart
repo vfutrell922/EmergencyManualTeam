@@ -109,9 +109,6 @@ class _SearchPageState extends State<SearchProtocolsPage> {
   }
 
   void _getProtocols() async {
-    //TODO: Where we will actually fetch from the database
-    //
-
     List tempList = await HandbookDatabase.instance.readNonRepeatingNames();
     debugPrint(tempList.toString());
 

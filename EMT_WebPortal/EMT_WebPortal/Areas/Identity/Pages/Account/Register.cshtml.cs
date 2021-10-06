@@ -77,6 +77,7 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
             {
                 var user = new EMT_WebPortalUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                result = await _userManager.AddToRoleAsync(user, "CareGiver");
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
