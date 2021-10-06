@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.emergencymanual">
    <application
+        android:usesCleartextTraffic="true"
+
         android:label="emergencymanual"
         android:icon="@mipmap/ic_launcher">
         <activity
