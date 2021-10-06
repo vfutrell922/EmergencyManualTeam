@@ -23,8 +23,21 @@ class _LogDetailsState extends State<LogDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Run Number: ${curLog.id}'),
+          title: Text('Run Number: ${curLog.patientID}'),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.edit),
+                tooltip: 'Edit Log',
+                onPressed: () {}
+                // TODO handle the press (create edit pop-up)
+                ),
+            IconButton(
+                icon: const Icon(Icons.delete),
+                tooltip: 'Delete Log',
+                onPressed: () {} //TODO handle the press (create delete pop-up)
+                )
+          ],
           backgroundColor: Color(0xFFFFFF),
         ),
         body: Center(
@@ -35,19 +48,24 @@ class _LogDetailsState extends State<LogDetailsPage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                // TODO here is where we will put the other info too
-                children: [new Text("123: ${curLog.additionalData}")],
+
+                children: [
+                  new Text("Date Performed: March 10, 2021")
+                ], //TODO change this?
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                // TODO here is where we will put the other info too
+                children: [new Text("Runtime: ${curLog.runTime}")],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  new Text("12"),
-                  ElevatedButton(
-                    child: new Text(
-                        "Edit ${curLog.patientID} and testing ${curLog.unitNum}"),
-                    // 3
-                    onPressed: () => {setState(() {})},
-                  )
+                  new Text("Unit Number:  ${curLog.unitNum}"),
+                  // ElevatedButton(
+                  //   child: new Text("Unit Number:  ${curLog.unitNum}"),
+                  //   onPressed: () => {setState(() {})},
+                  // )
                 ],
               ),
             ],
