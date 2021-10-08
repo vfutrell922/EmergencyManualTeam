@@ -23,7 +23,7 @@ class _LogDetailsState extends State<LogDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Run Number: ${curLog.patientID}'),
+          title: Text('Run Number: ${curLog.runNum}'),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -57,16 +57,6 @@ class _LogDetailsState extends State<LogDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 // TODO here is where we will put the other info too
                 children: [new Text("Runtime: ${curLog.runTime}")],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  new Text("Unit Number:  ${curLog.unitNum}"),
-                  // ElevatedButton(
-                  //   child: new Text("Unit Number:  ${curLog.unitNum}"),
-                  //   onPressed: () => {setState(() {})},
-                  // )
-                ],
               ),
             ],
           ),
