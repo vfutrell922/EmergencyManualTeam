@@ -108,16 +108,68 @@ class _LogPageState extends State<LogPage> {
                   child: new Text("Store"),
                 )
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            _buildPopupDialog(context),
+                      );
+                    },
+                    child: Text("testing popup")),
+              ],
+            ),
           ],
         )));
+  }
+
+  Widget _buildPopupDialog(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('Popup example'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text("Input Run Number",
+              style: TextStyle(
+                color: Colors.red,
+              )),
+          new TextField(
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(), hintText: 'Run Number'),
+          )
+        ],
+      ),
+      actions: <Widget>[
+        new TextButton(
+          onPressed: () {
+            addLog();
+            Navigator.of(context).pop();
+          },
+          child: const Text('Save Log'),
+        ),
+      ],
+    );
   }
 
   Future addLog() async {
     final log = Log(
       runTime: _stopWatchTimer.rawTime.value.toString(),
+      //TODO create json string here 
     );
 
     await LogDatabase.instance.add(log);
   }
+
+  Future updateLog() async{
+    final log = Log(
+      //TODO 
+    )
+
+  }
+  
 }
