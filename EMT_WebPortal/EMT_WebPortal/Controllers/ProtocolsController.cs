@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
 using EMT_WebPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EMT_WebPortal.Controllers
 {
@@ -20,6 +21,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols
+        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
         public async Task<IActionResult> Index()
         {
             var eMTManualContext = _context.Protocols.Include(p => p.Guideline);
@@ -27,6 +29,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Details/5
+        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Create
+        [Authorize(Roles = "Administrator,WebMaster")]
         public IActionResult Create()
         {
             ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id");
@@ -74,6 +78,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Edit/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -127,6 +132,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Delete/5
+        [Authorize(Roles = "Administrator,WebMaster")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

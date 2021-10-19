@@ -12,7 +12,8 @@ namespace EMT_WebPortal.Models
     {
         public int ID { get; set; }
         [Required]
-        [MaxLength(100, ErrorMessage = "Protocol name must be less than 30 characters"), MinLength(1, ErrorMessage = "Please enter a name")]
+        [MaxLength(100, ErrorMessage = "Protocol name must be less than 100 characters"), MinLength(1, ErrorMessage = "Please enter a name")]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string Name { get; set; }
         [Required]
         public Certifications Certification { get; set; }

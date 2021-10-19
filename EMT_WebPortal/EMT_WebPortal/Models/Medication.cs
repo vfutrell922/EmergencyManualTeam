@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace EMT_WebPortal.Models
 {
@@ -10,13 +11,27 @@ namespace EMT_WebPortal.Models
     {
         [Key]
         public int ID { get; set; }
+        [Required]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string Name { get; set; }
+        [Required]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string Action { get; set; }
+        [Required]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string Indication { get; set; }
-        public string Contradiction { get; set; }
+        [Required]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        public string Contraindication { get; set; }
+        [Required]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string Precaution { get; set; }
-        public string AdverseEffects {get; set;}
+        [Required]
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        public string AdverseEffects { get; set; }
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string AdultDosage { get; set; }
+        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string ChildDosage { get; set; }
     }
 }
