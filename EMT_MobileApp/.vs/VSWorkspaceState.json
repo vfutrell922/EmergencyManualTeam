@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\build\\app",
+    "\\build\\app\\generated",
+    "\\build\\app\\generated\\ap_generated_sources"
   ],
   "PreviewInSolutionExplorer": false
 }
