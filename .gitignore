@@ -9,6 +9,8 @@ EMT_MobileAPP/.buildlog/
 EMT_MobileAPP/.history
 EMT_MobileAPP/.svn/
 
+.vscode/tasks.json
+
 # IntelliJ related
 *.iml
 *.ipr
