@@ -13,6 +13,33 @@ class HomePage extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class LogBar extends StatefulWidget {
+  @override
+  _LogState createState() => _LogState();
+}
+
+int _selectedIndex = 0;
+const TextStyle optionStyle =
+    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+const List<Widget> _widgetOptions = <Widget>[
+  Text(
+    'Index 0: Home',
+    style: optionStyle,
+  ),
+  Text(
+    'Index 1: Business',
+    style: optionStyle,
+  ),
+  Text(
+    'Index 2: School',
+    style: optionStyle,
+  ),
+  Text(
+    'Index 3: Settings',
+    style: optionStyle,
+  ),
+];
+
 class _HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
@@ -22,7 +49,8 @@ class _HomeState extends State<HomePage> {
           centerTitle: true,
           backgroundColor: Color(0xFFFFFF),
         ),
-        body: HomePagePanel());
+        body: HomePagePanel(),
+        bottomNavigationBar: LogBar());
   }
 }
 
@@ -110,5 +138,41 @@ class HomePagePanel extends StatelessWidget {
             ],
           ),
         ]));
+  }
+}
+
+class _LogState extends State<LogBar> {
+  @override
+  Widget build(BuildContext context) {
+    return new BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+            backgroundColor: Colors.pink,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        });
   }
 }
