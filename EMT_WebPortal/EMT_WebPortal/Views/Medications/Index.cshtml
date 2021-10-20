@@ -52,51 +52,51 @@
                 <td>
                     @if (item.Action == null || item.Action.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.Action)
+                        @Html.Raw(item.Action)
                     }
                     else
                     {
-                        @(item.Action.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.Action.ToString().Substring(0,100) + "..." + "</p>")
                     }
                 </td>
                 <td>
                     @if (item.Indication == null || item.Indication.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.Indication)
+                        @Html.Raw(item.Indication);
                     }
                     else
                     {
-                        @(item.Indication.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.Indication.ToString().Substring(0,100) + "..." + "</p>")
                     }
                 </td>
                 <td>
                     @if (item.Contraindication == null || item.Contraindication.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.Contraindication)
+                        @Html.Raw(item.Contraindication)
                     }
                     else
                     {
-                        @(item.Contraindication.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.Contraindication.ToString().Substring(0, 100) + "..." + "</p>")
                     }
                 </td>
                 <td>
                     @if (item.Precaution == null || item.Precaution.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.Precaution)
+                        @Html.Raw(item.Precaution)
                     }
                     else
                     {
-                        @(item.Precaution.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.Precaution.ToString().Substring(0,100) + "..." + "</p>")
                     }
                 </td>
                 <td>
                     @if (item.AdverseEffects == null || item.AdverseEffects.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.AdverseEffects)
+                        @Html.Raw(item.AdverseEffects)
                     }
                     else
                     {
-                        @(item.AdverseEffects.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.AdverseEffects.ToString().Substring(0,100) + "..." + "</p>")
                     }
                 </td>
                 <td>

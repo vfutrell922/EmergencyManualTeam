@@ -44,21 +44,21 @@
                 <td>
                     @if (item.Background == null || item.Background.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.Background)
+                        @Html.Raw(item.Background)
                     }
                     else
                     {
-                        @(item.Background.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.Background.ToString().Substring(0,100) + "..." + "</p>")
                     }
                 </td>
                 <td>
                     @if (item.Checklist == null || item.Checklist.Length <= 100)
                     {
-                        @Html.DisplayFor(modelItem => item.Checklist)
+                        @Html.Raw(item.Checklist)
                     }
                     else
                     {
-                        @(item.Checklist.ToString().Substring(0,100) + "...")
+                        @Html.Raw(item.Checklist.ToString().Substring(0,100) + "..." + "</p>")
                     }
                 </td>
                 <td>
