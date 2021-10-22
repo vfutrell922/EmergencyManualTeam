@@ -37,7 +37,6 @@ namespace EMT_WebPortal.Controllers
             }
 
             var protocol = await _context.Protocols
-                .Include(p => p.Guideline)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (protocol == null)
             {
@@ -60,7 +59,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,GuidelineId,OLMCRequired")] Protocol protocol)
+        public async Task<IActionResult> Create([Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +98,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,GuidelineId,OLMCRequired")] Protocol protocol)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
         {
             if (id != protocol.ID)
             {
@@ -140,7 +139,6 @@ namespace EMT_WebPortal.Controllers
             }
 
             var protocol = await _context.Protocols
-                .Include(p => p.Guideline)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (protocol == null)
             {
