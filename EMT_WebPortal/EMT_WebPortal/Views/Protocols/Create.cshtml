@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="OtherInformation" class="control-label"></label>
-                <textarea id="OtherInformationArea" rows="10" cols="250" asp-for="OtherInformation" class="form-control block-display"></textarea>
+                <textarea id="OtherInformationArea" rows="10" cols="250" style="width:600px;" asp-for="OtherInformation" class="form-control block-display"></textarea>
                 <span asp-validation-for="OtherInformation" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,8 +45,8 @@
                 <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GuidelineId" class="control-label"></label>
-                <select asp-for="GuidelineId" class="form-control" asp-items="ViewBag.GuidelineId"></select>
+                <label asp-for="Guideline" class="control-label"></label>
+                <select asp-for="Guideline" class="form-control" asp-items="ViewBag.GuidelineId"></select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">

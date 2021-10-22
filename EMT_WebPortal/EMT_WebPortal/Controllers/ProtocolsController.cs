@@ -24,8 +24,7 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Index()
         {
-            var eMTManualContext = _context.Protocols.Include(p => p.Guideline);
-            return View(await eMTManualContext.ToListAsync());
+            return View(await _context.Protocols.ToListAsync());
         }
 
         // GET: Protocols/Details/5
@@ -52,7 +51,7 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
-            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id");
+            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name");
             return View();
         }
 
@@ -73,7 +72,7 @@ namespace EMT_WebPortal.Controllers
                 .Where(x => x.Value.Errors.Count > 0)
                 .Select(x => new { x.Key, x.Value.Errors })
                 .ToArray();
-            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id", protocol.GuidelineId);
+            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name", protocol.Guideline);
             return View(protocol);
         }
 
@@ -91,7 +90,7 @@ namespace EMT_WebPortal.Controllers
             {
                 return NotFound();
             }
-            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id", protocol.GuidelineId);
+            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name", protocol.Guideline);
             return View(protocol);
         }
 
@@ -127,7 +126,7 @@ namespace EMT_WebPortal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id", protocol.GuidelineId);
+            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name", protocol.Guideline);
             return View(protocol);
         }
 
