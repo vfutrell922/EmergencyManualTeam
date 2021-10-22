@@ -82,7 +82,7 @@ class LogDatabase {
 
   Future<int> updateLog(Log log) async {
     final db = await instance.database;
-
+    // TODO more in here to update well
     return db.update(tableLogs, log.toJson(),
         where: '$LogFields.runNum} = ?', whereArgs: [log.runNum]);
   }
