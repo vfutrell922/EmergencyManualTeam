@@ -21,14 +21,14 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Medications
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Medications.ToListAsync());
         }
 
         // GET: Medications/Details/5
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,7 +47,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Medications/Create
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
             return View();
@@ -56,7 +56,7 @@ namespace EMT_WebPortal.Controllers
         // POST: Medications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Action,Indication,Contraindication,Precaution,AdverseEffects,AdultDosage,ChildDosage")] Medication medication)
@@ -71,7 +71,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Medications/Edit/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,7 +90,7 @@ namespace EMT_WebPortal.Controllers
         // POST: Medications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Action,Indication,Contraindication,Precaution,AdverseEffects,AdultDosage,ChildDosage")] Medication medication)
@@ -124,7 +124,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Medications/Delete/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,7 +143,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // POST: Medications/Delete/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -21,7 +21,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Index()
         {
             var eMTManualContext = _context.Protocols.Include(p => p.Guideline);
@@ -29,7 +29,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Details/5
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,7 +49,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Create
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
             ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Id", "Id");
@@ -78,7 +78,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Edit/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -132,7 +132,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Protocols/Delete/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -166,5 +166,7 @@ namespace EMT_WebPortal.Controllers
         {
             return _context.Protocols.Any(e => e.ID == id);
         }
+
+     
     }
 }

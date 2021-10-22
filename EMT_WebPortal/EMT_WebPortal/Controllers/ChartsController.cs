@@ -24,14 +24,14 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Charts.ToListAsync());
         }
 
         // GET: Charts/Details/5
-        [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,9 +50,10 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Create
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
+            ViewBag.ProtocolNames = GetProtocolNames();
             return View();
         }
 
@@ -61,7 +62,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string Name, IFormFile file, bool IsQuickLink)
+        public async Task<IActionResult> Create(string Name, IFormFile file, bool IsQuickLink, string protocol)
         {
             Chart chart = new Chart();
             if(file.Length > 0)
@@ -72,6 +73,7 @@ namespace EMT_WebPortal.Controllers
                     chart.Name = Name;
                     chart.IsQuickLink = IsQuickLink;
                     chart.Photo = memoryStream.ToArray();
+                    chart.Protocol = protocol;
                 }
 
                     _context.Add(chart);
@@ -83,7 +85,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Edit/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -135,7 +137,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Delete/5
-        [Authorize(Roles = "Administrator,WebMaster")]
+        [Authorize(Roles = "Administrator,Director")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -167,6 +169,16 @@ namespace EMT_WebPortal.Controllers
         private bool ChartExists(int id)
         {
             return _context.Charts.Any(e => e.ID == id);
+        }
+
+        private IEnumerable<string> GetProtocolNames()
+        {
+            HashSet<string> names = new HashSet<string>();
+            foreach (var p in _context.Protocols)
+            {
+                names.Add(p.Name);
+            }
+            return names;
         }
     }
 }
