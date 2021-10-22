@@ -30,14 +30,6 @@ const List<Widget> _widgetOptions = <Widget>[
     'Index 1: Business',
     style: optionStyle,
   ),
-  Text(
-    'Index 2: School',
-    style: optionStyle,
-  ),
-  Text(
-    'Index 3: Settings',
-    style: optionStyle,
-  ),
 ];
 
 class _HomeState extends State<HomePage> {
@@ -145,34 +137,38 @@ class _LogState extends State<LogBar> {
   @override
   Widget build(BuildContext context) {
     return new BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.shifting,
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+            icon: Icon(Icons.add_circle_outline),
+            label: 'Start',
+            backgroundColor: Colors.lightGreen,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
+            icon: Icon(Icons.download_done_outlined),
+            label: 'Stop',
+            backgroundColor: Colors.red[400],
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
+            icon: Icon(Icons.preview_outlined),
+            label: 'Review Logs',
+            backgroundColor: Colors.blue[400],
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.blueGrey[800],
         onTap: (int index) {
           setState(() {
             _selectedIndex = index;
           });
+          if (index == 2) {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(builder: (context) => new OldLogsPage()),
+            );
+          }
         });
   }
 }
