@@ -57,25 +57,25 @@
             <td>
                 @if (item.OtherInformation == null || item.OtherInformation.Length <= 100)
                 {
-                    @Html.DisplayFor(modelItem => item.OtherInformation)
+                    @Html.Raw(item.OtherInformation)
                 }
                 else
                 {
-                    @(item.OtherInformation.ToString().Substring(0,100) + "...")
+                    @Html.Raw(item.OtherInformation.ToString().Substring(0,100) + "..." + "</p>")
                 }
             </td>
             <td>
                 @if (item.TreatmentPlan == null || item.TreatmentPlan.Length <= 100)
                 {
-                    @Html.DisplayFor(modelItem => item.TreatmentPlan)
+                    @Html.Raw(item.TreatmentPlan)
                 }
                 else
                 {
-                    @(item.TreatmentPlan.ToString().Substring(0,100) + "...")
+                    @Html.Raw(item.TreatmentPlan.ToString().Substring(0,100) + "..." + "</p>")
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Guideline.Id)
+                @Html.DisplayFor(modelItem => item.Guideline)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OLMCRequired)

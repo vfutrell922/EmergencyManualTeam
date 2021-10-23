@@ -8,7 +8,7 @@
 
 <p>
     @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
-    {  
+    {
         <a asp-action="Create">Create New</a>
     }
 </p>
@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Indication)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contradiction)
+                @Html.DisplayNameFor(model => model.Contraindication)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Precaution)
@@ -43,38 +43,88 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Action)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Indication)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contradiction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precaution)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdverseEffects)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdultDosage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChildDosage)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.Action == null || item.Action.Length <= 100)
+                    {
+                        @Html.Raw(item.Action)
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Action.ToString().Substring(0,100) + "..." + "</p>")
+                    }
+                </td>
+                <td>
+                    @if (item.Indication == null || item.Indication.Length <= 100)
+                    {
+                        @Html.Raw(item.Indication);
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Indication.ToString().Substring(0,100) + "..." + "</p>")
+                    }
+                </td>
+                <td>
+                    @if (item.Contraindication == null || item.Contraindication.Length <= 100)
+                    {
+                        @Html.Raw(item.Contraindication)
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Contraindication.ToString().Substring(0, 100) + "..." + "</p>")
+                    }
+                </td>
+                <td>
+                    @if (item.Precaution == null || item.Precaution.Length <= 100)
+                    {
+                        @Html.Raw(item.Precaution)
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Precaution.ToString().Substring(0,100) + "..." + "</p>")
+                    }
+                </td>
+                <td>
+                    @if (item.AdverseEffects == null || item.AdverseEffects.Length <= 100)
+                    {
+                        @Html.Raw(item.AdverseEffects)
+                    }
+                    else
+                    {
+                        @Html.Raw(item.AdverseEffects.ToString().Substring(0,100) + "..." + "</p>")
+                    }
+                </td>
+                <td>
+                    @if (item.AdultDosage == null || item.AdultDosage.Length <= 100)
+                    {
+                        @Html.DisplayFor(modelItem => item.AdultDosage)
+                    }
+                    else
+                    {
+                        @(item.AdultDosage.ToString().Substring(0,100) + "...")
+                    }
+                </td>
+                <td>
+                    @if (item.ChildDosage == null || item.ChildDosage.Length <= 100)
+                    {
+                        @Html.DisplayFor(modelItem => item.ChildDosage)
+                    }
+                    else
+                    {
+                        @(item.ChildDosage.ToString().Substring(0,100) + "...")
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

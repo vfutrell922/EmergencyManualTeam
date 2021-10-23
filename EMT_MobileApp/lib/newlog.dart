@@ -103,7 +103,8 @@ class _LogPageState extends State<LogPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: addLog,
+                  onPressed:
+                      addLog, //TODO sierra want to promt user for run number here
                   child: new Text("Store"),
                 )
               ],
@@ -114,8 +115,7 @@ class _LogPageState extends State<LogPage> {
 
   Future addLog() async {
     final log = Log(
-      id: 2,
-      logData: _stopWatchTimer.rawTime.value.toString(),
+      runTime: _stopWatchTimer.rawTime.value.toString(),
     );
 
     await LogDatabase.instance.add(log);

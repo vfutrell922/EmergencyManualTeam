@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using EMT_WebPortal.Areas.Identity.Data;
+@inject UserManager<EMT_WebPortalUser> userManager
+@{
+    ViewData["Title"] = "AccountManager";
+}
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <td>Username</td>
+            <td>Current Role</td>
+            <td>New Role</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody class="table-bordered">
+        @{List<EMT_WebPortalUser> allUsers = userManager.Users.ToList();
+            foreach (EMT_WebPortalUser u in allUsers)
+            {
+                IList<string> roles = await userManager.GetRolesAsync(u);
+                string user = u.UserName;
+                <tr>
+                    <td>@user</td>
+                    <td>@roles.ElementAt(0)</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton @Html.Raw(user)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select Role
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item btn btn-light" onclick="selectCaregiver()" data-arg1="@user">Caregiver</button>
+                                <button class="dropdown-item btn btn-light" onclick="selectAdministrator()" data-arg1="@user">Administrator</button>
+                                <button class="dropdown-item btn btn-light" onclick="selectWebMaster()" data-arg1="@user">WebMaster</button>
+                            </div>
+                            <button class="btn btn-primary" type="button" id="submitChangeButton" onclick="submitChange()" data-arg1="@user">
+                                Submit Change
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="button" id="deleteButton">Delete</button>
+                    </td>
+                </tr>
+                }
+            }
+    </tbody>
+
+</table>
+<script type="text/javascript" src="~/js/AccountManager.js"></script>

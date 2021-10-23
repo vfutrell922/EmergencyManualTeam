@@ -3,6 +3,15 @@
 @{
     ViewData["Title"] = "Create";
 }
+@section Head {
+    <script type="text/javascript">
+        tinymce.init({ selector: '#IndicationArea' });
+        tinymce.init({ selector: '#ContraindicationArea' });
+        tinymce.init({ selector: '#PrecautionArea' });
+        tinymce.init({ selector: '#AdverseArea' });
+        tinymce.init({ selector: '#ActionArea' });
+    </script>
+}
 
 <h1>Create</h1>
 
@@ -19,27 +28,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="Action" class="control-label"></label>
-                <input asp-for="Action" class="form-control" />
+                <textarea id="ActionArea" rows="10" cols="250" style="width:600px;" asp-for="Action" class="form-control block-display"></textarea>
                 <span asp-validation-for="Action" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Indication" class="control-label"></label>
-                <input asp-for="Indication" class="form-control" />
+                <textarea id="IndicationArea" rows="10" cols="250" style="width:600px;" asp-for="Indication" class="form-control block-display"></textarea>
                 <span asp-validation-for="Indication" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contradiction" class="control-label"></label>
-                <input asp-for="Contradiction" class="form-control" />
-                <span asp-validation-for="Contradiction" class="text-danger"></span>
+                <label asp-for="Contraindication" class="control-label"></label>
+                <textarea id="ContraindicationArea" rows="10" cols="250" style="width:600px;" asp-for="Contraindication" class="form-control block-display"></textarea>
+                <span asp-validation-for="Contraindication" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Precaution" class="control-label"></label>
-                <input asp-for="Precaution" class="form-control" />
+                <textarea id="PrecautionArea" rows="10" cols="250" style="width:600px;" asp-for="Precaution" class="form-control block-display"></textarea>
                 <span asp-validation-for="Precaution" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AdverseEffects" class="control-label"></label>
-                <input asp-for="AdverseEffects" class="form-control" />
+                <textarea id="AdverseArea" rows="10" cols="250" style="width:600px;" asp-for="AdverseEffects" class="form-control block-display"></textarea>
                 <span asp-validation-for="AdverseEffects" class="text-danger"></span>
             </div>
             <div class="form-group">
