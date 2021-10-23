@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * Author Vincent Futrell
+ * Last Modified: 10/22/2021
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,13 +16,13 @@ namespace EMT_WebPortal.Controllers
 {
     public class WebMasterController : Controller
     {
-        [Authorize(Roles = "WebMaster")]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Main() 
         {
             return View();
         }
 
-        [Authorize(Roles = "WebMaster")]
+        [Authorize(Roles = "Administrator")]
         public IActionResult AccountManager() 
         {
             return View();
