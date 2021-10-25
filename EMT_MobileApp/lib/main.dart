@@ -29,13 +29,13 @@ class MyApp extends StatelessWidget {
     HandbookDatabase.instance.clearProtocolTable();
     httpService.getProtocols().then((List<Protocol> protocols) async {
       for (var i = 0; i < protocols.length; i++) {
-        debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
+        // debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
         await HandbookDatabase.instance.addProtocol(protocols[i]);
       }
     });
 
     debugPrint("Getting charts");
-    HandbookDatabase.instance.clearChartTable();
+    // HandbookDatabase.instance.clearChartTable();
     httpService.getCharts().then((List<Chart> protocols) async {
       for (var i = 0; i < protocols.length; i++) {
         debugPrint("Chart Entry >>> " + protocols[i].toJson().toString());

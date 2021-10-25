@@ -36,7 +36,6 @@ class HandbookDatabase {
     final path = join(dbPath, dbfilePath);
 
     Database db = await openDatabase(path, version: 1, onCreate: _createDB);
-
     await db.execute("DELETE FROM $tableProtocols");
   }
 
@@ -45,7 +44,6 @@ class HandbookDatabase {
     final path = join(dbPath, dbfilePath);
 
     Database db = await openDatabase(path, version: 1, onCreate: _createDB);
-
     await db.execute("DELETE FROM $tableCharts");
   }
 
@@ -66,6 +64,7 @@ class HandbookDatabase {
 
     final PhotoType = 'BLOB NOT NULL';
     final IsQuickLinkType = 'INTEGER NOT NULL';
+    final ChartProtocolType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -88,6 +87,7 @@ class HandbookDatabase {
       ${ChartFields.Name} $NameType,
       ${ChartFields.Photo} $PhotoType,
       ${ChartFields.IsQuickLink} $IsQuickLinkType,
+      ${ChartFields.Protocol}: $ChartProtocolType,
     );''');
   }
 
