@@ -45,86 +45,89 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @if (item.Action == null || item.Action.Length <= 100)
-                    {
-                        @Html.Raw(item.Action)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.Action.ToString().Substring(0,100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @if (item.Indication == null || item.Indication.Length <= 100)
-                    {
-                        @Html.Raw(item.Indication);
-                    }
-                    else
-                    {
-                        @Html.Raw(item.Indication.ToString().Substring(0,100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @if (item.Contraindication == null || item.Contraindication.Length <= 100)
-                    {
-                        @Html.Raw(item.Contraindication)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.Contraindication.ToString().Substring(0, 100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @if (item.Precaution == null || item.Precaution.Length <= 100)
-                    {
-                        @Html.Raw(item.Precaution)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.Precaution.ToString().Substring(0,100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @if (item.AdverseEffects == null || item.AdverseEffects.Length <= 100)
-                    {
-                        @Html.Raw(item.AdverseEffects)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.AdverseEffects.ToString().Substring(0,100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @if (item.AdultDosage == null || item.AdultDosage.Length <= 100)
-                    {
-                        @Html.DisplayFor(modelItem => item.AdultDosage)
-                    }
-                    else
-                    {
-                        @(item.AdultDosage.ToString().Substring(0,100) + "...")
-                    }
-                </td>
-                <td>
-                    @if (item.ChildDosage == null || item.ChildDosage.Length <= 100)
-                    {
-                        @Html.DisplayFor(modelItem => item.ChildDosage)
-                    }
-                    else
-                    {
-                        @(item.ChildDosage.ToString().Substring(0,100) + "...")
-                    }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.Action == null || item.Action.Length <= 100)
+                {
+                    @Html.Raw(item.Action)
+                }
+                else
+                {
+                    @Html.Raw(item.Action.ToString().Substring(0, 100) + "..." + "</p>")
+                }
+            </td>
+            <td>
+                @if (item.Indication == null || item.Indication.Length <= 100)
+                {
+                    @Html.Raw(item.Indication);
+                }
+                else
+                {
+                    @Html.Raw(item.Indication.ToString().Substring(0, 100) + "..." + "</p>")
+                }
+            </td>
+            <td>
+                @if (item.Contraindication == null || item.Contraindication.Length <= 100)
+                {
+                    @Html.Raw(item.Contraindication)
+                }
+                else
+                {
+                    @Html.Raw(item.Contraindication.ToString().Substring(0, 100) + "..." + "</p>")
+                }
+            </td>
+            <td>
+                @if (item.Precaution == null || item.Precaution.Length <= 100)
+                {
+                    @Html.Raw(item.Precaution)
+                }
+                else
+                {
+                    @Html.Raw(item.Precaution.ToString().Substring(0, 100) + "..." + "</p>")
+                }
+            </td>
+            <td>
+                @if (item.AdverseEffects == null || item.AdverseEffects.Length <= 100)
+                {
+                    @Html.Raw(item.AdverseEffects)
+                }
+                else
+                {
+                    @Html.Raw(item.AdverseEffects.ToString().Substring(0, 100) + "..." + "</p>")
+                }
+            </td>
+            <td>
+                @if (item.AdultDosage == null || item.AdultDosage.Length <= 100)
+                {
+                    @Html.DisplayFor(modelItem => item.AdultDosage)
+                }
+                else
+                {
+                    @(item.AdultDosage.ToString().Substring(0,100) + "...")
+                }
+            </td>
+            <td>
+                @if (item.ChildDosage == null || item.ChildDosage.Length <= 100)
+                {
+                    @Html.DisplayFor(modelItem => item.ChildDosage)
+                }
+                else
+                {
+                    @(item.ChildDosage.ToString().Substring(0,100) + "...")
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>
