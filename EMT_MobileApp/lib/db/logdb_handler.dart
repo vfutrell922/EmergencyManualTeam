@@ -84,9 +84,8 @@ class LogDatabase {
 
   Future<int> updateLog(Log log) async {
     final db = await instance.database;
-
     return db.update(tableLogs, log.toJson(),
-        where: '$LogFields.id} = ?', whereArgs: [log.id]);
+        where: '${LogFields.id} = ?', whereArgs: [log.id]);
   }
 
   Future<int> deleteLog(int id) async {

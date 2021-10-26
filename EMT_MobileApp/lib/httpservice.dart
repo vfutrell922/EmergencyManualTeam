@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 
 class HttpService {
   final String protocolsURL =
-      "http://ec2-3-141-14-235.us-east-2.compute.amazonaws.com/api/protocolsget";
+      "http://ec2-3-141-14-235.us-east-2.compute.amazonaws.com:80/api/protocolsget";
 
   Future<List<Protocol>> getProtocols() async {
     Response res = await get(protocolsURL);

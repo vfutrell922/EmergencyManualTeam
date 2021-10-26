@@ -6,15 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
+import 'homepage.dart';
 
 class OldLogsPage extends StatefulWidget {
   @override
   _OldLogsPageState createState() => _OldLogsPageState();
-}
-
-class LogBar extends StatefulWidget {
-  @override
-  _LogState createState() => _LogState();
 }
 
 int _selectedIndex = 0;
@@ -38,7 +34,6 @@ class _OldLogsPageState extends State<OldLogsPage> {
       body: Container(
         child: _buildLogsList(),
       ),
-      bottomNavigationBar: LogBar(),
     );
   }
 
@@ -75,41 +70,5 @@ class _OldLogsPageState extends State<OldLogsPage> {
         );
       },
     );
-  }
-}
-
-class _LogState extends State<LogBar> {
-  @override
-  Widget build(BuildContext context) {
-    return new BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        });
   }
 }

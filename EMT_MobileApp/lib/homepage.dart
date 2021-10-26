@@ -24,18 +24,6 @@ class LogBar extends StatefulWidget {
 }
 
 int _selectedIndex = 0;
-const TextStyle optionStyle =
-    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-const List<Widget> _widgetOptions = <Widget>[
-  Text(
-    'Index 0: Home',
-    style: optionStyle,
-  ),
-  Text(
-    'Index 1: Business',
-    style: optionStyle,
-  ),
-];
 
 class _HomeState extends State<HomePage> {
   @override
@@ -146,6 +134,7 @@ class _LogState extends State<LogBar> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _textFieldController = TextEditingController();
     return new BottomNavigationBar(
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -178,7 +167,6 @@ class _LogState extends State<LogBar> {
               addLog();
               globals.currentLogID = globals.nextLogID;
               globals.nextLogID++;
-              print(globals.nextLogID);
             } else {
               showDialog<String>(
                 context: context,
@@ -195,7 +183,6 @@ class _LogState extends State<LogBar> {
                       onPressed: () {
                         globals.currentLogID = globals.nextLogID;
                         globals.nextLogID++;
-                        print(globals.nextLogID);
                         Navigator.pop(context, 'New Log');
                       },
                       child: const Text('Start New Log'),
@@ -205,7 +192,44 @@ class _LogState extends State<LogBar> {
               );
             }
           } else if (index == 1) {
-            globals.currentLogID = -1;
+            String valueText = "0";
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('TextField in Dialog'),
+                    content: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          valueText = value;
+                        });
+                      },
+                      controller: _textFieldController,
+                      decoration:
+                          InputDecoration(hintText: "Text Field in Dialog"),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('CANCEL'),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.pop(context);
+                          });
+                        },
+                      ),
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.pop(context);
+                            addRunNum(int.parse(valueText));
+                            globals.currentLogID = -1;
+                          });
+                        },
+                      ),
+                    ],
+                  );
+                });
           } else if (index == 2) {
             Navigator.push(
               context,
@@ -221,5 +245,11 @@ class _LogState extends State<LogBar> {
 
     final log = Log(startTime: formattedTime);
     await LogDatabase.instance.add(log);
+  }
+
+  Future addRunNum(int runNumber) async {
+    Log currentLog = await LogDatabase.instance.read(globals.currentLogID);
+    Log newLog = currentLog.copy(runNum: runNumber);
+    await LogDatabase.instance.updateLog(newLog);
   }
 }
