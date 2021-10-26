@@ -35,7 +35,7 @@ class Protocol {
   final String Name;
   final int Certification;
   final int PatientType;
-  final int? GuidelineId;
+  final int GuidelineId;
   final String? Guideline;
   final int OLMCRequired;
   final int? HasAssociatedMedication;
@@ -50,7 +50,7 @@ class Protocol {
     required this.Name,
     required this.Certification,
     required this.PatientType,
-    this.GuidelineId,
+    required this.GuidelineId,
     this.Guideline,
     required this.OLMCRequired,
     this.HasAssociatedMedication,
@@ -94,8 +94,8 @@ class Protocol {
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as int,
         PatientType: json[ProtocolFields.PatientType] as int,
-        GuidelineId: json[ProtocolFields.GuidelineId] as int?,
-        Guideline: json[ProtocolFields.Guideline] as String?,
+        GuidelineId: json[ProtocolFields.GuidelineId] as int,
+        Guideline: json[ProtocolFields.Guideline] as String,
         OLMCRequired: ((json[ProtocolFields.OLMCRequired] as bool) ? 1 : 0),
         HasAssociatedMedication:
             ((json[ProtocolFields.HasAssociatedMedication] as bool?) == null
@@ -113,8 +113,8 @@ class Protocol {
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as int,
         PatientType: json[ProtocolFields.PatientType] as int,
-        GuidelineId: json[ProtocolFields.GuidelineId] as int?,
-        Guideline: json[ProtocolFields.Guideline] as String?,
+        GuidelineId: json[ProtocolFields.GuidelineId] as int,
+        Guideline: json[ProtocolFields.Guideline] as String,
         OLMCRequired: (json[ProtocolFields.OLMCRequired] as int),
         HasAssociatedMedication:
             (json[ProtocolFields.HasAssociatedMedication] as int?),
