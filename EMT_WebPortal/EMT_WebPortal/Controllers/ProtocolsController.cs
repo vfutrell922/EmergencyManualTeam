@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
 using EMT_WebPortal.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Web;
+
 
 namespace EMT_WebPortal.Controllers
 {
@@ -55,7 +57,16 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
-            ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name");
+            List<SelectListItem> MedicationsSelectListItems = new List<SelectListItem>();
+
+            foreach(Medication m in _context.Medications)
+            {
+                SelectListItem listItem = new SelectListItem() { Text = m.Name, Value = m.ID.ToString(), Selected = false };
+                MedicationsSelectListItems.Add(listItem);
+            }
+
+            ViewData["GuidelineNames"] = new SelectList(_context.Guidelines, "Name", "Name");
+            ViewData["MedicationsList"] = MedicationsSelectListItems;
             return View();
         }
 
@@ -64,7 +75,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
+        public async Task<IActionResult> Create([Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,Medications,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
         {
             if (ModelState.IsValid)
             {
