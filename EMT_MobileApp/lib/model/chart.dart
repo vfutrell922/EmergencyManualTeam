@@ -50,7 +50,7 @@ class Chart {
   static Chart fromWebJson(Map<String, Object?> json) => Chart(
         id: json[ChartFields.id] as int?,
         Name: json[ChartFields.Name] as String,
-        Photo: (json[ChartFields.Photo] as List<int>).join(","),
+        Photo: (json[ChartFields.Photo] as List<dynamic>).join(","),
         IsQuickLink: ((json[ChartFields.IsQuickLink] as bool) ? 1 : 0),
         Protocol: json[ChartFields.Protocol] as String,
       );
