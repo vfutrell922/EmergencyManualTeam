@@ -52,7 +52,7 @@ class HandbookDatabase {
     final NameType = 'TEXT NOT NULL';
     final CertificationType = 'INTEGER NOT NULL';
     final PatientTypeType = 'INTEGER NOT NULL';
-    final GuidelineIdType = 'INTEGER NOT NULL';
+    final GuidelineIdType = 'INTEGER';
     final GuidelineType = 'TEXT';
     final OLMCRequiredType = 'INTEGER NOT NULL';
     final HasAssociatedMedicationType = 'INTEGER';

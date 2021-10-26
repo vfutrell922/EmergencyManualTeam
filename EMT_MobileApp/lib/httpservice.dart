@@ -5,12 +5,12 @@ import 'model/chart.dart';
 
 import 'package:flutter/foundation.dart';
 
-class HttpService {
-  final String protocolsURL =
-      "http://ec2-3-141-14-235.us-east-2.compute.amazonaws.com/api/protocolsget";
-  final String chartsURL =
-      "http://ec2-3-141-14-235.us-east-2.compute.amazonaws.com/api/chartsget";
+final String siteName =
+    "http://ec2-13-58-14-181.us-east-2.compute.amazonaws.com";
 
+class HttpService {
+  final String protocolsURL = siteName + "/api/protocolsget";
+  final String chartsURL = siteName + "/api/chartsget";
   Future<List<Protocol>> getProtocols() async {
     Response res = await get(protocolsURL);
 
