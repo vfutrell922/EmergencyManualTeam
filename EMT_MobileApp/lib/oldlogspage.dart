@@ -61,7 +61,7 @@ class _OldLogsPageState extends State<OldLogsPage> {
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
           title: Text('Run ID: ${logs[index].runNum}'),
-          subtitle: Text('Run Time: ${logs[index].runTime}'),
+          subtitle: Text('Run Time: ${logs[index].startTime}'),
           //TODO sierra Trailing icon here, check yaml file
           onTap: () {
             Navigator.push(

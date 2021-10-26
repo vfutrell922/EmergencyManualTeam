@@ -63,7 +63,7 @@ class _LogDetailsState extends State<LogDetailsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               // TODO here is where we will put the other info too
-              children: [new Text("Runtime: ${curLog.runTime}")],
+              children: [new Text("Runtime: ${curLog.startTime}")],
             ),
           ],
         ),

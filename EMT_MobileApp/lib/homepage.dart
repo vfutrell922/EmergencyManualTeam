@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'quicklinkspage.dart';
 import 'oldlogspage.dart';
 import 'searchprotocolspage.dart';
@@ -215,10 +216,10 @@ class _LogState extends State<LogBar> {
   }
 
   Future addLog() async {
-    final log = Log(
-      runTime: "00:00:00",
-    );
+    DateTime startTime = DateTime.now();
+    String formattedTime = DateFormat.Hms().format(startTime);
 
+    final log = Log(startTime: formattedTime);
     await LogDatabase.instance.add(log);
   }
 }

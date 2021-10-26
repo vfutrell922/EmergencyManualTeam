@@ -33,14 +33,16 @@ class LogDatabase {
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final runNumType = 'INTEGER';
-    final runTimeType = 'TEXT';
+    final startTimeType = 'TEXT';
+    final endTimeType = 'TEXT';
     final additionalDataType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableLogs (
       ${LogFields.id} $idType,
       ${LogFields.runNum} $runNumType,
-      ${LogFields.runTime} $runTimeType,
+      ${LogFields.startTime} $startTimeType,
+      ${LogFields.endTime} $endTimeType,
       ${LogFields.additionalData} $additionalDataType
     );''');
   }
