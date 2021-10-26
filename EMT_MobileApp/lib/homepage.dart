@@ -2,11 +2,15 @@
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'quicklinkspage.dart';
 import 'oldlogspage.dart';
 import 'searchprotocolspage.dart';
 import 'newlog.dart';
+import 'db/logdb_handler.dart';
+import 'model/log.dart';
+import 'globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
   @override
@@ -134,6 +138,11 @@ class HomePagePanel extends StatelessWidget {
 }
 
 class _LogState extends State<LogBar> {
+  void initState() {
+    globals.initNextLogID();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new BottomNavigationBar(
@@ -163,12 +172,53 @@ class _LogState extends State<LogBar> {
           setState(() {
             _selectedIndex = index;
           });
-          if (index == 2) {
+          if (index == 0) {
+            if (globals.currentLogID == -1) {
+              addLog();
+              globals.currentLogID = globals.nextLogID;
+              globals.nextLogID++;
+              print(globals.nextLogID);
+            } else {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Current Log'),
+                  content: const Text(
+                      'A log is currently in progress. Would you like to start a new log?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Continue Current'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        globals.currentLogID = globals.nextLogID;
+                        globals.nextLogID++;
+                        print(globals.nextLogID);
+                        Navigator.pop(context, 'New Log');
+                      },
+                      child: const Text('Start New Log'),
+                    ),
+                  ],
+                ),
+              );
+            }
+          } else if (index == 1) {
+            globals.currentLogID = -1;
+          } else if (index == 2) {
             Navigator.push(
               context,
               new MaterialPageRoute(builder: (context) => new OldLogsPage()),
             );
           }
         });
+  }
+
+  Future addLog() async {
+    final log = Log(
+      runTime: "00:00:00",
+    );
+
+    await LogDatabase.instance.add(log);
   }
 }
