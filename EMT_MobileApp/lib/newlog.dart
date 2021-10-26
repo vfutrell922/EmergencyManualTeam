@@ -144,9 +144,9 @@ class _LogPageState extends State<LogPage> {
               )),
           new TextField(
             decoration: const InputDecoration(
-                border: OutlineInputBorder(), hintText: 'Run Number'),
+                border: OutlineInputBorder(), hintText: 'add more data'),
             onChanged: (text) {
-              updateLog(text);
+              LogDatabase.instance.additionalDataUpdate(text);
             },
           )
         ],
@@ -166,10 +166,13 @@ class _LogPageState extends State<LogPage> {
 
   // TODO activated when "start" is pressed
   Future createLog() async {
+    var dt = DateTime.now();
+    // TODO var str = JSON.encode(dt, toEncodable: myEncode);
+
     final log = Log(
-      // the start time?? TODO
-      // datetime.now
-      runTime: _stopWatchTimer.rawTime.value.toString(),
+      // append more info to end of json
+      additionalData: DateTime.now().toString(),
+      //_stopWatchTimer.rawTime.value.toString(),
     );
     await LogDatabase.instance.add(log);
   }
@@ -185,19 +188,4 @@ class _LogPageState extends State<LogPage> {
   //  await LogDatabase.instance.add(log);
   //}
 
-  // called anytime the log is running and they add more info
-  // or if they go back and update info
-  // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
-  Future<void> updateLog(String data) async {
-    //TODO this stuff will eventually be global instead
-    int hardId = 1;
-    Future<Log> curLog = LogDatabase.instance.read(hardId);
-
-    final log = Log(
-        //TODO
-
-        );
-
-    await LogDatabase.instance.updateLog(log);
-  }
 }

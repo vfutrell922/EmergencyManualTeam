@@ -5,6 +5,7 @@ import 'package:emergencymanual/model/log.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:convert' show JSON;
 
 class LogDatabase {
   static final LogDatabase instance = LogDatabase._init();
@@ -80,9 +81,25 @@ class LogDatabase {
     return result.map((json) => Log.fromJson(json)).toList();
   }
 
+  // called anytime the log is running and they add more info
+  // or if they go back and update info
+  // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
+  Future<void> additionalDataUpdate(String data) async {
+    //TODO this stuff will eventually be global instead
+    int hardId = 1;
+    Log curLog = await LogDatabase.instance.read(hardId);
+    print("this is the current log");
+    print(curLog);
+
+    Log updatedLog = curLog.copy(additionalData: data);
+    await LogDatabase.instance.updateLog(curLog);
+  }
+
+  // Updates the log in the database
   Future<int> updateLog(Log log) async {
     final db = await instance.database;
     // TODO more in here to update well
+    // TODO call appendAddionalData
     return db.update(tableLogs, log.toJson(),
         where: '$LogFields.runNum} = ?', whereArgs: [log.runNum]);
   }
@@ -93,6 +110,21 @@ class LogDatabase {
     return await db
         .delete(tableLogs, where: '${LogFields.id} = ?', whereArgs: [id]);
   }
+
+  // TODO method to add to json object for additional data
+  dynamic appendAdditionalData(dynamic data) {
+    // doesn't need to return anything
+  }
+
+  // sierra TODO need this?
+  dynamic myEncode(dynamic item) {
+    if (item is DateTime) {
+      return item.toIso8601String();
+    } // TODO have other types for meds, etc. to know what to add on end?
+    return item;
+  }
+
+  // TODO method to parse data from additional data
 
   Future close() async {
     final db = await instance.database;
