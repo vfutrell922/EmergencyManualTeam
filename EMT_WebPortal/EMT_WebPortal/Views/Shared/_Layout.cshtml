@@ -11,15 +11,12 @@
     <title>@ViewData["Title"] - EMT_WebPortal</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src="https://cdn.tiny.cloud/1/5i1owr8qm7y8f3xymduk42c3s0t5s0j9c9wik1tivzp71spd/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="/path/to/tinymce.min.js"></script>
 </head>
-@RenderSection("Head", required: false)
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <img src="~/Images/MWALogo.PNG" alt="Mountain West Logo" style="width:70px;height:86px;" />
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EMT_WebPortal</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +38,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Charts" asp-action="Index">Charts</a>
                         </li>
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("WebMaster"))
+                        @if(SignInManager.IsSignedIn(User) && User.IsInRole("WebMaster")) 
                         {
                             <li>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="WebMaster" asp-action="Main">Web Master Controls</a>
@@ -59,6 +56,11 @@
         </main>
     </div>
 
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - EMT_WebPortal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -11,10 +11,10 @@ namespace EMT_WebPortal.Models
     public class User
     {
         public int ID { get; set; }
-        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        [RegularExpression("[a-zA-Z]*", ErrorMessage = "Only alphanumeric characters may be used")]
         public string Name { get; set; }
         public bool Admin { get; set; }
-        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        [RegularExpression("[a-zA-Z0-9 ]*", ErrorMessage = "Only alphanumeric characters may be used")]
         public string Certification { get; set; }
     }
 }

@@ -35,41 +35,44 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @if (item.Background == null || item.Background.Length <= 100)
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @{if (item.Background != null)
                     {
-                        @Html.Raw(item.Background)
+                        string displayText = item.Background.ToString().Substring(0, 100) + " ...";
+                        @Html.DisplayFor(modelItem => displayText)
                     }
                     else
                     {
-                        @Html.Raw(item.Background.ToString().Substring(0,100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @if (item.Checklist == null || item.Checklist.Length <= 100)
+                        string displayText = "No Background Entered.";
+                        @Html.DisplayFor(modelItem => displayText) }
+                }
+            </td>
+            <td>
+                @{if (item.Checklist != null)
                     {
-                        @Html.Raw(item.Checklist)
+                        string displayText = item.Checklist.ToString().Substring(0, 100) + " ...";
+                        @Html.DisplayFor(modelItem => displayText)
                     }
                     else
                     {
-                        @Html.Raw(item.Checklist.ToString().Substring(0,100) + "..." + "</p>")
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", "Guidelines", new { id = item.Id }, new { @class = "btn btn-outline-info" })
-                    @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", "Guidelines", new { id = item.Id }, new { @class = "btn btn-outline-primary" })
-                        @Html.ActionLink("Delete", "Delete", "Guidelines", new { id = item.Id }, new{@class = "btn btn-outline-danger"})
-                    }
-                </td>
-            </tr>
-        }
+                        string displayText = "No Information Entered.";
+                        @Html.DisplayFor(modelItem => displayText) }
+                }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id"> | Edit |</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"> Delete |</a>
+                }
+            </td>
+        </tr>
+}
     </tbody>
 </table>

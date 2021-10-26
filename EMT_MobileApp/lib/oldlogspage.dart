@@ -6,11 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
+import 'homepage.dart';
 
 class OldLogsPage extends StatefulWidget {
   @override
   _OldLogsPageState createState() => _OldLogsPageState();
 }
+
+int _selectedIndex = 0;
 
 class _OldLogsPageState extends State<OldLogsPage> {
   List<Log> logs = [];
@@ -52,8 +55,8 @@ class _OldLogsPageState extends State<OldLogsPage> {
       itemCount: logs.length,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
-          title: Text('Run ID: ${logs[index].patientID}'),
-          subtitle: Text('Run Time: ${logs[index].runTime}'),
+          title: Text('Run ID: ${logs[index].runNum}'),
+          subtitle: Text('Run Time: ${logs[index].startTime}'),
           //TODO sierra Trailing icon here, check yaml file
           onTap: () {
             Navigator.push(

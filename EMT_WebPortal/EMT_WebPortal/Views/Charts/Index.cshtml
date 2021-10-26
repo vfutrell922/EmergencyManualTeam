@@ -24,25 +24,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ID">
-                        <img src="data:image;base64,@System.Convert.ToBase64String(item.Photo)" width="80" height="80" />
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsQuickLink)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", "Charts", new { id = item.ID }, new { @class = "btn btn-info" })
-                    @Html.ActionLink("Delete", "Delete", "Charts", new { id = item.ID }, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <img src="data:image;base64,@System.Convert.ToBase64String(item.Photo)" width="80" height="80" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsQuickLink)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

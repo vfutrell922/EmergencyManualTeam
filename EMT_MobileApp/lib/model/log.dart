@@ -4,67 +4,59 @@ class LogFields {
   static final List<String> values = [
     id,
     runNum,
-    patientID,
-    unitNum,
-    runTime,
+    startTime,
+    endTime,
     additionalData
   ];
   static final String id = '_id';
   static final String runNum = 'runNum';
-  static final String patientID = "patientID";
-  static final String unitNum = 'unitNum';
-  static final String runTime = "runTime";
+  static final String startTime = "startTime";
+  static final String endTime = "endTime";
   static final String additionalData = "additionalData";
 }
 
 class Log {
   final int? id;
   final int? runNum;
-  final String? patientID;
-  final int? unitNum;
-  final String? runTime;
+  final String? startTime;
+  final String? endTime;
   final String? additionalData;
 
   const Log(
       {this.id,
       this.runNum,
-      this.patientID,
-      this.unitNum,
-      this.runTime,
+      this.startTime,
+      this.endTime,
       this.additionalData});
 
   Log copy({
     int? id,
     int? runNum,
-    String? patientID,
-    int? unitNum,
-    String? runTime,
+    String? startTime,
+    String? endTime,
     String? additionalData,
   }) =>
       Log(
         id: id ?? this.id,
         runNum: runNum ?? this.runNum,
-        patientID: patientID ?? this.patientID,
-        unitNum: unitNum ?? this.unitNum,
-        runTime: runTime ?? this.runTime,
+        startTime: startTime ?? this.startTime,
+        endTime: endTime ?? this.endTime,
         additionalData: additionalData ?? this.additionalData,
       );
 
   static Log fromJson(Map<String, Object?> json) => Log(
         id: json[LogFields.id] as int?,
         runNum: json[LogFields.runNum] as int?,
-        patientID: json[LogFields.patientID] as String?,
-        unitNum: json[LogFields.unitNum] as int?,
-        runTime: json[LogFields.runTime] as String?,
+        startTime: json[LogFields.startTime] as String?,
+        endTime: json[LogFields.endTime] as String?,
         additionalData: json[LogFields.additionalData] as String?,
       );
 
   Map<String, Object?> toJson() => {
         LogFields.id: id,
         LogFields.runNum: runNum,
-        LogFields.patientID: patientID,
-        LogFields.unitNum: unitNum,
-        LogFields.runTime: runTime,
+        LogFields.startTime: startTime,
+        LogFields.endTime: endTime,
         LogFields.additionalData: additionalData,
       };
 

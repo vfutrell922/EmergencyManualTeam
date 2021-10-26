@@ -39,19 +39,19 @@
             @Html.DisplayNameFor(model => model.OtherInformation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.Raw(Model.OtherInformation)
+            @Html.DisplayFor(model => model.OtherInformation)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.TreatmentPlan)
         </dt>
         <dd class = "col-sm-10">
-            @Html.Raw(Model.TreatmentPlan)
+            @Html.DisplayFor(model => model.TreatmentPlan)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Guideline)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Guideline)
+            @Html.DisplayFor(model => model.Guideline.Id)
         </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OLMCRequired)
