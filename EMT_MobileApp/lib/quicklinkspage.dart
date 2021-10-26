@@ -26,6 +26,13 @@ class QuickLinksPage extends StatefulWidget {
   _QuickLinksState createState() => _QuickLinksState();
 }
 
+class LogBar extends StatefulWidget {
+  @override
+  _LogState createState() => _LogState();
+}
+
+int _selectedIndex = 0;
+
 class _QuickLinksState extends State<QuickLinksPage> {
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,8 @@ class _QuickLinksState extends State<QuickLinksPage> {
           centerTitle: true,
           backgroundColor: Color(0xFFFFFF),
         ),
-        body: QuickLinksPanel());
+        body: QuickLinksPanel(),
+        bottomNavigationBar: LogBar());
   }
 }
 
@@ -94,5 +102,41 @@ class QuickLinksPanel extends StatelessWidget {
                   )))
               .toList(),
         ));
+  }
+}
+
+class _LogState extends State<LogBar> {
+  @override
+  Widget build(BuildContext context) {
+    return new BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+            backgroundColor: Colors.pink,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        });
   }
 }

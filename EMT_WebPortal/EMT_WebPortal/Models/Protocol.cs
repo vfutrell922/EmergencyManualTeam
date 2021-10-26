@@ -12,8 +12,7 @@ namespace EMT_WebPortal.Models
     {
         public int ID { get; set; }
         [Required]
-        [MaxLength(100, ErrorMessage = "Protocol name must be less than 100 characters"), MinLength(1, ErrorMessage = "Please enter a name")]
-        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        [MaxLength(100, ErrorMessage = "Protocol name must be less than 30 characters"), MinLength(1, ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
         [Required]
         public Certifications Certification { get; set; }
@@ -22,10 +21,12 @@ namespace EMT_WebPortal.Models
         [Required]
         public bool HasAssociatedMedication { get; set; }
         public List<Medication> Medications { get; set; }
+        public Chart Chart { get; set; }
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
         [Required]
-        public string Guideline { get; set; }
+        public int GuidelineId { get; set; }
+        public Guideline Guideline { get; set; }
         [Required]
         public bool OLMCRequired { get; set; }
     }

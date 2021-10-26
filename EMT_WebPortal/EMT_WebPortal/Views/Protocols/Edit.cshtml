@@ -3,12 +3,6 @@
 @{
     ViewData["Title"] = "Edit";
 }
-@section Head {
-    <script type="text/javascript">
-        tinymce.init({ selector: '#OtherInformationArea' });
-        tinymce.init({ selector: '#TreatmentPlanArea' });
-    </script>
-}
 
 <h1>Edit</h1>
 
@@ -39,18 +33,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="OtherInformation" class="control-label"></label>
-                <textarea id="OtherInformationArea" rows="10" cols="250" style="width:600px;" asp-for="OtherInformation" class="form-control block-display"></textarea>
+                <input asp-for="OtherInformation" class="form-control" />
                 <span asp-validation-for="OtherInformation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TreatmentPlan" class="control-label"></label>
-                <textarea id="TreatmentPlanArea" rows="10" cols="250" style="width:600px;" asp-for="TreatmentPlan" class="form-control block-display"></textarea>
+                <input asp-for="TreatmentPlan" class="form-control" />
                 <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Guideline" class="control-label"></label>
-                <select asp-for="Guideline" class="form-control" asp-items="ViewBag.GuidelineId"></select>
-                <span asp-validation-for="Guideline" class="text-danger"></span>
+                <label asp-for="GuidelineId" class="control-label"></label>
+                <select asp-for="GuidelineId" class="form-control" asp-items="ViewBag.GuidelineId"></select>
+                <span asp-validation-for="GuidelineId" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
