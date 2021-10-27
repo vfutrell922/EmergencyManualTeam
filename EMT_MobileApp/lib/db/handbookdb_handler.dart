@@ -43,7 +43,6 @@ class HandbookDatabase {
     final NameType = 'TEXT NOT NULL';
     final CertificationType = 'INTEGER NOT NULL';
     final PatientTypeType = 'INTEGER NOT NULL';
-    final GuidelineIdType = 'INTEGER NOT NULL';
     final GuidelineType = 'TEXT';
     final OLMCRequiredType = 'INTEGER NOT NULL';
     final HasAssociatedMedicationType = 'INTEGER';
@@ -59,7 +58,6 @@ class HandbookDatabase {
       ${ProtocolFields.Name} $NameType,
       ${ProtocolFields.Certification} $CertificationType,
       ${ProtocolFields.PatientType} $PatientTypeType,
-      ${ProtocolFields.GuidelineId} $GuidelineIdType,
       ${ProtocolFields.Guideline} $GuidelineType,
       ${ProtocolFields.OLMCRequired} $OLMCRequiredType,
       ${ProtocolFields.HasAssociatedMedication} $HasAssociatedMedicationType,

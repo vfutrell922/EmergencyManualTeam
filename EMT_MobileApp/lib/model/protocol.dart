@@ -6,7 +6,6 @@ class ProtocolFields {
     Name,
     Certification,
     PatientType,
-    GuidelineId,
     Guideline,
     OLMCRequired,
     HasAssociatedMedication,
@@ -20,7 +19,6 @@ class ProtocolFields {
   static final String Name = 'Name';
   static final String Certification = 'Certification';
   static final String PatientType = 'PatientType';
-  static final String GuidelineId = 'GuidelineId';
   static final String Guideline = 'Guideline';
   static final String OLMCRequired = 'OLMCRequired';
   static final String HasAssociatedMedication = 'HasAssociatedMedication';
@@ -35,7 +33,6 @@ class Protocol {
   final String Name;
   final int Certification;
   final int PatientType;
-  final int GuidelineId;
   final String? Guideline;
   final int OLMCRequired;
   final int? HasAssociatedMedication;
@@ -50,7 +47,6 @@ class Protocol {
     required this.Name,
     required this.Certification,
     required this.PatientType,
-    required this.GuidelineId,
     this.Guideline,
     required this.OLMCRequired,
     this.HasAssociatedMedication,
@@ -66,7 +62,6 @@ class Protocol {
     int? Certification,
     int? PatientType,
     int? HasAssociatedMedication,
-    int? GuidelineId,
     String? Guideline,
     int? OLMCRequired,
     List<String>? Medications,
@@ -79,7 +74,6 @@ class Protocol {
         Name: Name ?? this.Name,
         Certification: Certification ?? this.Certification,
         PatientType: PatientType ?? this.PatientType,
-        GuidelineId: GuidelineId ?? this.GuidelineId,
         Guideline: Guideline ?? this.Guideline,
         OLMCRequired: OLMCRequired ?? this.OLMCRequired,
         HasAssociatedMedication:
@@ -94,7 +88,6 @@ class Protocol {
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as int,
         PatientType: json[ProtocolFields.PatientType] as int,
-        GuidelineId: json[ProtocolFields.GuidelineId] as int,
         Guideline: json[ProtocolFields.Guideline] as String?,
         OLMCRequired: ((json[ProtocolFields.OLMCRequired] as bool) ? 1 : 0),
         HasAssociatedMedication:
@@ -113,7 +106,6 @@ class Protocol {
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as int,
         PatientType: json[ProtocolFields.PatientType] as int,
-        GuidelineId: json[ProtocolFields.GuidelineId] as int,
         Guideline: json[ProtocolFields.Guideline] as String?,
         OLMCRequired: (json[ProtocolFields.OLMCRequired] as int),
         HasAssociatedMedication:
@@ -128,7 +120,6 @@ class Protocol {
         ProtocolFields.Name: Name,
         ProtocolFields.Certification: Certification,
         ProtocolFields.PatientType: PatientType,
-        ProtocolFields.GuidelineId: GuidelineId,
         ProtocolFields.Guideline: Guideline,
         ProtocolFields.OLMCRequired: OLMCRequired,
         ProtocolFields.HasAssociatedMedication: HasAssociatedMedication,
