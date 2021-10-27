@@ -59,7 +59,7 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "Administrator,WebMaster")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Action,Indication,Contradiction,Precaution,AdverseEffects,AdultDosage,ChildDosage")] Medication medication)
+        public async Task<IActionResult> Create([Bind("ID,Name,Action,Indication,Contraindication,Precaution,AdverseEffects,AdultDosage,ChildDosage")] Medication medication)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "Administrator,WebMaster")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Action,Indication,Contradiction,Precaution,AdverseEffects,AdultDosage,ChildDosage")] Medication medication)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Action,Indication,Contraindication,Precaution,AdverseEffects,AdultDosage,ChildDosage")] Medication medication)
         {
             if (id != medication.ID)
             {

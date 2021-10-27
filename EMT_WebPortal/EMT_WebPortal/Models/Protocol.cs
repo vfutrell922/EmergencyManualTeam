@@ -21,12 +21,12 @@ namespace EMT_WebPortal.Models
         public PatientTypes PatientType { get; set; }
         [Required]
         public bool HasAssociatedMedication { get; set; }
-        public List<Medication> Medications { get; set; }
+        public virtual ICollection<Medication> Medications { get; set; }
         public Chart Chart { get; set; }
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
         [Required]
-        public String Guideline { get; set; }
+        public string Guideline { get; set; }
         [Required]
         public bool OLMCRequired { get; set; }
     }
