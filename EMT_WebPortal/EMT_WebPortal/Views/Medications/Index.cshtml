@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Indication)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contradiction)
+                @Html.DisplayNameFor(model => model.Contraindication)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Precaution)
@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.Indication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Contradiction)
+                @Html.DisplayFor(modelItem => item.Contraindication)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Precaution)
@@ -70,9 +70,12 @@
                 @Html.DisplayFor(modelItem => item.ChildDosage)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                }
             </td>
         </tr>
 }

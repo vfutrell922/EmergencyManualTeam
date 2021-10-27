@@ -36,9 +36,11 @@
                 @Html.DisplayFor(modelItem => item.IsQuickLink)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
+                {
+                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                }
             </td>
         </tr>
 }

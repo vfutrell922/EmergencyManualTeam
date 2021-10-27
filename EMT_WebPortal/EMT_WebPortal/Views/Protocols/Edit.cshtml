@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Edit";
 }
+    <script type="text/javascript">
+    tinymce.init({ selector: '#OtherInformationArea' });
+    tinymce.init({ selector: '#TreatmentPlanArea' });
+    </script>
 
 <h1>Edit</h1>
 
@@ -33,12 +37,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="OtherInformation" class="control-label"></label>
-                <input asp-for="OtherInformation" class="form-control" />
+                <input id="OtherInformationArea" asp-for="OtherInformation" class="form-control" />
                 <span asp-validation-for="OtherInformation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TreatmentPlan" class="control-label"></label>
-                <input asp-for="TreatmentPlan" class="form-control" />
+                <input id="TreatmentPlanArea" asp-for="TreatmentPlan" class="form-control" />
                 <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
             </div>
             <div class="form-group">

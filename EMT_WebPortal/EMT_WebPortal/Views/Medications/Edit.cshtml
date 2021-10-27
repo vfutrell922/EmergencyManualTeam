@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<script type="text/javascript">
+        tinymce.init({ selector: '#IndicationArea' });
+        tinymce.init({ selector: '#ContraindicationArea' });
+        tinymce.init({ selector: '#PrecautionArea' });
+        tinymce.init({ selector: '#AdverseArea' });
+        tinymce.init({ selector: '#ActionArea' });
+</script>
+}
 
 <h1>Edit</h1>
 
@@ -20,27 +28,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="Action" class="control-label"></label>
-                <input asp-for="Action" class="form-control" />
+                <input id="ActionArea" asp-for="Action" class="form-control" />
                 <span asp-validation-for="Action" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Indication" class="control-label"></label>
-                <input asp-for="Indication" class="form-control" />
+                <input id="IndicationArea" asp-for="Indication" class="form-control" />
                 <span asp-validation-for="Indication" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contradiction" class="control-label"></label>
-                <input asp-for="Contradiction" class="form-control" />
-                <span asp-validation-for="Contradiction" class="text-danger"></span>
+                <label asp-for="Contraindication" class="control-label"></label>
+                <input id="ContraindicationArea" asp-for="Contraindication" class="form-control" />
+                <span asp-validation-for="Contraindication" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Precaution" class="control-label"></label>
-                <input asp-for="Precaution" class="form-control" />
+                <input id="PrecautionArea" asp-for="Precaution" class="form-control" />
                 <span asp-validation-for="Precaution" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AdverseEffects" class="control-label"></label>
-                <input asp-for="AdverseEffects" class="form-control" />
+                <input id="AdverseArea" asp-for="AdverseEffects" class="form-control" />
                 <span asp-validation-for="AdverseEffects" class="text-danger"></span>
             </div>
             <div class="form-group">
