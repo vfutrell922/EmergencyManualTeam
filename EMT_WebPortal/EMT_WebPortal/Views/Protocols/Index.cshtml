@@ -64,11 +64,11 @@
             </td>
 
             <td>
-                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Details", "Details", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-info" })
                 @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
                 {
-                    @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
-                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                    @Html.ActionLink("Edit", "Edit", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
                 }
             </td>
         </tr>

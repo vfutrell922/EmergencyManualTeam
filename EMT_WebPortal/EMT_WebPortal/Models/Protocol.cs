@@ -26,8 +26,7 @@ namespace EMT_WebPortal.Models
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
         [Required]
-        public int GuidelineId { get; set; }
-        public Guideline Guideline { get; set; }
+        public String Guideline { get; set; }
         [Required]
         public bool OLMCRequired { get; set; }
     }

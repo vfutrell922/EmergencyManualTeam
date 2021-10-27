@@ -21,6 +21,10 @@
     <input type="checkbox" name="IsQuickLink" id="quicklink" value="true" />
     <br />
     <br />
+    <div class="form-group">
+        <label asp-for="Protocol" class="control-label"></label>
+        <select asp-for="Protocol" class="form-control" asp-items="ViewBag.ProtocolNames"></select>
+    </div>
     <input type="submit" value="Upload Image" />
     <br />
     <br />
