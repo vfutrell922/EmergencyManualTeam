@@ -26,7 +26,7 @@ namespace EMT_WebPortal.Data
             var medications = new Medication[]
             {
                 new Medication{Name="Acetaminophen(Tylenol)", Action="An analgesic/antipyretic that has weak anti-inflammatory activity and no effects on platelets or bleeding time. Acetaminophen acts both centrally and peripherally via multiple enzymatic processes. The most significant appears to be peroxidase inhibition which yields COX-2 inhibitor-like effects.",
-                Indication="Fever. Minor Pain", Contradiction="Hypersensitivity, Known liver disease(relative)", Precaution="Do not administer if used in the last 4 hours.", AdverseEffects="Gastric Irritation(rare)", AdultDosage="PO 650-1000mg, single dose only", ChildDosage="15mg/kg PO/Rectal, single dose only. Max 650mg"}
+                Indication="Fever. Minor Pain", Contraindication="Hypersensitivity, Known liver disease(relative)", Precaution="Do not administer if used in the last 4 hours.", AdverseEffects="Gastric Irritation(rare)", AdultDosage="PO 650-1000mg, single dose only", ChildDosage="15mg/kg PO/Rectal, single dose only. Max 650mg"}
             };
 
             context.Medications.AddRange(medications);
