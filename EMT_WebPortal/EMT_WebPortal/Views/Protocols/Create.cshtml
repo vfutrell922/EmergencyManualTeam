@@ -38,6 +38,7 @@
             <div id="MedicationsSelect" style="display:none">
                 <div class="form-group">
                     <label asp-for="Medications" class="control-label"></label>
+                    <select asp-for="Medications" class="form-control" asp-items="ViewBag.MedicationsList"></select>
                 </div>
             </div>
             <div class="form-group">

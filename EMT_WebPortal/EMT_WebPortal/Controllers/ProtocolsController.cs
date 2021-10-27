@@ -57,16 +57,8 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
-            List<SelectListItem> MedicationsSelectListItems = new List<SelectListItem>();
-
-            foreach(Medication m in _context.Medications)
-            {
-                SelectListItem listItem = new SelectListItem() { Text = m.Name, Value = m.ID.ToString(), Selected = false };
-                MedicationsSelectListItems.Add(listItem);
-            }
-
             ViewData["GuidelineNames"] = new SelectList(_context.Guidelines, "Name", "Name");
-            ViewData["MedicationsList"] = MedicationsSelectListItems;
+            ViewData["MedicationsList"] = new SelectList(_context.Medications, "ID", "Name");
             return View();
         }
 
