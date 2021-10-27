@@ -12,5 +12,6 @@ namespace EMT_WebPortal.Models
         public string Name { get; set; }
         public byte[] Photo { get; set; }
         public bool IsQuickLink { get; set; }
+        public string Protocol { get; set; }
     }
 }

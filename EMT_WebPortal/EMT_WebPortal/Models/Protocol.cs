@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Web.Mvc;
 
 namespace EMT_WebPortal.Models
 {
@@ -25,11 +26,12 @@ namespace EMT_WebPortal.Models
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
         [Required]
-        public int GuidelineId { get; set; }
-        public Guideline Guideline { get; set; }
+        public String Guideline { get; set; }
         [Required]
         public bool OLMCRequired { get; set; }
     }
+
+  
 
     public enum Certifications
     {

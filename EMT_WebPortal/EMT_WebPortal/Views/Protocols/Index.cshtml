@@ -22,19 +22,10 @@
                 @Html.DisplayNameFor(model => model.PatientType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasAssociatedMedication)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.OtherInformation)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TreatmentPlan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Guideline)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OLMCRequired)
             </th>
             <th></th>
         </tr>
@@ -52,38 +43,33 @@
                 @Html.DisplayFor(modelItem => item.PatientType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HasAssociatedMedication)
-            </td>
-            <td>
                 @if (item.OtherInformation == null || item.OtherInformation.Length <= 100)
                 {
-                    @Html.DisplayFor(modelItem => item.OtherInformation)
+                    @Html.Raw(item.OtherInformation)
                 }
                 else
                 {
-                    @(item.OtherInformation.ToString().Substring(0,100) + "...")
+                    @Html.Raw(item.OtherInformation.ToString().Substring(0,100) + "...")
                 }
             </td>
             <td>
                 @if (item.TreatmentPlan == null || item.TreatmentPlan.Length <= 100)
                 {
-                    @Html.DisplayFor(modelItem => item.TreatmentPlan)
+                    @Html.Raw(item.TreatmentPlan)
                 }
                 else
                 {
-                    @(item.TreatmentPlan.ToString().Substring(0,100) + "...")
+                    @Html.Raw(item.TreatmentPlan.ToString().Substring(0, 100) + "...")
                 }
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Guideline.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OLMCRequired)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.ActionLink("Details", "Details", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                }
             </td>
         </tr>
 }

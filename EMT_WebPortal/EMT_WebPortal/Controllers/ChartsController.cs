@@ -49,6 +49,7 @@ namespace EMT_WebPortal.Controllers
         // GET: Charts/Create
         public IActionResult Create()
         {
+            ViewData["ProtocolNames"] = new SelectList(_context.Protocols, "Name", "Name");
             return View();
         }
 
@@ -59,7 +60,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string Name, IFormFile file, bool IsQuickLink)
+        public async Task<IActionResult> Create(string Name, IFormFile file, bool IsQuickLink, string Protocol)
         {
             Chart chart = new Chart();
             if(file.Length > 0)
@@ -70,6 +71,7 @@ namespace EMT_WebPortal.Controllers
                     chart.Name = Name;
                     chart.IsQuickLink = IsQuickLink;
                     chart.Photo = memoryStream.ToArray();
+                    chart.Protocol = Protocol;
                 }
 
                     _context.Add(chart);
