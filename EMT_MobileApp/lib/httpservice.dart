@@ -6,7 +6,7 @@ import 'model/chart.dart';
 import 'package:flutter/foundation.dart';
 
 final String siteName =
-    "http://ec2-13-58-14-181.us-east-2.compute.amazonaws.com";
+    "http://ec2-52-15-53-224.us-east-2.compute.amazonaws.com";
 
 class HttpService {
   final String protocolsURL = siteName + "/api/protocolsget";
@@ -15,6 +15,7 @@ class HttpService {
     Response res = await get(protocolsURL);
 
     if (res.statusCode == 200) {
+      debugPrint("Got protocol response");
       Iterable l = json.decode(res.body);
 
       List<Protocol> protocols =
@@ -29,6 +30,7 @@ class HttpService {
     Response res = await get(chartsURL);
 
     if (res.statusCode == 200) {
+      debugPrint("Got chart response");
       Iterable l = json.decode(res.body);
 
       List<Chart> charts =

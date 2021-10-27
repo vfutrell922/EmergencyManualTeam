@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
 import 'package:emergencymanual/model/chart.dart';
@@ -12,7 +13,7 @@ class HandbookDatabase {
 
   static Database? _database;
 
-  final String dbfilePath = 'handbook_database.db';
+  final String dbfilePath = 'handbook_db.db';
 
   HandbookDatabase._init();
 
@@ -91,7 +92,7 @@ class HandbookDatabase {
 
   Future<Protocol> addProtocol(Protocol protocol) async {
     final db = await instance.database;
-
+    debugPrint("Entering Protocol");
     final id = await db.insert(tableProtocols, protocol.toJson());
 
     return protocol.copy(id: id);
@@ -99,7 +100,7 @@ class HandbookDatabase {
 
   Future<Chart> addChart(Chart chart) async {
     final db = await instance.database;
-
+    debugPrint("Entering Chart");
     final id = await db.insert(tableCharts, chart.toJson());
 
     return chart.copy(id: id);
@@ -137,6 +138,23 @@ class HandbookDatabase {
     } else {
       throw Exception('ID $id not found');
     }
+  }
+
+  Future<List<Uint8List>> readChartPhotoForProtocol(String ProtocolName) async {
+    final db = await instance.database;
+
+    final orderBy = '${ChartFields.id} ASC';
+
+    final result = await db.query(tableCharts,
+        columns: ['Protocol', 'Photo'], orderBy: orderBy);
+    List<Uint8List> ret = [];
+    for (var obj in result) {
+      String pname = obj["Protocol"].toString();
+      if (pname == ProtocolName) {
+        ret.add((obj["Photo"] as Uint8List));
+      }
+    }
+    return ret;
   }
 
   Future<List<Protocol>> readAllProtocols() async {

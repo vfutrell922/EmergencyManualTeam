@@ -50,6 +50,14 @@ class _ProtocolState extends State<ProtocolPage> {
     return protocol;
   }
 
+  Widget chartsPanel(String ProtocolName) {
+    return new Column(
+      children: [
+        new Text("hi"),
+      ],
+    );
+  }
+
   Widget build(BuildContext context) {
     return FutureBuilder(
         builder: (ctx, snapshot) {
@@ -195,8 +203,7 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child:
-                      new Text('These are relevant charts for cardiac arrest'),
+                  child: chartsPanel(""),
                 ),
               ),
             ],
