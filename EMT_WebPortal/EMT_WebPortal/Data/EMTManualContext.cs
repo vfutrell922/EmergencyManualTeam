@@ -18,16 +18,22 @@ namespace EMT_WebPortal.Data
         public DbSet<Protocol> Protocols { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
+        public DbSet<MedicationProtocol> Medications_Protocols { get; set; }
 
  
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            modelBuilder.Entity<Chart>().ToTable("Chart");
-            modelBuilder.Entity<Guideline>().ToTable("Guideline");
-            modelBuilder.Entity<Medication>().ToTable("Medication");
-            modelBuilder.Entity<Protocol>().ToTable("Protocol");
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<PhoneNumber>().ToTable("PhoneNumber");
+            modelBuilder.Entity<MedicationProtocol>().HasKey(mp => new { mp.MedicationId, mp.ProtocolId });
+
+            modelBuilder.Entity<MedicationProtocol>()
+                .HasOne(t => t.Protocol)
+                .WithMany(t => t.Medications)
+                .HasForeignKey(t => t.ProtocolId);
+
+            modelBuilder.Entity<MedicationProtocol>()
+                .HasOne(t => t.Medication)
+                .WithMany(t => t.Protocols)
+                .HasForeignKey(t => t.MedicationId);
         }
     }
 }

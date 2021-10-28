@@ -1,15 +1,16 @@
-﻿@model EMT_WebPortal.Models.Protocol
-
+﻿
+@model EMT_WebPortal.Models.Protocol
 @{
     ViewData["Title"] = "Create";
 }
-@section Head {
-<script type="text/javascript">
-    tinymce.init({ selector: '#OtherInformationArea' });
-    tinymce.init({ selector: '#TreatmentPlanArea' });
-</script>
 
-} 
+@section Head {
+    <script type="text/javascript">
+        tinymce.init({ selector: '#OtherInformationArea' });
+        tinymce.init({ selector: '#TreatmentPlanArea' });
+    </script>
+
+}
 
 <h1>Create New Protocol</h1>
 <hr />
@@ -19,26 +20,26 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input id="Name" asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Certification" class="control-label"></label>
-                <select asp-for="Certification" class="form-control" asp-items="Html.GetEnumSelectList<Certifications>()"></select>
+                <select id="Certification" asp-for="Certification" class="form-control" asp-items="Html.GetEnumSelectList<Certifications>()"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PatientType" class="control-label"></label>
-                <select asp-for="PatientType" class="form-control" asp-items="Html.GetEnumSelectList<PatientTypes>()"></select>
+                <select id="PatientType" asp-for="PatientType" class="form-control" asp-items="Html.GetEnumSelectList<PatientTypes>()"></select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input id="hasMedicationInput" class="form-check-input" asp-for="HasAssociatedMedication" /> @Html.DisplayNameFor(model => model.HasAssociatedMedication)
                 </label>
             </div>
-            <div id="MedicationsSelect" style="display:none">
+            <div id="MedicationsSelect" style="display:none" class="form-group">
                 <div class="form-group">
-                    <label asp-for="Medications" class="control-label"></label>
-                    <select asp-for="Medications" class="form-control" asp-items="ViewBag.MedicationsList"></select>
+                    <label class="control-label"></label>
+                    <select id="selectList" multiple="multiple" class="form-control" name="MedicationsIdList" asp-items="ViewBag.MedicationsList"></select>
                 </div>
             </div>
             <div class="form-group">
@@ -53,11 +54,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Guideline" class="control-label"></label>
-                <select asp-for="Guideline" class="form-control" asp-items="ViewBag.GuidelineNames"></select>
+                <select id="Guideline" asp-for="Guideline" class="form-control" asp-items="ViewBag.GuidelineNames"></select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="OLMCRequired" /> @Html.DisplayNameFor(model => model.OLMCRequired)
+                    <input id="OLMC" class="form-check-input" asp-for="OLMCRequired" /> @Html.DisplayNameFor(model => model.OLMCRequired)
                 </label>
             </div>
             <div class="form-group">

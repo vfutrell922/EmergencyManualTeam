@@ -25,8 +25,12 @@ namespace EMT_WebPortal.Data
             //Seed medication table
             var medications = new Medication[]
             {
-                new Medication{Name="Acetaminophen(Tylenol)", Action="An analgesic/antipyretic that has weak anti-inflammatory activity and no effects on platelets or bleeding time. Acetaminophen acts both centrally and peripherally via multiple enzymatic processes. The most significant appears to be peroxidase inhibition which yields COX-2 inhibitor-like effects.",
-                Indication="Fever. Minor Pain", Contraindication="Hypersensitivity, Known liver disease(relative)", Precaution="Do not administer if used in the last 4 hours.", AdverseEffects="Gastric Irritation(rare)", AdultDosage="PO 650-1000mg, single dose only", ChildDosage="15mg/kg PO/Rectal, single dose only. Max 650mg"}
+                new Medication{Name="Acetaminophen", Action="An analgesic/antipyretic that has weak anti-inflammatory activity and no effects on platelets or bleeding time. Acetaminophen acts both centrally and peripherally via multiple enzymatic processes. The most significant appears to be peroxidase inhibition which yields COX-2 inhibitor-like effects.",
+                Indication="Fever. Minor Pain", Contraindication="Hypersensitivity, Known liver disease(relative)", Precaution="Do not administer if used in the last 4 hours.", AdverseEffects="Gastric Irritation(rare)", AdultDosage="PO 650-1000mg, single dose only", ChildDosage="15mg/kg PO/Rectal, single dose only. Max 650mg"},
+
+                new Medication{Name="Tylenol", Action="An analgesic/antipyretic that has weak anti-inflammatory activity and no effects on platelets or bleeding time. Acetaminophen acts both centrally and peripherally via multiple enzymatic processes. The most significant appears to be peroxidase inhibition which yields COX-2 inhibitor-like effects.",
+                Indication="Fever. Minor Pain", Contraindication="Hypersensitivity, Known liver disease(relative)", Precaution="Do not administer if used in the last 4 hours.", AdverseEffects="Gastric Irritation(rare)", AdultDosage="PO 650-1000mg, single dose only", ChildDosage="15mg/kg PO/Rectal, single dose only. Max 650mg"},
+
             };
 
             context.Medications.AddRange(medications);
@@ -50,7 +54,7 @@ namespace EMT_WebPortal.Data
             //Seed protocol table
             var protocols = new Protocol[]
             {
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, Guideline="General Patient Care Guidelines", Medications=null, PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, 
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, Guideline="General Patient Care Guidelines", Medications=null, PatientType=PatientTypes.PEDIATRIC, HasAssociatedMedication=false, 
                 OtherInformation="Focused history and physical exam: " +
                 "Assess ABC’s for evidence of current apnea, airway reflex compromise or difficulty in ventilatory effort, " +
                 "Assess medical conditions, burns or traumatic injuries that may have or will compromise the airway, "+
@@ -71,11 +75,11 @@ namespace EMT_WebPortal.Data
                     "If there is difficulty ventilating a tracheostomy patient, consider “D.O.P.E.” (Dislodged ? Obstruction ? Pneumothorax ? Equipment failure ?)",
                 OLMCRequired = true},
 
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, Guideline="General Patient Care Guidelines", Medications = null , PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, 
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, Guideline="General Patient Care Guidelines", Medications = null , PatientType=PatientTypes.PEDIATRIC, HasAssociatedMedication=false, 
                  OtherInformation=null, TreatmentPlan= "Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
                      "Avoid hyperventilation: maintain a ventilatory rate of 10-12 breaths per minute", OLMCRequired = false },
 
-                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, Medications = null , Guideline="General Patient Care Guidelines", PatientType=PatientTypes.PEDIATRIC, Chart=null, HasAssociatedMedication=false, 
+                new Protocol{Name="AIRWAY AND TRACHEOSTOMY MANAGEMENT", Certification=Certifications.EMT, Medications = null , Guideline="General Patient Care Guidelines", PatientType=PatientTypes.PEDIATRIC, HasAssociatedMedication=false, 
                 OtherInformation=null, TreatmentPlan="Ventilate with BVM when apneic or exhibiting respiratory distress. Consider a nasal or oral airway when not contraindicated (facial fractures, intact gag response, etc.), "+
                     "Avoid hyperventilation - recommended pediatric ventilatory rates:, " +
                     "Infant (0-12 month): 25 breaths per minute, " +

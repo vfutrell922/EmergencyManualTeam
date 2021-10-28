@@ -35,7 +35,7 @@ namespace EMT_WebPortal.Models
         public string AdultDosage { get; set; }
         //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string ChildDosage { get; set; }
-        public virtual ICollection<Protocol> Protocols {get; set;}
+        public virtual ICollection<MedicationProtocol> Protocols {get; set;}
     }
 }
 

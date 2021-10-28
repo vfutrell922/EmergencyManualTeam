@@ -11,7 +11,7 @@ namespace EMT_WebPortal.Models
 {
     public class Protocol
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         [MaxLength(100, ErrorMessage = "Protocol name must be less than 30 characters"), MinLength(1, ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
@@ -21,8 +21,7 @@ namespace EMT_WebPortal.Models
         public PatientTypes PatientType { get; set; }
         [Required]
         public bool HasAssociatedMedication { get; set; }
-        public virtual ICollection<Medication> Medications { get; set; }
-        public Chart Chart { get; set; }
+        public List<MedicationProtocol> Medications { get; set; }
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
         [Required]
