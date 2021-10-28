@@ -1,9 +1,12 @@
 // EMT Medic Manual App for Mountain West Ambulance
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
+import 'model/chart.dart';
 
 class ProtocolPage extends StatefulWidget {
   final String name;
@@ -16,12 +19,25 @@ class ProtocolPage extends StatefulWidget {
 
 class _ProtocolState extends State<ProtocolPage> {
   late List<Protocol> _protocols;
+  late List<Chart> _charts;
+
+  Future SetUp() async {
+    await findProtocols();
+    await findCharts();
+  }
 
   Future<List<Protocol>> findProtocols() async {
     List<Protocol> protocols =
         await HandbookDatabase.instance.getProtocolsWithName(widget.name);
     _protocols = protocols;
     return protocols;
+  }
+
+  Future<List<Chart>> findCharts() async {
+    List<Chart> charts =
+        await HandbookDatabase.instance.getChartsForProtocol(widget.name);
+    _charts = charts;
+    return charts;
   }
 
   String findProtocolWithCertification(int certification) {
@@ -50,12 +66,12 @@ class _ProtocolState extends State<ProtocolPage> {
     return protocol;
   }
 
-  Widget chartsPanel(String ProtocolName) {
-    return new Column(
-      children: [
-        new Text("hi"),
-      ],
-    );
+  List displayAllCharts() {
+    List<Widget> ret = [];
+    for (Chart chart in _charts) {
+      ret.add(Image.memory(chart.Photo));
+    }
+    return ret;
   }
 
   Widget build(BuildContext context) {
@@ -81,7 +97,7 @@ class _ProtocolState extends State<ProtocolPage> {
             child: CircularProgressIndicator(),
           );
         },
-        future: findProtocols());
+        future: SetUp());
   }
 
   Widget specificPage() {
@@ -203,7 +219,11 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child: chartsPanel(""),
+                  child: Stack(
+                    children: <Widget>[
+                      ...displayAllCharts(),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -140,23 +140,6 @@ class HandbookDatabase {
     }
   }
 
-  Future<List<Uint8List>> readChartPhotoForProtocol(String ProtocolName) async {
-    final db = await instance.database;
-
-    final orderBy = '${ChartFields.id} ASC';
-
-    final result = await db.query(tableCharts,
-        columns: ['Protocol', 'Photo'], orderBy: orderBy);
-    List<Uint8List> ret = [];
-    for (var obj in result) {
-      String pname = obj["Protocol"].toString();
-      if (pname == ProtocolName) {
-        ret.add((obj["Photo"] as Uint8List));
-      }
-    }
-    return ret;
-  }
-
   Future<List<Protocol>> readAllProtocols() async {
     final db = await instance.database;
 
@@ -194,6 +177,20 @@ class HandbookDatabase {
     return ret;
   }
 
+  Future<List<Chart>> getChartsForProtocol(String ProtocolName) async {
+    final db = await instance.database;
+    debugPrint("protocolname" + ProtocolName);
+    String whereString = '${ChartFields.Protocol} =?';
+    List<dynamic> whereArguments = [ProtocolName];
+    final result = await db.query(tableCharts,
+        where: whereString, whereArgs: whereArguments);
+
+    List<Chart> charts =
+        List<Chart>.from(result.map((model) => Chart.fromJson(model)));
+    debugPrint("Returning charts " + charts.length.toString());
+    return charts;
+  }
+
   Future<List<Protocol>> getProtocolsWithName(String name) async {
     final db = await instance.database;
     String whereString = '${ProtocolFields.Name} =?';
@@ -203,7 +200,7 @@ class HandbookDatabase {
 
     List<Protocol> protocols =
         List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-    debugPrint("Protocols with the specified name: " + protocols.toString());
+    debugPrint("Returning protocols " + protocols.length.toString());
     return protocols;
   }
 
