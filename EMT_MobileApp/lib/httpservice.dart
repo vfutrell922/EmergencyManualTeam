@@ -5,8 +5,7 @@ import 'model/chart.dart';
 
 import 'package:flutter/foundation.dart';
 
-final String siteName =
-    "http://ec2-52-15-53-224.us-east-2.compute.amazonaws.com";
+final String siteName = "https://mwaprotocol.com";
 
 class HttpService {
   final String protocolsURL = siteName + "/api/protocolsget";
