@@ -21,9 +21,10 @@ class _ProtocolState extends State<ProtocolPage> {
   late List<Protocol> _protocols;
   late List<Chart> _charts;
 
-  Future SetUp() async {
-    await findProtocols();
+  Future<List<Protocol>> SetUp() async {
+    debugPrint("Setting up protocol page");
     await findCharts();
+    return await findProtocols();
   }
 
   Future<List<Protocol>> findProtocols() async {
@@ -76,6 +77,7 @@ class _ProtocolState extends State<ProtocolPage> {
 
   Widget build(BuildContext context) {
     return FutureBuilder(
+        future: SetUp(),
         builder: (ctx, snapshot) {
           // Checking if future is resolved
           if (snapshot.connectionState == ConnectionState.done) {
@@ -96,8 +98,7 @@ class _ProtocolState extends State<ProtocolPage> {
           return Center(
             child: CircularProgressIndicator(),
           );
-        },
-        future: SetUp());
+        });
   }
 
   Widget specificPage() {
