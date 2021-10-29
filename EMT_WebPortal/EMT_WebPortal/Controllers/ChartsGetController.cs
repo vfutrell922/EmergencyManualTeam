@@ -21,17 +21,23 @@ namespace EMT_WebPortal.Controllers
         {
             _context = context;
         }
+
+        public int[] BytesToSend(byte[] Bytes) {
+            return Bytes?.Select(x => (int)x).ToArray() ?? new int[0];
+        }
+
         // GET: api/<controller>
         [HttpGet]
         public string Get()
         {
             int chartCount = _context.Charts.Count();
-            Chart[] allCharts = new Chart[chartCount];
+            ChartToSend[] allCharts = new ChartToSend[chartCount];
             int x = 0;
 
             foreach(Chart c in _context.Charts)
-            {
-                allCharts[x] = c;
+            {   
+                ChartToSend myC = new ChartToSend(c.ID, c.Name, BytesToSend(c.Photo), c.IsQuickLink, c.Protocol);
+                allCharts[x] = myC;
                 x++;
             }
 

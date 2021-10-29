@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
+import 'package:emergencymanual/model/chart.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,7 +13,7 @@ class HandbookDatabase {
 
   static Database? _database;
 
-  final String dbfilePath = 'handbook_database.db';
+  final String dbfilePath = 'handbook_db.db';
 
   HandbookDatabase._init();
 
@@ -34,8 +37,15 @@ class HandbookDatabase {
     final path = join(dbPath, dbfilePath);
 
     Database db = await openDatabase(path, version: 1, onCreate: _createDB);
-
     await db.execute("DELETE FROM $tableProtocols");
+  }
+
+  void clearChartTable() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, dbfilePath);
+
+    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+    await db.execute("DELETE FROM $tableCharts");
   }
 
   Future _createDB(Database db, int version) async {
@@ -52,6 +62,10 @@ class HandbookDatabase {
     final OtherInformationType = 'TEXT';
     final TreatmentPlanType = 'TEXT';
 
+    final PhotoType = 'BLOB NOT NULL';
+    final IsQuickLinkType = 'INTEGER NOT NULL';
+    final ChartProtocolType = 'TEXT';
+
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
       ${ProtocolFields.id} $idType,
@@ -66,17 +80,33 @@ class HandbookDatabase {
       ${ProtocolFields.OtherInformation} $OtherInformationType,
       ${ProtocolFields.TreatmentPlan} $TreatmentPlanType
     );''');
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS $tableCharts (
+      ${ChartFields.id} $idType,
+      ${ChartFields.Name} $NameType,
+      ${ChartFields.Photo} $PhotoType,
+      ${ChartFields.IsQuickLink} $IsQuickLinkType,
+      ${ChartFields.Protocol} $ChartProtocolType
+    );''');
   }
 
-  Future<Protocol> add(Protocol protocol) async {
+  Future<Protocol> addProtocol(Protocol protocol) async {
     final db = await instance.database;
-
+    debugPrint("Entering Protocol");
     final id = await db.insert(tableProtocols, protocol.toJson());
 
     return protocol.copy(id: id);
   }
 
-  Future<Protocol> read(int id) async {
+  Future<Chart> addChart(Chart chart) async {
+    final db = await instance.database;
+    debugPrint("Entering Chart");
+    final id = await db.insert(tableCharts, chart.toJson());
+
+    return chart.copy(id: id);
+  }
+
+  Future<Protocol> readProtocol(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -93,7 +123,24 @@ class HandbookDatabase {
     }
   }
 
-  Future<List<Protocol>> readAll() async {
+  Future<Chart> readChart(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableCharts,
+      columns: ChartFields.values,
+      where: '${ChartFields.id} = ? ',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Chart.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<List<Protocol>> readAllProtocols() async {
     final db = await instance.database;
 
     final orderBy = '${ProtocolFields.id} ASC';
@@ -101,6 +148,16 @@ class HandbookDatabase {
     final result = await db.query(tableProtocols, orderBy: orderBy);
 
     return result.map((json) => Protocol.fromJson(json)).toList();
+  }
+
+  Future<List<Chart>> readAllCharts() async {
+    final db = await instance.database;
+
+    final orderBy = '${ChartFields.id} ASC';
+
+    final result = await db.query(tableCharts, orderBy: orderBy);
+
+    return result.map((json) => Chart.fromJson(json)).toList();
   }
 
   Future<List<String>> readNonRepeatingNames() async {
@@ -120,6 +177,20 @@ class HandbookDatabase {
     return ret;
   }
 
+  Future<List<Chart>> getChartsForProtocol(String ProtocolName) async {
+    final db = await instance.database;
+    debugPrint("protocolname" + ProtocolName);
+    String whereString = '${ChartFields.Protocol} =?';
+    List<dynamic> whereArguments = [ProtocolName];
+    final result = await db.query(tableCharts,
+        where: whereString, whereArgs: whereArguments);
+
+    List<Chart> charts =
+        List<Chart>.from(result.map((model) => Chart.fromJson(model)));
+    debugPrint("Returning charts " + charts.length.toString());
+    return charts;
+  }
+
   Future<List<Protocol>> getProtocolsWithName(String name) async {
     final db = await instance.database;
     String whereString = '${ProtocolFields.Name} =?';
@@ -129,28 +200,11 @@ class HandbookDatabase {
 
     List<Protocol> protocols =
         List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-    debugPrint("Protocols with the specified name: " + protocols.toString());
+    debugPrint("Returning protocols " + protocols.length.toString());
     return protocols;
   }
 
-  Future<String> getProtocolWithNameAndCertification(
-      String name, int certification) async {
-    final db = await instance.database;
-    // String whereString = '${ProtocolFields.Name} =?';
-    // List<dynamic> whereArguments = [name];
-    // final result = await db.query(tableProtocols,
-    //     where: whereString, whereArgs: whereArguments);
-    final result = await db.rawQuery(
-        'SELECT * FROM ${tableProtocols} WHERE ${ProtocolFields.Name}=? AND ${ProtocolFields.Certification}=?',
-        [name, certification]);
-
-    List<Protocol> protocols =
-        List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-    debugPrint("Protocols with the specified name: " + protocols.toString());
-    return "";
-  }
-
-  Future<int> update(Protocol protocol) async {
+  Future<int> updateProtocol(Protocol protocol) async {
     final db = await instance.database;
 
     return db.update(tableProtocols, protocol.toJson(),
