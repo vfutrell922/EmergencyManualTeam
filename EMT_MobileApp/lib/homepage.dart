@@ -215,6 +215,7 @@ class _LogState extends State<LogBar> {
               addLog();
               globals.currentLogID = globals.nextLogID;
               globals.nextLogID++;
+              print("enter");
             } else {
               showDialog<String>(
                 context: context,
@@ -229,9 +230,47 @@ class _LogState extends State<LogBar> {
                     ),
                     TextButton(
                       onPressed: () {
-                        globals.currentLogID = globals.nextLogID;
-                        globals.nextLogID++;
-                        Navigator.pop(context, 'New Log');
+                        String valueText = "0";
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Save Old Log'),
+                                content: TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      valueText = value;
+                                    });
+                                  },
+                                  controller: _textFieldController,
+                                  decoration:
+                                      InputDecoration(hintText: "Run Number"),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('CANCEL'),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context, 'New Log');
+                                      setState(() {
+                                        Navigator.pop(context);
+                                        addRunNum(int.parse(valueText));
+                                      });
+                                      addLog();
+                                      globals.currentLogID = globals.nextLogID;
+                                      globals.nextLogID++;
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
                       },
                       child: const Text('Start New Log'),
                     ),
@@ -240,44 +279,67 @@ class _LogState extends State<LogBar> {
               );
             }
           } else if (index == 1) {
-            String valueText = "0";
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text('TextField in Dialog'),
-                    content: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          valueText = value;
-                        });
-                      },
-                      controller: _textFieldController,
-                      decoration:
-                          InputDecoration(hintText: "Text Field in Dialog"),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('CANCEL'),
-                        onPressed: () {
+            if (globals.currentLogID != -1) {
+              String valueText = "0";
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Save Log'),
+                      content: TextField(
+                        onChanged: (value) {
                           setState(() {
-                            Navigator.pop(context);
+                            valueText = value;
                           });
                         },
+                        controller: _textFieldController,
+                        decoration: InputDecoration(hintText: "Run Number"),
                       ),
-                      TextButton(
-                        child: Text('OK'),
-                        onPressed: () {
-                          setState(() {
-                            Navigator.pop(context);
-                            addRunNum(int.parse(valueText));
-                            globals.currentLogID = -1;
-                          });
-                        },
-                      ),
-                    ],
-                  );
-                });
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('CANCEL'),
+                          onPressed: () {
+                            setState(() {
+                              Navigator.pop(context);
+                            });
+                          },
+                        ),
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            setState(() {
+                              Navigator.pop(context);
+                              addRunNum(int.parse(valueText));
+                              globals.currentLogID = -1;
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            } else {
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        title: const Text('No Active Log'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: const <Widget>[
+                              Text('There is no in progress log.'),
+                              Text('Please start a log to save.'),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
+            }
           } else if (index == 2) {
             Navigator.push(
               context,
