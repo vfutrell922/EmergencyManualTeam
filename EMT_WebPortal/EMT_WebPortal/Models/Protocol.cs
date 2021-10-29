@@ -21,6 +21,7 @@ namespace EMT_WebPortal.Models
         public PatientTypes PatientType { get; set; }
         [Required]
         public bool HasAssociatedMedication { get; set; }
+        [JsonIgnore]
         public List<MedicationProtocol> Medications { get; set; }
         public string OtherInformation { get; set; }
         public string TreatmentPlan { get; set; }
