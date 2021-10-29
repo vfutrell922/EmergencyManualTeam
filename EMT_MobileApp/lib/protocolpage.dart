@@ -70,7 +70,12 @@ class _ProtocolState extends State<ProtocolPage> {
   List displayAllCharts() {
     List<Widget> ret = [];
     for (Chart chart in _charts) {
-      ret.add(Image.memory(chart.Photo));
+      ret.add(
+        Text(chart.Name),
+      );
+      ret.add(
+        Card(elevation: 10, child: Image.memory(chart.Photo)),
+      );
     }
     return ret;
   }
@@ -220,7 +225,7 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child: Stack(
+                  child: Column(
                     children: <Widget>[
                       ...displayAllCharts(),
                     ],
