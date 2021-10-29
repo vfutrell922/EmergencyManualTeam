@@ -44,7 +44,7 @@ namespace EMT_WebPortal.Controllers
             }
 
             var protocol = await _context.Protocols
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (protocol == null)
             {
                 return NotFound();
@@ -57,16 +57,8 @@ namespace EMT_WebPortal.Controllers
         [Authorize(Roles = "Administrator,Director")]
         public IActionResult Create()
         {
-            List<SelectListItem> MedicationsSelectListItems = new List<SelectListItem>();
-
-            foreach(Medication m in _context.Medications)
-            {
-                SelectListItem listItem = new SelectListItem() { Text = m.Name, Value = m.ID.ToString(), Selected = false };
-                MedicationsSelectListItems.Add(listItem);
-            }
-
             ViewData["GuidelineNames"] = new SelectList(_context.Guidelines, "Name", "Name");
-            ViewData["MedicationsList"] = MedicationsSelectListItems;
+            ViewData["MedicationsList"] = new MultiSelectList(_context.Medications, "ID", "Name");
             return View();
         }
 
@@ -75,18 +67,34 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,Medications,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
+        public async Task<IActionResult> Create([Bind("Id,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol, List<int> MedicationsIdList)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(protocol);
                 await _context.SaveChangesAsync();
+
+               // int task = await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT EMTManualContext.dbo.Medications_Protocols ON;");
+                foreach(var item in MedicationsIdList) 
+                {
+                    MedicationProtocol mp = new MedicationProtocol()
+                    {
+                        MedicationId = item,
+                        ProtocolId = protocol.Id,
+                        Protocol = protocol,
+                        Medication = _context.Medications.Where(x => x.ID == item).FirstOrDefault()
+                    };
+                    _context.Medications_Protocols.Add(mp);
+                }
+                _context.SaveChanges();
+               // await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Medications_Protocols OFF;");
                 return RedirectToAction(nameof(Index));
             }
             var errors = ModelState
                 .Where(x => x.Value.Errors.Count > 0)
                 .Select(x => new { x.Key, x.Value.Errors })
                 .ToArray();
+            ViewBag.MedicationsList = new MultiSelectList(_context.Medications, "ID", "Name", protocol.Medications);
             ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name", protocol.Guideline);
             return View(protocol);
         }
@@ -114,9 +122,9 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
         {
-            if (id != protocol.ID)
+            if (id != protocol.Id)
             {
                 return NotFound();
             }
@@ -130,7 +138,7 @@ namespace EMT_WebPortal.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProtocolExists(protocol.ID))
+                    if (!ProtocolExists(protocol.Id))
                     {
                         return NotFound();
                     }
@@ -155,7 +163,7 @@ namespace EMT_WebPortal.Controllers
             }
 
             var protocol = await _context.Protocols
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (protocol == null)
             {
                 return NotFound();
@@ -169,15 +177,24 @@ namespace EMT_WebPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //Delete the Protocol
             var protocol = await _context.Protocols.FindAsync(id);
             _context.Protocols.Remove(protocol);
             await _context.SaveChangesAsync();
+
+            //Delete links the protocol had to any medications
+            var mps = _context.Medications_Protocols.Where(x => x.ProtocolId == id);
+            foreach(MedicationProtocol mp in mps) 
+            {
+                _context.Medications_Protocols.Remove(mp);
+            }
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProtocolExists(int id)
         {
-            return _context.Protocols.Any(e => e.ID == id);
+            return _context.Protocols.Any(e => e.Id == id);
         }
 
      

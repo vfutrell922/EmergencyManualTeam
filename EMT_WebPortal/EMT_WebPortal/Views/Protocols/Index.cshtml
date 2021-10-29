@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
 </p>
 <table class="table">
     <thead>
@@ -64,11 +64,11 @@
             </td>
 
             <td>
-                @Html.ActionLink("Details", "Details", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Details", "Details", "Protocols", new { id = item.Id }, new { @class = "btn btn-outline-info" })
                 @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
                 {
-                    @Html.ActionLink("Edit", "Edit", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
-                    @Html.ActionLink("Delete", "Delete", "Protocols", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                    @Html.ActionLink("Edit", "Edit", "Protocols", new { id = item.Id }, new { @class = "btn btn-outline-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Protocols", new { id = item.Id}, new { @class = "btn btn-outline-danger" })
                 }
             </td>
         </tr>

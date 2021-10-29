@@ -4,9 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create New Chart</h1>
 
-<h4>Chart</h4>
 @using (Html.BeginForm("Create", "Charts", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <label for="fileName">File Name</label>
@@ -25,7 +24,7 @@
         <label asp-for="Protocol" class="control-label"></label>
         <select asp-for="Protocol" class="form-control" asp-items="ViewBag.ProtocolNames"></select>
     </div>
-    <input type="submit" value="Upload Image" />
+    <button type="submit" class="btn btn-outline-success" button>Upload Image</button>
     <br />
     <br />
     @ViewBag.Message

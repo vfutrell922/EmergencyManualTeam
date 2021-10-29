@@ -49,11 +49,22 @@ namespace EMT_WebPortal.Controllers
         // GET: Charts/Create
         public IActionResult Create()
         {
-            ViewData["ProtocolNames"] = new SelectList(_context.Protocols, "Name", "Name");
+            PopulateProtocolsList();
             return View();
         }
 
-        
+        //Adds a list 
+        private void PopulateProtocolsList()
+        {
+            var protocols = _context.Protocols.ToArray();
+            HashSet<string> names = new HashSet<string>();
+            foreach(Protocol p in protocols) 
+            {
+                names.Add(p.Name);
+            }
+            SelectList sl = new SelectList(names);
+            ViewBag.ProtocolNames = sl;
+        }
 
         // POST: Charts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
