@@ -11,6 +11,7 @@ import 'searchprotocolspage.dart';
 import 'newlog.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
@@ -26,16 +27,63 @@ class LogBar extends StatefulWidget {
 int _selectedIndex = 0;
 
 class _HomeState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Emergency Manual'),
-          centerTitle: true,
-          backgroundColor: Color(0xFFFFFF),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('Emergency Manual'),
+        centerTitle: true,
+        backgroundColor: Color(0xFFFFFF),
+      ),
+      body: HomePagePanel(),
+      bottomNavigationBar: LogBar(),
+      endDrawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Medications'),
+            ),
+            ListTile(
+              title: const Text('Medication 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Medication 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
-        body: HomePagePanel(),
-        bottomNavigationBar: LogBar());
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+          launch("tel://18884475594");
+        },
+        child: const Icon(Icons.local_phone),
+        backgroundColor: Colors.green,
+      ),
+    );
   }
 }
 
