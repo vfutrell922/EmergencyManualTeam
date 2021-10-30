@@ -15,22 +15,23 @@ class LogDetailsPage extends StatefulWidget {
   _LogDetailsState createState() => _LogDetailsState(curLog: curLog);
 }
 
+// class EditDetailsPage extends StatefulWidget {
+//   bool editLog = false;
+//   EditDetailsPage({required editingLog});
+//   @override
+//   _EditDetailsState createState() => _EditDetailsState(editingLog: editLog);
+// }
+
 class LogBar extends StatefulWidget {
   @override
   _LogState createState() => _LogState();
 }
 
-class EditDetailsPage extends StatefulWidget {
-  bool editingLog = false;
-  @override
-  _EditDetailsState createState() => _EditDetailsState(editLog: editingLog);
-}
-
 int _selectedIndex = 0;
+bool editingLog = false; //TODO does this get reset each time?
 
 class _LogDetailsState extends State<LogDetailsPage> {
   final Log curLog;
-  //TODO not sure if this is the best way to pass a log from oldLogsPage..
   _LogDetailsState({required this.curLog});
 
   @override
@@ -64,32 +65,35 @@ class _LogDetailsState extends State<LogDetailsPage> {
         ],
         backgroundColor: Color(0xFFFFFF),
       ),
-      body: 
+      body: //EditDetailsPage(editingLog: false),
+          new Center(
+        child: _buildEditLog(),
 
-          Center(
-            editLogP: EditDetailsPage();
-
-          // child: Column(
-          //   children: [
-          //     SizedBox(
-          //       height: 10.0,
-          //     ),
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-
-          //       children: [
-          //         new Text("Date Performed: March 10, 2021")
-          //       ], //TODO change this?
-          //     ),
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       // TODO here is where we will put the other info too
-          //       children: [new Text("Runtime: ${curLog.startTime}")],
-          //     ),
-          //   ],
-          // ),
-          ),
+        // child: new Column(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: <Widget>[
+        //       new Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           new Text("Date Performed: March 10, 2021"),
+        //         ],
+        //       )
+        //     ]),
+      ),
       bottomNavigationBar: LogBar(),
+    );
+  }
+
+  Widget _buildEditLog() {
+    List additionalDataList =
+        LogDatabase.instance.additionalDataRetrieve(curLog.id!);
+    return ListView.builder(
+      itemCount: additionalDataList == null ? 0 : additionalDataList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new ListTile(
+          title: Text('we made it boys'), //additionalDataList[index]),
+        );
+      },
     );
   }
 
@@ -127,28 +131,25 @@ class _LogDetailsState extends State<LogDetailsPage> {
   }
 }
 
-class _EditDetailsState extends State<EditDetailsPage> {
-  _EditDetailsState(BuildContext context, bool editLog);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Center(
-
-    child: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                new Text("Date Performed: March 10, 2021"),
-              ],
-            )]),
-
-    
-      );
-  }
-}
+//TODO sierra this is for edit widget if trying to make that work
+// class _EditDetailsState extends State<EditDetailsPage> {
+//   _EditDetailsState(BuildContext context, {required bool editingLog});
+//   @override
+//   Widget build(BuildContext context) {
+//     return new Center(
+//       child: new Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: <Widget>[
+//             new Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 new Text("Date Performed: March 10, 2021"),
+//               ],
+//             )
+//           ]),
+//     );
+//   }
+// }
 
 class _LogState extends State<LogBar> {
   @override

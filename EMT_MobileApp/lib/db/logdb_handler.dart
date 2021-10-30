@@ -85,20 +85,6 @@ class LogDatabase {
     return result.map((json) => Log.fromJson(json)).toList();
   }
 
-  // called anytime the log is running and they add more info
-  // or if they go back and update info
-  // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
-  Future<void> additionalDataUpdate(String data) async {
-    //TODO this stuff will eventually be global instead
-    int hardId = 1;
-    Log curLog = await LogDatabase.instance.read(hardId);
-    print("this is the current log");
-    print(curLog);
-
-    Log updatedLog = curLog.copy(additionalData: data);
-    await LogDatabase.instance.updateLog(curLog);
-  }
-
   // Updates the log in the database
   Future<int> updateLog(Log log) async {
     final db = await instance.database;
@@ -113,9 +99,26 @@ class LogDatabase {
         .delete(tableLogs, where: '${LogFields.id} = ?', whereArgs: [id]);
   }
 
-  // TODO method to add to json object for additional data
-  dynamic appendAdditionalData(dynamic data) {
-    // doesn't need to return anything
+  // called anytime the log is running and they add more info
+  // or if they go back and update info
+  // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
+  Future<void> additionalDataUpdate(String data) async {
+    //TODO this stuff will eventually be global instead
+    int hardId = 1;
+    Log curLog = await LogDatabase.instance.read(hardId);
+    print("this is the current log");
+    print(curLog);
+
+    Log updatedLog = curLog.copy(additionalData: data);
+    await LogDatabase.instance.updateLog(curLog);
+  }
+
+  List<dynamic> additionalDataRetrieve(int id) {
+    var returnList;
+    //TODO actually extract stuff here
+    returnList = ['item1', 'item2'];
+
+    return returnList;
   }
 
   // sierra TODO need this?
