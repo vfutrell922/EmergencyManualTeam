@@ -155,21 +155,14 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Protocols/Delete/5
         [Authorize(Roles = "Administrator,Director")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var protocol = await _context.Protocols
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (protocol == null)
-            {
-                return NotFound();
-            }
-
-            return View(protocol);
+            return await DeleteConfirmed(id);
         }
 
         // POST: Protocols/Delete/5

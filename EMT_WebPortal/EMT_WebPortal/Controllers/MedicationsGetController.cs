@@ -25,14 +25,16 @@ namespace EMT_WebPortal.Controllers
         [HttpGet]
         public string Get()
         {
-            string allMedications = "";
+            Medication[] allMedications = new Medication[_context.Medications.Count()];
+            int x = 0;
 
-            foreach(Medication p in _context.Medications) 
+            foreach (Medication p in _context.Medications)
             {
-                allMedications += JsonConvert.SerializeObject(p);
+                allMedications[x] = p;
+                x++;
             }
 
-            return allMedications;
+            return JsonConvert.SerializeObject(allMedications);
         }
 
         // GET api/<controller>/5

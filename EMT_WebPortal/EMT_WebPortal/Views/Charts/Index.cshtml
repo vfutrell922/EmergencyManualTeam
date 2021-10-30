@@ -41,13 +41,35 @@
                 @Html.DisplayFor(modelItem => item.Protocol)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "Charts", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Details", "Details", "Charts", new { id = item.ID }, new { @class = "btn btn-outline-info", @style = "width:120px;" })
                 @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
                 {
-                    @Html.ActionLink("Delete", "Delete", "Charts", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                   // @Html.ActionLink("Delete", "Delete", "Charts", new { id = item.ID }, new { @class = "btn btn-outline-danger", @style = "width:120px;" })
+                   <button type ="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmCancel" style="width:120px;"></button>
                 }
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+!
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
