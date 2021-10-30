@@ -94,9 +94,10 @@ class HomePagePanel extends StatelessWidget {
     double buttonWidth = (screenWidth - (screenWidth * .1)) / 2;
     double buttonHeight = buttonWidth * 0.5;
     return new Center(
-        child: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
+        child: new SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
           Image.asset('assets/images/logo.png', height: 300, width: 300),
           new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -170,7 +171,7 @@ class HomePagePanel extends StatelessWidget {
               )
             ],
           ),
-        ]));
+        ])));
   }
 }
 
