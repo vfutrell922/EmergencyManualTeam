@@ -81,7 +81,7 @@ class _HomeState extends State<HomePage> {
           launch("tel://18884475594");
         },
         child: const Icon(Icons.local_phone),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.red,
       ),
     );
   }
@@ -92,48 +92,16 @@ class HomePagePanel extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double buttonWidth = (screenWidth - (screenWidth * .1)) / 2;
-    double buttonHeight = buttonWidth * 0.5;
+    double buttonHeight = buttonWidth * 0.8;
     return new Center(
         child: new SingleChildScrollView(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-          Image.asset('assets/images/logo.png', height: 300, width: 300),
-          new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new SizedBox(
-                  width: buttonWidth,
-                  height: buttonHeight,
-                  child: new ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            //TODO sierra example
-                            builder: (context) => new LogPage()),
-                      );
-                    },
-                    child: new Text("Start New Log"),
-                  ),
-                ),
-                new SizedBox(
-                  width: buttonWidth,
-                  height: buttonHeight,
-                  child: new ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => new OldLogsPage()),
-                      );
-                    },
-                    child: new Text(
-                      "View Old Logs",
-                    ),
-                  ),
-                ),
-              ]),
+          Image.asset('assets/images/logo.png', height: 250, width: 250),
+          SizedBox(
+            height: 100,
+          ),
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -148,8 +116,11 @@ class HomePagePanel extends StatelessWidget {
                           builder: (context) => new SearchProtocolsPage()),
                     );
                   },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(31, 61, 155, 1)),
                   child: new Text(
                     "Protocols",
+                    style: TextStyle(fontSize: 25),
                   ),
                 ),
               ),
@@ -164,8 +135,11 @@ class HomePagePanel extends StatelessWidget {
                           builder: (context) => new QuickLinksPage()),
                     );
                   },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(31, 61, 155, 1)),
                   child: new Text(
                     "Quick Links",
+                    style: TextStyle(fontSize: 25),
                   ),
                 ),
               )
