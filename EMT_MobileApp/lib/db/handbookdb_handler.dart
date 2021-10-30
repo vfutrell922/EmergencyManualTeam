@@ -61,7 +61,6 @@ class HandbookDatabase {
       ${ProtocolFields.Guideline} $GuidelineType,
       ${ProtocolFields.OLMCRequired} $OLMCRequiredType,
       ${ProtocolFields.HasAssociatedMedication} $HasAssociatedMedicationType,
-      ${ProtocolFields.Medications} $MedicationsType,
       ${ProtocolFields.Chart} $ChartType,
       ${ProtocolFields.OtherInformation} $OtherInformationType,
       ${ProtocolFields.TreatmentPlan} $TreatmentPlanType

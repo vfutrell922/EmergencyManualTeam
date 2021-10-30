@@ -9,7 +9,6 @@ class ProtocolFields {
     Guideline,
     OLMCRequired,
     HasAssociatedMedication,
-    Medications,
     Chart,
     OtherInformation,
     TreatmentPlan,
@@ -22,7 +21,6 @@ class ProtocolFields {
   static final String Guideline = 'Guideline';
   static final String OLMCRequired = 'OLMCRequired';
   static final String HasAssociatedMedication = 'HasAssociatedMedication';
-  static final String Medications = 'Medications';
   static final String Chart = 'Chart';
   static final String OtherInformation = 'OtherInformation';
   static final String TreatmentPlan = 'TreatmentPlan';
@@ -36,8 +34,6 @@ class Protocol {
   final String? Guideline;
   final int OLMCRequired;
   final int? HasAssociatedMedication;
-  //TODO: These types are not correct, filler
-  final List<String>? Medications;
   final String? Chart;
   final String? OtherInformation;
   final String? TreatmentPlan;
@@ -50,7 +46,6 @@ class Protocol {
     this.Guideline,
     required this.OLMCRequired,
     this.HasAssociatedMedication,
-    this.Medications,
     this.Chart,
     this.OtherInformation,
     this.TreatmentPlan,
@@ -64,7 +59,6 @@ class Protocol {
     int? HasAssociatedMedication,
     String? Guideline,
     int? OLMCRequired,
-    List<String>? Medications,
     String? Chart,
     String? OtherInformation,
     String? TreatmentPlan,
@@ -78,7 +72,6 @@ class Protocol {
         OLMCRequired: OLMCRequired ?? this.OLMCRequired,
         HasAssociatedMedication:
             HasAssociatedMedication ?? this.HasAssociatedMedication,
-        Medications: Medications ?? this.Medications,
         OtherInformation: OtherInformation ?? this.OtherInformation,
         TreatmentPlan: TreatmentPlan ?? this.TreatmentPlan,
       );
@@ -96,7 +89,6 @@ class Protocol {
                 : (json[ProtocolFields.HasAssociatedMedication] as bool)
                     ? 1
                     : 0),
-        Medications: json[ProtocolFields.Medications] as List<String>?,
         OtherInformation: json[ProtocolFields.OtherInformation] as String?,
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,
       );
@@ -110,7 +102,6 @@ class Protocol {
         OLMCRequired: (json[ProtocolFields.OLMCRequired] as int),
         HasAssociatedMedication:
             (json[ProtocolFields.HasAssociatedMedication] as int?),
-        Medications: json[ProtocolFields.Medications] as List<String>?,
         OtherInformation: json[ProtocolFields.OtherInformation] as String?,
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,
       );
@@ -123,7 +114,6 @@ class Protocol {
         ProtocolFields.Guideline: Guideline,
         ProtocolFields.OLMCRequired: OLMCRequired,
         ProtocolFields.HasAssociatedMedication: HasAssociatedMedication,
-        ProtocolFields.Medications: Medications,
         ProtocolFields.OtherInformation: OtherInformation,
         ProtocolFields.TreatmentPlan: TreatmentPlan
       };

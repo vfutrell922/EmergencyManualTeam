@@ -12,7 +12,7 @@ class HttpService {
 
     if (res.statusCode == 200) {
       Iterable l = json.decode(res.body);
-
+      debugPrint("Iterable: " + l.toString());
       List<Protocol> protocols =
           List<Protocol>.from(l.map((model) => Protocol.fromWebJson(model)));
       return protocols;
