@@ -8,6 +8,7 @@ import 'homepage.dart';
 import 'httpservice.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'model/medication.dart';
 import 'db/handbookdb_handler.dart';
 import 'package:flutter/foundation.dart';
 
@@ -42,6 +43,16 @@ class MyApp extends StatelessWidget {
         await HandbookDatabase.instance.addChart(charts[i]);
       }
     });
+
+    debugPrint("Getting medication");
+    HandbookDatabase.instance.clearMedicationTable();
+    httpService.getMedications().then((List<Medication> medications) async {
+      for (var i = 0; i < medications.length; i++) {
+        // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
+        await HandbookDatabase.instance.addMedication(medications[i]);
+      }
+    });
+
     return true;
   }
 }

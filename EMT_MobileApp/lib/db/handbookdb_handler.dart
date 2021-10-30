@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
 import 'package:emergencymanual/model/chart.dart';
+import 'package:emergencymanual/model/medication.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:path/path.dart';
@@ -48,6 +49,14 @@ class HandbookDatabase {
     await db.execute("DELETE FROM $tableCharts");
   }
 
+  void clearMedicationTable() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, dbfilePath);
+
+    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+    await db.execute("DELETE FROM $tableMedications");
+  }
+
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final NameType = 'TEXT NOT NULL';
@@ -65,6 +74,14 @@ class HandbookDatabase {
     final PhotoType = 'BLOB NOT NULL';
     final IsQuickLinkType = 'INTEGER NOT NULL';
     final ChartProtocolType = 'TEXT';
+
+    final ActionType = 'TEXT NOT NULL';
+    final IndicationType = 'TEXT NOT NULL';
+    final ContraindicationType = 'TEXT NOT NULL';
+    final PrecautionType = 'TEXT NOT NULL';
+    final AdverseEffectsType = 'TEXT NOT NULL';
+    final AdultDosageType = 'TEXT';
+    final ChildDosageType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -88,6 +105,18 @@ class HandbookDatabase {
       ${ChartFields.IsQuickLink} $IsQuickLinkType,
       ${ChartFields.Protocol} $ChartProtocolType
     );''');
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS $tableMedications (
+      ${MedicationFields.id} $idType,
+      ${MedicationFields.Name} $NameType,
+      ${MedicationFields.Action} $ActionType,
+      ${MedicationFields.Indication} $IndicationType,
+      ${MedicationFields.Contraindication} $ContraindicationType,
+      ${MedicationFields.Precaution} $PrecautionType,
+      ${MedicationFields.AdverseEffects} $AdverseEffectsType,
+      ${MedicationFields.AdultDosage} $AdultDosageType,
+      ${MedicationFields.ChildDosage} $ChildDosageType,
+    );''');
   }
 
   Future<Protocol> addProtocol(Protocol protocol) async {
@@ -104,6 +133,14 @@ class HandbookDatabase {
     final id = await db.insert(tableCharts, chart.toJson());
 
     return chart.copy(id: id);
+  }
+
+  Future<Medication> addMedication(Medication medication) async {
+    final db = await instance.database;
+    debugPrint("Entering Medication");
+    final id = await db.insert(tableMedications, medication.toJson());
+
+    return medication.copy(id: id);
   }
 
   Future<Protocol> readProtocol(int id) async {
@@ -140,6 +177,23 @@ class HandbookDatabase {
     }
   }
 
+  Future<Medication> readMedication(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableMedications,
+      columns: MedicationFields.values,
+      where: '${MedicationFields.id} = ? ',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Medication.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
   Future<List<Protocol>> readAllProtocols() async {
     final db = await instance.database;
 
@@ -158,6 +212,16 @@ class HandbookDatabase {
     final result = await db.query(tableCharts, orderBy: orderBy);
 
     return result.map((json) => Chart.fromJson(json)).toList();
+  }
+
+  Future<List<Medication>> readAllMedications() async {
+    final db = await instance.database;
+
+    final orderBy = '${MedicationFields.id} ASC';
+
+    final result = await db.query(tableMedications, orderBy: orderBy);
+
+    return result.map((json) => Medication.fromJson(json)).toList();
   }
 
   Future<List<String>> readNonRepeatingNames() async {
