@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:emergencymanual/icons.dart';
 import 'model/log.dart';
+import 'db/logdb_handler.dart';
 
 class LogDetailsPage extends StatefulWidget {
   final Log curLog;
@@ -17,6 +18,12 @@ class LogDetailsPage extends StatefulWidget {
 class LogBar extends StatefulWidget {
   @override
   _LogState createState() => _LogState();
+}
+
+class EditDetailsPage extends StatefulWidget {
+  bool editingLog = false;
+  @override
+  _EditDetailsState createState() => _EditDetailsState(editLog: editingLog);
 }
 
 int _selectedIndex = 0;
@@ -36,40 +43,110 @@ class _LogDetailsState extends State<LogDetailsPage> {
           IconButton(
               icon: const Icon(Icons.edit),
               tooltip: 'Edit Log',
-              onPressed: () {}
+              onPressed: () {
+                // showDialog(
+                //   context: context,
+                //   builder: (BuildContext context) =>
+                //       _EditDetailsState(context, true),
+                // );
+              }
               // TODO handle the press (create edit pop-up)
               ),
           IconButton(
               icon: const Icon(Icons.delete),
               tooltip: 'Delete Log',
-              onPressed: () {} //TODO handle the press (create delete pop-up)
-              )
+              onPressed: () {
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => _deleteDialog(context),
+                );
+              })
         ],
         backgroundColor: Color(0xFFFFFF),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: 
 
-              children: [
-                new Text("Date Performed: March 10, 2021")
-              ], //TODO change this?
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              // TODO here is where we will put the other info too
-              children: [new Text("Runtime: ${curLog.startTime}")],
-            ),
-          ],
-        ),
-      ),
+          Center(
+            editLogP: EditDetailsPage();
+
+          // child: Column(
+          //   children: [
+          //     SizedBox(
+          //       height: 10.0,
+          //     ),
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+
+          //       children: [
+          //         new Text("Date Performed: March 10, 2021")
+          //       ], //TODO change this?
+          //     ),
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       // TODO here is where we will put the other info too
+          //       children: [new Text("Runtime: ${curLog.startTime}")],
+          //     ),
+          //   ],
+          // ),
+          ),
       bottomNavigationBar: LogBar(),
     );
+  }
+
+  Widget _deleteDialog(BuildContext context) {
+    return new AlertDialog(
+      title: Text('Delete Log?'),
+      actions: <Widget>[
+        new Text(
+            "Are you sure you want to delete log for Run ${curLog.runNum}  ?"),
+        TextButton(
+          child: Text('CANCEL'),
+          onPressed: () {
+            setState(() {
+              Navigator.pop(context);
+            });
+          },
+        ),
+        TextButton(
+          child: Text('Delete Log',
+              style: TextStyle(
+                color: Colors.red,
+              )),
+          onPressed: () async {
+            await LogDatabase.instance.deleteLog(curLog.id!).then((value) {
+              setState(() {
+                Navigator.pop(context);
+              });
+              Navigator.pop(context, true); //send back to oldLogsPage
+            });
+            //Future.delayed(Duration.zero, () {
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _EditDetailsState extends State<EditDetailsPage> {
+  _EditDetailsState(BuildContext context, bool editLog);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Center(
+
+    child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+              children: [
+                new Text("Date Performed: March 10, 2021"),
+              ],
+            )]),
+
+    
+      );
   }
 }
 

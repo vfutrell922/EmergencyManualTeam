@@ -18,6 +18,12 @@ int _selectedIndex = 0;
 class _OldLogsPageState extends State<OldLogsPage> {
   List<Log> logs = [];
 
+  // for updating the list upon returning
+  void _getRequests() async {
+    setState(() {});
+    debugPrint('_getRequests hit');
+  }
+
   @override
   void initState() {
     this._getLogs();
@@ -59,13 +65,27 @@ class _OldLogsPageState extends State<OldLogsPage> {
           subtitle: Text('Run Time: ${logs[index].startTime}'),
           //TODO sierra Trailing icon here, check yaml file
           onTap: () {
-            Navigator.push(
-              context,
+            Navigator.of(context).push(
               new MaterialPageRoute(
-                  //TODO sierra example //TODO sierra !!!!
                   builder: (context) =>
                       new LogDetailsPage(curLog: logs[index])),
             );
+            //     .then((value) {
+            setState(() {
+              //     // refresh state of Page1
+            });
+            // });
+            //setState(() {});
+            //debugPrint('came back from log details');
+
+            // Navigator.push(
+            //   context,
+            //   new MaterialPageRoute(
+            //       //TODO sierra example //TODO sierra !!!!
+
+            //       builder: (context) =>
+            //           new LogDetailsPage(curLog: logs[index])),
+            // );
           },
         );
       },

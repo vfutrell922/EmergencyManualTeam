@@ -5,7 +5,8 @@ import 'model/chart.dart';
 
 import 'package:flutter/foundation.dart';
 
-final String siteName = "https://mwaprotocol.com";
+final String siteName =
+    "http://ec2-52-15-53-224.us-east-2.compute.amazonaws.com";
 
 class HttpService {
   final String protocolsURL = siteName + "/api/protocolsget";
@@ -21,6 +22,7 @@ class HttpService {
           List<Protocol>.from(l.map((model) => Protocol.fromWebJson(model)));
       return protocols;
     } else {
+      debugPrint(res.statusCode.toString());
       throw "Unable to retrieve protocols.";
     }
   }

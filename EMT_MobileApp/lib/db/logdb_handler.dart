@@ -69,6 +69,8 @@ class LogDatabase {
     if (maps.isNotEmpty) {
       return Log.fromJson(maps.first);
     } else {
+      debugPrint(maps.toString());
+
       throw Exception('ID $id not found');
     }
   }
