@@ -53,7 +53,6 @@ class _OldLogsPageState extends State<OldLogsPage> {
     return ListView.builder(
       //itemCount: logs == null ? 0 : logs.length,
       itemCount: logs.length,
-      reverse: true,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
           title: Text('Run ID: ${logs[index].runNum}'),
