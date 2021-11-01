@@ -160,7 +160,7 @@ class HandbookDatabase {
     return result.map((json) => Chart.fromJson(json)).toList();
   }
 
-  Future<List<String>> readNonRepeatingNames() async {
+  Future<List<String>> readNonRepeatingProtocolNames() async {
     final db = await instance.database;
 
     final orderBy = '${ProtocolFields.id} ASC';
@@ -179,7 +179,6 @@ class HandbookDatabase {
 
   Future<List<Chart>> getChartsForProtocol(String ProtocolName) async {
     final db = await instance.database;
-    debugPrint("protocolname" + ProtocolName);
     String whereString = '${ChartFields.Protocol} =?';
     List<dynamic> whereArguments = [ProtocolName];
     final result = await db.query(tableCharts,
@@ -187,7 +186,22 @@ class HandbookDatabase {
 
     List<Chart> charts =
         List<Chart>.from(result.map((model) => Chart.fromJson(model)));
-    debugPrint("Returning charts " + charts.length.toString());
+    debugPrint("Returning charts for specified protocol length: " +
+        charts.length.toString());
+    return charts;
+  }
+
+  Future<List<Chart>> getQuickLinkCharts(String ProtocolName) async {
+    final db = await instance.database;
+    String whereString = '${ChartFields.IsQuickLink} =?';
+    List<dynamic> whereArguments = [1];
+    final result = await db.query(tableCharts,
+        where: whereString, whereArgs: whereArguments);
+
+    List<Chart> charts =
+        List<Chart>.from(result.map((model) => Chart.fromJson(model)));
+    debugPrint(
+        "Returning quick link charts length: " + charts.length.toString());
     return charts;
   }
 
