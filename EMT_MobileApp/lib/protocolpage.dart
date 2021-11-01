@@ -21,6 +21,32 @@ class _ProtocolState extends State<ProtocolPage> {
   late List<Protocol> _protocols;
   late List<Chart> _charts;
 
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: SetUp(),
+        builder: (ctx, snapshot) {
+          // Checking if future is resolved
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If we got an error
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              return specificPage();
+            }
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
   Future<List<Protocol>> SetUp() async {
     debugPrint("Setting up protocol page");
     await findCharts();
@@ -78,32 +104,6 @@ class _ProtocolState extends State<ProtocolPage> {
       );
     }
     return ret;
-  }
-
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: SetUp(),
-        builder: (ctx, snapshot) {
-          // Checking if future is resolved
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If we got an error
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  '${snapshot.error} occured',
-                  style: TextStyle(fontSize: 18),
-                ),
-              );
-
-              // if we got our data
-            } else if (snapshot.hasData) {
-              return specificPage();
-            }
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        });
   }
 
   Widget specificPage() {

@@ -29,23 +29,36 @@ class QuickLinksPage extends StatefulWidget {
   _QuickLinksState createState() => _QuickLinksState();
 }
 
-class _QuickLinksState extends State<QuickLinksPage> {}
+class _QuickLinksState extends State<QuickLinksPage> {
+  late List<Chart> _charts;
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Emergency Manual'),
-          centerTitle: true,
-          backgroundColor: Color(0xFFFFFF),
-        ),
-        body: QuickLinksPanel());
+    return FutureBuilder(
+        future: getCharts(),
+        builder: (ctx, snapshot) {
+          // Checking if future is resolved
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If we got an error
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              return QuickLinks();
+            }
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
-}
 
-class ImageDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget ImageDialog() {
     return Dialog(
       child: Container(
         width: 400,
@@ -58,19 +71,14 @@ class ImageDialog extends StatelessWidget {
       ),
     );
   }
-}
-
-class QuickLinksPanel extends StatelessWidget {
-  late List<Chart> _charts;
 
   Future<List<Chart>> getCharts() async {
     List<Chart> charts = await HandbookDatabase.instance.getQuickLinkCharts();
     _charts = charts;
     return charts;
   }
-  
-  @override
-  Widget build(BuildContext context) {
+
+  Widget QuickLinks(BuildContext context) {
     return new GridView.custom(
         padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
