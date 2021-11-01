@@ -73,9 +73,10 @@ class _ProtocolState extends State<ProtocolPage> {
       ret.add(
         Text(chart.Name),
       );
-      ret.add(
-        Card(elevation: 10, child: Image.memory(chart.Photo)),
-      );
+      ret.add(InteractiveViewer(
+        child: Image.memory(chart.Photo),
+        maxScale: 5.0,
+      ));
     }
     return ret;
   }
