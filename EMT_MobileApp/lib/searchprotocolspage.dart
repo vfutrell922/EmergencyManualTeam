@@ -109,7 +109,8 @@ class _SearchPageState extends State<SearchProtocolsPage> {
   }
 
   void _getProtocols() async {
-    List tempList = await HandbookDatabase.instance.readNonRepeatingNames();
+    List tempList =
+        await HandbookDatabase.instance.readNonRepeatingProtocolNames();
     debugPrint(tempList.toString());
 
     setState(() {
