@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 
 namespace EMT_WebPortal.Models
@@ -35,6 +36,7 @@ namespace EMT_WebPortal.Models
         public string AdultDosage { get; set; }
         //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
         public string ChildDosage { get; set; }
+        [JsonIgnore]
         public virtual ICollection<MedicationProtocol> Protocols {get; set;}
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMT_WebPortal.Data;
 using EMT_WebPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EMT_WebPortal.Controllers
 {
@@ -20,12 +21,14 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: PhoneNumbers
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.PhoneNumbers.ToListAsync());
         }
 
         // GET: PhoneNumbers/Details/5
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: PhoneNumbers/Create
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +70,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: PhoneNumbers/Edit/5
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,12 +122,8 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: PhoneNumbers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var phoneNumber = await _context.PhoneNumbers
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -131,7 +132,7 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            return View(phoneNumber);
+            return await DeleteConfirmed(id);
         }
 
         // POST: PhoneNumbers/Delete/5

@@ -125,12 +125,8 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Guidelines/Delete/5
         [Authorize(Roles = "Administrator,WebMaster")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var guideline = await _context.Guidelines
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -139,7 +135,7 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            return View(guideline);
+            return await DeleteConfirmed(id);
         }
 
         // POST: Guidelines/Delete/5
