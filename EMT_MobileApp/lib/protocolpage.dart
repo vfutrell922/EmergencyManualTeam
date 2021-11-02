@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ProtocolPage extends StatefulWidget {
   final String name;
@@ -166,7 +167,9 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(3)),
+                  child: Html(
+                    data: findProtocolWithCertification(3),
+                  ),
                 ),
               ),
               Scaffold(
@@ -181,7 +184,7 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(0)),
+                  child: Html(data: findProtocolWithCertification(0)),
                 ),
               ),
               Scaffold(
@@ -196,7 +199,7 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(1)),
+                  child: Html(data: findProtocolWithCertification(1)),
                 ),
               ),
               Scaffold(
@@ -211,7 +214,7 @@ class _ProtocolState extends State<ProtocolPage> {
                 ),
                 body: new SingleChildScrollView(
                   scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(2)),
+                  child: Html(data: findProtocolWithCertification(2)),
                 ),
               ),
               Scaffold(
