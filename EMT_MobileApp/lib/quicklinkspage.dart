@@ -94,20 +94,25 @@ class _QuickLinksState extends State<QuickLinksPage> {
         ));
   }
 
-  // Widget getPhoto(String name) {
-  //   return
-  // }
+  Widget getPhoto(String name) {
+    var thisChart;
+    for (Chart chart in _charts) {
+      if (chart.Name == name) {
+        thisChart = chart;
+      }
+    }
+    return InteractiveViewer(
+      child: Image.memory(thisChart.Photo),
+      maxScale: 5.0,
+    );
+  }
 
   Widget ImageDialog(String chartname) {
     return Dialog(
       child: Container(
         width: 400,
         height: 500,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: ExactAssetImage(
-                    'assets/images/pulselessDeterminationCriteria.png'),
-                fit: BoxFit.cover)),
+        child: getPhoto(chartname),
       ),
     );
   }
