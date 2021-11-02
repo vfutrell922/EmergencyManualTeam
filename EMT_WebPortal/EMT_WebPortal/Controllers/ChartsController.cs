@@ -78,7 +78,7 @@ namespace EMT_WebPortal.Controllers
         public async Task<IActionResult> Create(string Name, IFormFile file, bool IsQuickLink, string Protocol)
         {
             Chart chart = new Chart();
-            if(file.Length > 0)
+            if(file != null && file.Length > 0)
             {
                 using (var memoryStream = new MemoryStream()) 
                 {

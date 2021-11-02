@@ -26,11 +26,11 @@ namespace EMT_WebPortal.Areas.Identity.Data
 
             roleManager.CreateAsync(new IdentityRole("CareGiver")).Wait();
             roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
-            roleManager.CreateAsync(new IdentityRole("WebMaster")).Wait();
+            roleManager.CreateAsync(new IdentityRole("Director")).Wait();
 
             var user1 = new EMT_WebPortalUser { UserName = "caregiver", Email = "caregiver@us.com", EmailConfirmed = true, };
             var user2 = new EMT_WebPortalUser { UserName = "admin", Email = "admin@us.com", EmailConfirmed = true};
-            var user3 = new EMT_WebPortalUser { UserName = "webmaster", Email = "webmaster@us.com", EmailConfirmed = true};
+            var user3 = new EMT_WebPortalUser { UserName = "director", Email = "director@us.com", EmailConfirmed = true};
 
             string password = "Abcdefgh!2";
             userManager.CreateAsync(user1, password).Wait();
@@ -39,7 +39,7 @@ namespace EMT_WebPortal.Areas.Identity.Data
 
             userManager.AddToRoleAsync(user1, "CareGiver").Wait();
             userManager.AddToRoleAsync(user2, "Administrator").Wait();
-            userManager.AddToRoleAsync(user3, "WebMaster").Wait();
+            userManager.AddToRoleAsync(user3, "Director").Wait();
         }
     }
 }

@@ -23,7 +23,7 @@
                 string user = u.UserName;
                 <tr>
                     <td>@user</td>
-                    <td>@roles.ElementAt(0)</td>
+                    <td class="roles-display" id="role-display @Html.Raw(user)">@roles.ElementAt(0)</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton @Html.Raw(user)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,7 +32,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button class="dropdown-item btn btn-light" onclick="selectCaregiver()" data-arg1="@user">Caregiver</button>
                                 <button class="dropdown-item btn btn-light" onclick="selectAdministrator()" data-arg1="@user">Administrator</button>
-                                <button class="dropdown-item btn btn-light" onclick="selectWebMaster()" data-arg1="@user">WebMaster</button>
+                                <button class="dropdown-item btn btn-light" onclick="selectDirector()" data-arg1="@user">Director</button>
                             </div>
                             <button class="btn btn-primary" type="button" id="submitChangeButton" onclick="submitChange()" data-arg1="@user">
                                 Submit Change
