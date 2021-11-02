@@ -9,20 +9,9 @@ import 'db/handbookdb_handler.dart';
 
 class GridLayout {
   final String title;
-  final IconData icon;
 
-  GridLayout({required this.title, required this.icon});
+  GridLayout({required this.title});
 }
-
-// List<GridLayout> iconOptions = [
-//   GridLayout(
-//       title: 'Pulseless Determination Criteria', icon: IconApp.heartbeat),
-//   GridLayout(title: 'Air Medical Prehospital Triage', icon: IconApp.ambulance),
-//   GridLayout(title: 'Prehospital Agitation', icon: IconApp.h_sigh),
-//   GridLayout(title: 'Post-ROSC Care Checklist', icon: IconApp.medkit),
-//   GridLayout(title: 'STEMI Bypass Protocol', icon: IconApp.stethoscope),
-//   GridLayout(title: 'Field Management of Hypoglycemia', icon: IconApp.user_md),
-// ];
 
 class QuickLinksPage extends StatefulWidget {
   @override
@@ -49,7 +38,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
 
               // if we got our data
             } else if (snapshot.hasData) {
-              return QuickLinks();
+              return QuickLinks(context);
             }
           }
           return Center(
@@ -58,24 +47,14 @@ class _QuickLinksState extends State<QuickLinksPage> {
         });
   }
 
-  Widget ImageDialog() {
-    return Dialog(
-      child: Container(
-        width: 400,
-        height: 500,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: ExactAssetImage(
-                    'assets/images/pulselessDeterminationCriteria.png'),
-                fit: BoxFit.cover)),
-      ),
-    );
-  }
-
   Future<List<Chart>> getCharts() async {
     List<Chart> charts = await HandbookDatabase.instance.getQuickLinkCharts();
     _charts = charts;
     return charts;
+  }
+
+  List<GridLayout> iconOptions() {
+    return _charts.map((chart) => GridLayout(title: chart.Name)).toList();
   }
 
   Widget QuickLinks(BuildContext context) {
@@ -88,7 +67,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
           childAspectRatio: (2 / 2),
         ),
         childrenDelegate: SliverChildListDelegate(
-          iconOptions
+          iconOptions()
               .map((data) => GestureDetector(
                   onTap: () {},
                   child: GestureDetector(
@@ -98,7 +77,6 @@ class _QuickLinksState extends State<QuickLinksPage> {
                         child: Center(
                           child: Column(
                             children: [
-                              Icon(data.icon, size: 45),
                               Text(data.title,
                                   style: TextStyle(
                                       fontSize: 22, color: Colors.black),
@@ -108,10 +86,29 @@ class _QuickLinksState extends State<QuickLinksPage> {
                         )),
                     onTap: () {
                       showDialog(
-                          context: context, builder: (_) => ImageDialog());
+                          context: context,
+                          builder: (_) => ImageDialog(data.title));
                     },
                   )))
               .toList(),
         ));
+  }
+
+  // Widget getPhoto(String name) {
+  //   return
+  // }
+
+  Widget ImageDialog(String chartname) {
+    return Dialog(
+      child: Container(
+        width: 400,
+        height: 500,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: ExactAssetImage(
+                    'assets/images/pulselessDeterminationCriteria.png'),
+                fit: BoxFit.cover)),
+      ),
+    );
   }
 }

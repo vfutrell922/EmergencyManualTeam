@@ -191,7 +191,7 @@ class HandbookDatabase {
     return charts;
   }
 
-  Future<List<Chart>> getQuickLinkCharts(String ProtocolName) async {
+  Future<List<Chart>> getQuickLinkCharts() async {
     final db = await instance.database;
     String whereString = '${ChartFields.IsQuickLink} =?';
     List<dynamic> whereArguments = [1];
