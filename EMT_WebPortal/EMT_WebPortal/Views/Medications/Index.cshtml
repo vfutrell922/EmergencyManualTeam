@@ -70,11 +70,11 @@
                 @Html.DisplayFor(modelItem => item.ChildDosage)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info", @style = "width:120px;" })
                 @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
                 {
-                    @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
-                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
+                    @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary", @style = "width:120px;" })
+                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger", @style = "width:120px;" })
                 }
             </td>
         </tr>

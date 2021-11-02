@@ -36,8 +36,7 @@ class Protocol {
   final String? Guideline;
   final int OLMCRequired;
   final int? HasAssociatedMedication;
-  //TODO: These types are not correct, filler
-  final List<String>? Medications;
+  final String? Medications;
   final String? Chart;
   final String? OtherInformation;
   final String? TreatmentPlan;
@@ -62,9 +61,9 @@ class Protocol {
     int? Certification,
     int? PatientType,
     int? HasAssociatedMedication,
+    String? Medications,
     String? Guideline,
     int? OLMCRequired,
-    List<String>? Medications,
     String? Chart,
     String? OtherInformation,
     String? TreatmentPlan,
@@ -83,7 +82,9 @@ class Protocol {
         TreatmentPlan: TreatmentPlan ?? this.TreatmentPlan,
       );
 
-  static Protocol fromWebJson(Map<String, Object?> json) => Protocol(
+  static Protocol fromWebJson(
+          Map<String, Object?> json, String? medicationsList) =>
+      Protocol(
         id: json[ProtocolFields.id] as int?,
         Name: json[ProtocolFields.Name] as String,
         Certification: json[ProtocolFields.Certification] as int,
@@ -96,7 +97,7 @@ class Protocol {
                 : (json[ProtocolFields.HasAssociatedMedication] as bool)
                     ? 1
                     : 0),
-        Medications: json[ProtocolFields.Medications] as List<String>?,
+        Medications: medicationsList,
         OtherInformation: json[ProtocolFields.OtherInformation] as String?,
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,
       );
@@ -110,7 +111,7 @@ class Protocol {
         OLMCRequired: (json[ProtocolFields.OLMCRequired] as int),
         HasAssociatedMedication:
             (json[ProtocolFields.HasAssociatedMedication] as int?),
-        Medications: json[ProtocolFields.Medications] as List<String>?,
+        Medications: (json[ProtocolFields.Medications] as String?),
         OtherInformation: json[ProtocolFields.OtherInformation] as String?,
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,
       );
