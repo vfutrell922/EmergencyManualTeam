@@ -60,9 +60,12 @@ class _OldLogsPageState extends State<OldLogsPage> {
       //itemCount: logs == null ? 0 : logs.length,
       itemCount: logs.length,
       itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
+        return new Card(
+            child: ListTile(
           title: Text('Run ID: ${logs[index].runNum}'),
           subtitle: Text('Run Time: ${logs[index].startTime}'),
+          selectedTileColor: Colors.grey[300],
+          trailing: Icon(Icons.arrow_forward_ios_rounded),
           //TODO sierra Trailing icon here, check yaml file
           onTap: () {
             Navigator.of(context).push(
@@ -87,7 +90,7 @@ class _OldLogsPageState extends State<OldLogsPage> {
             //           new LogDetailsPage(curLog: logs[index])),
             // );
           },
-        );
+        ));
       },
     );
   }
