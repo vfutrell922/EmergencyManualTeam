@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'globals.dart' as globals;
+
+import 'model/log.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ProtocolPage extends StatefulWidget {
