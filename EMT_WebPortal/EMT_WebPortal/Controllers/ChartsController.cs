@@ -66,6 +66,7 @@ namespace EMT_WebPortal.Controllers
             {
                 names.Add(p.Name);
             }
+            names.Add("None");
             SelectList sl = new SelectList(names);
             ViewBag.ProtocolNames = sl;
         }

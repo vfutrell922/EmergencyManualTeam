@@ -12,7 +12,6 @@ namespace EMT_WebPortal.Models
         public int ID { get; set; }
         [Required]
         public string Name { get; set; }
-
         [NotEmptyArray(ErrorMessage = "Please select a photo to upload")]
         public byte[] Photo { get; set; }
         [Required]
