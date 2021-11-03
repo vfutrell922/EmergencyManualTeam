@@ -125,7 +125,7 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Medications/Delete/5
         [Authorize(Roles = "Administrator,WebMaster")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -139,7 +139,7 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            return View(medication);
+            return await DeleteConfirmed(id);
         }
 
         // POST: Medications/Delete/5

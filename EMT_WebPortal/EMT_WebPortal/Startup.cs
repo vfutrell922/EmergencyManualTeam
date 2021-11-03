@@ -18,6 +18,9 @@ using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 using EMT_WebPortal.Areas.Identity.Data;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WebPWrecover.Services;
+using EMT_WebPortal.Areas.Identity.Services;
 
 namespace EMT_WebPortal
 {
@@ -42,6 +45,7 @@ namespace EMT_WebPortal
             if (currentEnvironment.IsDevelopment())
             {
                 services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
+
             }
             //If in the production environment, get the DB connection string from AWS Secrets manager.
             else 
@@ -49,6 +53,8 @@ namespace EMT_WebPortal
                 services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
             }
             services.AddMvc();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +81,7 @@ namespace EMT_WebPortal
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

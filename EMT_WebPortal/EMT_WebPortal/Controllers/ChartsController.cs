@@ -10,6 +10,7 @@ using EMT_WebPortal.Models;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EMT_WebPortal.Controllers
 {
@@ -23,12 +24,14 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Charts.ToListAsync());
         }
 
         // GET: Charts/Details/5
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Create
+        [Authorize(Roles = "CareGiver,Administrator,Director")]
         public IActionResult Create()
         {
             PopulateProtocolsList();
@@ -74,7 +78,7 @@ namespace EMT_WebPortal.Controllers
         public async Task<IActionResult> Create(string Name, IFormFile file, bool IsQuickLink, string Protocol)
         {
             Chart chart = new Chart();
-            if(file.Length > 0)
+            if(file != null && file.Length > 0)
             {
                 using (var memoryStream = new MemoryStream()) 
                 {
@@ -145,12 +149,8 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET: Charts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var chart = await _context.Charts
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -159,7 +159,7 @@ namespace EMT_WebPortal.Controllers
                 return NotFound();
             }
 
-            return View(chart);
+            return await DeleteConfirmed(id);
         }
 
         // POST: Charts/Delete/5
