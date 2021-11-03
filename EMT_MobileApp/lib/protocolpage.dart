@@ -73,21 +73,21 @@ class _ProtocolState extends State<ProtocolPage> {
     _protocols.forEach((element) {
       if (element.Certification == certification) {
         if (element.PatientType == 0) {
-          protocol += "Adult\n\n";
+          protocol += "<p><b>Adult</b></p>";
         } else if (element.PatientType == 1) {
-          protocol += "Pediatric\n\n";
+          protocol += "<p><b>Pediatric</b></p>";
         } else if (element.PatientType == 2) {
-          protocol += "All Ages\n\n";
+          protocol += "<p><b>All Ages</b></p>";
         }
         if (element.TreatmentPlan != Null) {
-          protocol += ("Treatment Plan\n\n" +
+          protocol += ("<p><b>Treatment Plan</b></p>" +
               element.TreatmentPlan.toString() +
-              "\n\n");
+              "<p></p>");
         }
         if (element.OtherInformation != Null) {
-          protocol += ("Other Information\n\n" +
+          protocol += ("<p><b>Other Information</b></p>" +
               element.OtherInformation.toString() +
-              "\n\n");
+              "<p></p>");
         }
       }
     });
@@ -156,67 +156,71 @@ class _ProtocolState extends State<ProtocolPage> {
           body: TabBarView(
             children: <Widget>[
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.yellow,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "General",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.yellow,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "General",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: Html(
-                    data: findProtocolWithCertification(3),
-                  ),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(
+                        data: findProtocolWithCertification(3),
+                      ),
+                    ),
+                  )),
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "EMT",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "EMT",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: Html(data: findProtocolWithCertification(0)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(data: findProtocolWithCertification(0)),
+                    ),
+                  )),
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "AEMT",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "AEMT",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: Html(data: findProtocolWithCertification(1)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(data: findProtocolWithCertification(1)),
+                    ),
+                  )),
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "Paramedic",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "Paramedic",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: Html(data: findProtocolWithCertification(2)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(data: findProtocolWithCertification(2)),
+                    ),
+                  )),
               Scaffold(
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
