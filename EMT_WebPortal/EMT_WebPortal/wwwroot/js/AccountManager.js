@@ -58,6 +58,7 @@ async function submitChange() {
     }
 }
 
+//Returns the number of users whose role is currently(before the role change) Administrator
 function isLastAdmin() {
     let adminCount = 0;
     let allUsersRoles = $(".roles-display");
