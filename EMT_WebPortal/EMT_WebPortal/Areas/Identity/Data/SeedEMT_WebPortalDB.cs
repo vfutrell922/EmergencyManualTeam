@@ -28,9 +28,9 @@ namespace EMT_WebPortal.Areas.Identity.Data
             roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
             roleManager.CreateAsync(new IdentityRole("Director")).Wait();
 
-            var user1 = new EMT_WebPortalUser { UserName = "caregiver", Email = "caregiver@us.com", EmailConfirmed = true, };
-            var user2 = new EMT_WebPortalUser { UserName = "admin", Email = "admin@us.com", EmailConfirmed = true};
-            var user3 = new EMT_WebPortalUser { UserName = "director", Email = "director@us.com", EmailConfirmed = true};
+            var user1 = new EMT_WebPortalUser { UserName = "caregiver", Email = "caregiver@mwaprotocol.com.com", EmailConfirmed = true, };
+            var user2 = new EMT_WebPortalUser { UserName = "admin", Email = "admin@mwaprotocol.com", EmailConfirmed = true};
+            var user3 = new EMT_WebPortalUser { UserName = "director", Email = "director@mwaprotocol.com", EmailConfirmed = true};
 
             string password = "Abcdefgh!2";
             userManager.CreateAsync(user1, password).Wait();
