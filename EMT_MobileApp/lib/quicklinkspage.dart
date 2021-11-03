@@ -3,6 +3,7 @@
 // for their Senior Project 2021 at the University of Utah.
 import 'package:emergencymanual/icons.dart';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'model/chart.dart';
 import 'db/handbookdb_handler.dart';
@@ -22,29 +23,35 @@ class _QuickLinksState extends State<QuickLinksPage> {
   late List<Chart> _charts;
 
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getCharts(),
-        builder: (ctx, snapshot) {
-          // Checking if future is resolved
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If we got an error
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  '${snapshot.error} occured',
-                  style: TextStyle(fontSize: 18),
-                ),
-              );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Quick Links'),
+          centerTitle: true,
+          backgroundColor: Color(0xFFFFFF),
+        ),
+        body: FutureBuilder(
+            future: getCharts(),
+            builder: (ctx, snapshot) {
+              // Checking if future is resolved
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If we got an error
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      '${snapshot.error} occured',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  );
 
-              // if we got our data
-            } else if (snapshot.hasData) {
-              return QuickLinks(context);
-            }
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        });
+                  // if we got our data
+                } else if (snapshot.hasData) {
+                  return QuickLinks(context);
+                }
+              }
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }));
   }
 
   Future<List<Chart>> getCharts() async {
@@ -53,9 +60,9 @@ class _QuickLinksState extends State<QuickLinksPage> {
     return charts;
   }
 
-  List<GridLayout> iconOptions() {
-    return _charts.map((chart) => GridLayout(title: chart.Name)).toList();
-  }
+  // List<GridLayout> iconOptions() {
+  //   return _charts.map((chart) => GridLayout(title: chart.Name)).toList();
+  // }
 
   Widget QuickLinks(BuildContext context) {
     return new GridView.custom(
@@ -67,8 +74,8 @@ class _QuickLinksState extends State<QuickLinksPage> {
           childAspectRatio: (2 / 2),
         ),
         childrenDelegate: SliverChildListDelegate(
-          iconOptions()
-              .map((data) => GestureDetector(
+          _charts
+              .map((chart) => GestureDetector(
                   onTap: () {},
                   child: GestureDetector(
                     child: Container(
@@ -77,7 +84,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
                         child: Center(
                           child: Column(
                             children: [
-                              Text(data.title,
+                              Text(chart.Name,
                                   style: TextStyle(
                                       fontSize: 22, color: Colors.black),
                                   textAlign: TextAlign.center)
@@ -86,34 +93,21 @@ class _QuickLinksState extends State<QuickLinksPage> {
                         )),
                     onTap: () {
                       showDialog(
-                          context: context,
-                          builder: (_) => ImageDialog(data.title));
+                          context: context, builder: (_) => ImageDialog(chart));
                     },
                   )))
               .toList(),
         ));
   }
 
-  Widget getPhoto(String name) {
-    var thisChart;
-    for (Chart chart in _charts) {
-      if (chart.Name == name) {
-        thisChart = chart;
-      }
-    }
-    return InteractiveViewer(
-      child: Image.memory(thisChart.Photo),
-      maxScale: 5.0,
-    );
-  }
-
-  Widget ImageDialog(String chartname) {
+  Widget ImageDialog(Chart chart) {
+    debugPrint("getting the image dialog");
     return Dialog(
-      child: Container(
-        width: 400,
-        height: 500,
-        child: getPhoto(chartname),
+        child: Center(
+      child: InteractiveViewer(
+        child: Image.memory(chart.Photo),
+        maxScale: 5.0,
       ),
-    );
+    ));
   }
 }
