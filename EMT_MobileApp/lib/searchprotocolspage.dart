@@ -3,6 +3,7 @@
 // for their Senior Project 2021 at the University of Utah.
 import 'package:flutter/material.dart';
 import 'protocolpage.dart';
+import 'logbar.dart';
 
 import 'db/handbookdb_handler.dart';
 
@@ -53,6 +54,7 @@ class _SearchPageState extends State<SearchProtocolsPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: LogBar(),
       appBar: AppBar(
         title: Text('Protocol Glossary'),
         centerTitle: true,

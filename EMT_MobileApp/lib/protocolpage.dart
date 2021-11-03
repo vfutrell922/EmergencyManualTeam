@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
-import 'globals.dart' as globals;
-
-import 'model/log.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'logbar.dart';
 
 class ProtocolPage extends StatefulWidget {
   final String name;
@@ -116,6 +114,7 @@ class _ProtocolState extends State<ProtocolPage> {
         initialIndex: 1,
         length: 5,
         child: Scaffold(
+          bottomNavigationBar: LogBar(),
           appBar: AppBar(
               backgroundColor: Color(0xFFFFFF),
               title: Text(widget.name),
