@@ -12,6 +12,7 @@ import 'newlog.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:developer';
 import 'globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
@@ -25,6 +26,41 @@ class LogBar extends StatefulWidget {
 }
 
 int _selectedIndex = 0;
+
+class medLogFields {
+  static final List<String> values = [
+    type,
+    dosage,
+    route,
+    timeStamp,
+  ];
+  static final String type = 'type';
+  static final String dosage = 'dosage';
+  static final String route = 'route';
+  static final String timeStamp = 'timeStamp';
+}
+
+class medLog {
+  final String? type;
+  final String? dosage;
+  final String? route;
+  final String? timeStamp;
+
+  const medLog({this.type, this.dosage, this.route, this.timeStamp});
+
+  Map<String, dynamic> toJson(String time) => {
+        medLogFields.type: 'Medication',
+        medLogFields.dosage: '50mg',
+        medLogFields.route: 'LT',
+        medLogFields.timeStamp: 'rn',
+      };
+  static medLog fromWebJson(Map<String, Object?> json) => medLog(
+        type: json[medLogFields.type] as String?,
+        dosage: json[medLogFields.dosage] as String,
+        route: json[medLogFields.route] as String,
+        timeStamp: json[medLogFields.timeStamp] as String,
+      );
+}
 
 class _HomeState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -57,18 +93,15 @@ class _HomeState extends State<HomePage> {
             ListTile(
               title: const Text('Medication 1'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
+                addMedication(1);
+                debugPrint("numer1");
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('Medication 2'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
+                addMedication(2);
                 Navigator.pop(context);
               },
             ),
@@ -84,6 +117,16 @@ class _HomeState extends State<HomePage> {
         backgroundColor: Colors.red,
       ),
     );
+  }
+
+  Future addMedication(int medicationID) async {
+    String medication = '';
+    DateTime startTime = DateTime.now();
+    String formattedTime = DateFormat.Hms().format(startTime);
+    medLog newMedication = new medLog(
+        type: "Tylonel", dosage: "40mg", route: "IO", timeStamp: formattedTime);
+    dynamic jsonString = newMedication.toJson(formattedTime);
+    await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
   }
 }
 
@@ -166,17 +209,17 @@ class _LogState extends State<LogBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle_outline),
             label: 'Start',
-            backgroundColor: Colors.lightGreen,
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.download_done_outlined),
             label: 'Stop',
-            backgroundColor: Colors.red[400],
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.preview_outlined),
             label: 'Review Logs',
-            backgroundColor: Colors.blue[400],
+            backgroundColor: Colors.red,
           ),
         ],
         currentIndex: _selectedIndex,

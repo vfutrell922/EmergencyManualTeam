@@ -59,6 +59,7 @@ class _OldLogsPageState extends State<OldLogsPage> {
           subtitle: Text('Run Time: ${logs[index].startTime}'),
           //TODO sierra Trailing icon here, check yaml file
           onTap: () {
+            debugPrint('Add data: ${logs[index].additionalData}');
             Navigator.push(
               context,
               new MaterialPageRoute(

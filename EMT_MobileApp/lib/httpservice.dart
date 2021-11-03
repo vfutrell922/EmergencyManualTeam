@@ -32,12 +32,12 @@ class HttpService {
         break;
       }
     }
-    List l = json.decode(body).toList();
+    List k = json.decode(body).toList();
 
-    debugPrint("Iterable: " + l.toString());
-    List<Protocol> protocols = List<Protocol>.from(l.map((model) =>
+    debugPrint("Iterable: " + k.toString());
+    List<Protocol> protocols = List<Protocol>.from(k.map((model) =>
         Protocol.fromWebJson(
-            model, findMedications(medicationData[l.indexOf(model)]))));
+            model, findMedications(medicationData[k.indexOf(model)]))));
     return protocols;
   }
 

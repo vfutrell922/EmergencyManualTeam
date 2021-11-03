@@ -1,11 +1,28 @@
 import 'dart:async';
+import 'package:emergencymanual/homepage.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:emergencymanual/model/log.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:convert' show JSON;
+import 'package:emergencymanual/globals.dart' as globals;
+import 'dart:convert';
+
+class additionalDataLogFields {
+  static final List<String> values = [
+    Medications,
+  ];
+  static final String Medications = 'Medications';
+}
+
+class additionalDataLog {
+  final List<String> Medications;
+
+  const additionalDataLog({
+    required this.Medications,
+  });
+}
 
 class LogDatabase {
   static final LogDatabase instance = LogDatabase._init();
@@ -88,13 +105,41 @@ class LogDatabase {
   // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
   Future<void> additionalDataUpdate(String data) async {
     //TODO this stuff will eventually be global instead
-    int hardId = 1;
-    Log curLog = await LogDatabase.instance.read(hardId);
-    print("this is the current log");
-    print(curLog);
+    List<String> dataList = [];
+    if (globals.currentLogID != -1) {
+      Log curLog = await LogDatabase.instance.read(globals.currentLogID);
+      if (curLog.additionalData != null) {
+        //Retrieves the current value from the log
+        List<dynamic> jsonMeds =
+            jsonDecode(curLog.additionalData!)["Medications"];
+        //Creates new addtionDataLog using the previous
+        additionalDataLog currentData =
+            new additionalDataLog(Medications: jsonMeds.cast<String>());
 
-    Log updatedLog = curLog.copy(additionalData: data);
-    await LogDatabase.instance.updateLog(curLog);
+        //Adds new data JSON to the medications
+        List<String> newMeds = currentData.Medications;
+        newMeds.add(data);
+        additionalDataLog newData = new additionalDataLog(Medications: newMeds);
+
+        //Sends new logs to database
+        Log updatedLog =
+            curLog.copy(additionalData: jsonEncode(newData).toString());
+        await LogDatabase.instance.updateLog(updatedLog);
+      } else {
+        //Initializes additionalDataLog
+        additionalDataLog newDataLog =
+            new additionalDataLog(Medications: [data]);
+
+        //Creates JSON
+        String newDataJson = jsonEncode(newDataLog).toString();
+
+        //Sends to database
+        Log updatedLog = curLog.copy(additionalData: newDataJson);
+        await LogDatabase.instance.updateLog(updatedLog);
+      }
+      debugPrint("Addtional Data: ${curLog.additionalData}");
+      print("Addtional Data: ${curLog.additionalData}");
+    }
   }
 
   // Updates the log in the database

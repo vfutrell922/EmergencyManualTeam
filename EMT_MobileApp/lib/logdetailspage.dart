@@ -57,13 +57,18 @@ class _LogDetailsState extends State<LogDetailsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                new Text("Date Performed: March 10, 2021")
+                new Text("Date Performed: March 10, 2021"),
               ], //TODO change this?
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               // TODO here is where we will put the other info too
               children: [new Text("Runtime: ${curLog.startTime}")],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              // TODO here is where we will put the other info too
+              children: [new Text("Addtional Data: ${curLog.additionalData}")],
             ),
           ],
         ),

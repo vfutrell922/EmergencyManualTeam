@@ -14,7 +14,7 @@ class HandbookDatabase {
 
   static Database? _database;
 
-  final String dbfilePath = 'handbook_db.db';
+  final String dbfilePath = 'handbookDBer.db';
 
   HandbookDatabase._init();
 
@@ -82,6 +82,7 @@ class HandbookDatabase {
     final AdverseEffectsType = 'TEXT NOT NULL';
     final AdultDosageType = 'TEXT';
     final ChildDosageType = 'TEXT';
+    final MaxType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -116,6 +117,7 @@ class HandbookDatabase {
       ${MedicationFields.AdverseEffects} $AdverseEffectsType,
       ${MedicationFields.AdultDosage} $AdultDosageType,
       ${MedicationFields.ChildDosage} $ChildDosageType,
+      ${MedicationFields.Max} $MaxType
     );''');
   }
 
