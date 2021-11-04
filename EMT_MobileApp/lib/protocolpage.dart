@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'logbar.dart';
 
 class ProtocolPage extends StatefulWidget {
   final String name;
@@ -20,65 +22,6 @@ class ProtocolPage extends StatefulWidget {
 class _ProtocolState extends State<ProtocolPage> {
   late List<Protocol> _protocols;
   late List<Chart> _charts;
-
-  Future<List<Protocol>> SetUp() async {
-    debugPrint("Setting up protocol page");
-    await findCharts();
-    return await findProtocols();
-  }
-
-  Future<List<Protocol>> findProtocols() async {
-    List<Protocol> protocols =
-        await HandbookDatabase.instance.getProtocolsWithName(widget.name);
-    _protocols = protocols;
-    return protocols;
-  }
-
-  Future<List<Chart>> findCharts() async {
-    List<Chart> charts =
-        await HandbookDatabase.instance.getChartsForProtocol(widget.name);
-    _charts = charts;
-    return charts;
-  }
-
-  String findProtocolWithCertification(int certification) {
-    String protocol = "";
-    _protocols.forEach((element) {
-      if (element.Certification == certification) {
-        if (element.PatientType == 0) {
-          protocol += "Adult\n\n";
-        } else if (element.PatientType == 1) {
-          protocol += "Pediatric\n\n";
-        } else if (element.PatientType == 2) {
-          protocol += "All Ages\n\n";
-        }
-        if (element.TreatmentPlan != Null) {
-          protocol += ("Treatment Plan\n\n" +
-              element.TreatmentPlan.toString() +
-              "\n\n");
-        }
-        if (element.OtherInformation != Null) {
-          protocol += ("Other Information\n\n" +
-              element.OtherInformation.toString() +
-              "\n\n");
-        }
-      }
-    });
-    return protocol;
-  }
-
-  List displayAllCharts() {
-    List<Widget> ret = [];
-    for (Chart chart in _charts) {
-      ret.add(
-        Text(chart.Name),
-      );
-      ret.add(
-        Card(elevation: 10, child: Image.memory(chart.Photo)),
-      );
-    }
-    return ret;
-  }
 
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -106,11 +49,72 @@ class _ProtocolState extends State<ProtocolPage> {
         });
   }
 
+  Future<List<Protocol>> SetUp() async {
+    debugPrint("Setting up protocol page");
+    await findCharts();
+    return await findProtocols();
+  }
+
+  Future<List<Protocol>> findProtocols() async {
+    List<Protocol> protocols =
+        await HandbookDatabase.instance.getProtocolsWithName(widget.name);
+    _protocols = protocols;
+    return protocols;
+  }
+
+  Future<List<Chart>> findCharts() async {
+    List<Chart> charts =
+        await HandbookDatabase.instance.getChartsForProtocol(widget.name);
+    _charts = charts;
+    return charts;
+  }
+
+  String findProtocolWithCertification(int certification) {
+    String protocol = "";
+    _protocols.forEach((element) {
+      if (element.Certification == certification) {
+        if (element.PatientType == 0) {
+          protocol += "<p><b>Adult</b></p>";
+        } else if (element.PatientType == 1) {
+          protocol += "<p><b>Pediatric</b></p>";
+        } else if (element.PatientType == 2) {
+          protocol += "<p><b>All Ages</b></p>";
+        }
+        if (element.TreatmentPlan != Null) {
+          protocol += ("<p><b>Treatment Plan</b></p>" +
+              element.TreatmentPlan.toString() +
+              "<p></p>");
+        }
+        if (element.OtherInformation != Null) {
+          protocol += ("<p><b>Other Information</b></p>" +
+              element.OtherInformation.toString() +
+              "<p></p>");
+        }
+      }
+    });
+    return protocol;
+  }
+
+  List displayAllCharts() {
+    List<Widget> ret = [];
+    for (Chart chart in _charts) {
+      ret.add(
+        Text(chart.Name),
+      );
+      ret.add(InteractiveViewer(
+        child: Image.memory(chart.Photo),
+        maxScale: 5.0,
+      ));
+    }
+    return ret;
+  }
+
   Widget specificPage() {
     return DefaultTabController(
         initialIndex: 1,
         length: 5,
         child: Scaffold(
+          bottomNavigationBar: LogBar(),
           appBar: AppBar(
               backgroundColor: Color(0xFFFFFF),
               title: Text(widget.name),
@@ -154,65 +158,71 @@ class _ProtocolState extends State<ProtocolPage> {
           body: TabBarView(
             children: <Widget>[
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.yellow,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "General",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.yellow,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "General",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(3)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(
+                        data: findProtocolWithCertification(3),
+                      ),
+                    ),
+                  )),
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "EMT",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "EMT",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(0)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(data: findProtocolWithCertification(0)),
+                    ),
+                  )),
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "AEMT",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "AEMT",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(1)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(data: findProtocolWithCertification(1)),
+                    ),
+                  )),
               Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "Paramedic",
-                    style: TextStyle(color: Colors.black),
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.black,
+                    title: Text(
+                      "Paramedic",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: new Text(findProtocolWithCertification(2)),
-                ),
-              ),
+                  body: new Container(
+                    child: new SingleChildScrollView(
+                      scrollDirection: Axis.vertical, //.horizontal
+                      child: Html(data: findProtocolWithCertification(2)),
+                    ),
+                  )),
               Scaffold(
                 appBar: AppBar(
                   automaticallyImplyLeading: false,

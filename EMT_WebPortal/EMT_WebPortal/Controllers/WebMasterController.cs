@@ -12,16 +12,6 @@ namespace EMT_WebPortal.Controllers
 {
     public class WebMasterController : Controller
     {
-        [Authorize(Roles = "Administrator")]
-        public IActionResult Main() 
-        {
-            return View();
-        }
 
-        [Authorize(Roles = "Administrator")]
-        public IActionResult AccountManager() 
-        {
-            return View();
-        }
     }
 }

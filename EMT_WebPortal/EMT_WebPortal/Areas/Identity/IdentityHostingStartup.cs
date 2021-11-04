@@ -20,7 +20,16 @@ namespace EMT_WebPortal.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("EMT_WebPortalUserContextConnection")));
 
-                services.AddDefaultIdentity<EMT_WebPortalUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<EMT_WebPortalUser>(options => 
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequiredLength = 8;
+                    })
                 .AddRoles<IdentityRole>().AddEntityFrameworkStores<EMT_WebPortalUserContext>();
             });
         }
