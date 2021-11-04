@@ -134,7 +134,8 @@ class _ProtocolState extends State<ProtocolPage> {
     await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
   }
 
-  List<Medication> findMedicationsForCertification(int certification) {
+  Future<List<Medication>> findMedicationsForCertification(
+      int certification) async {
     List<String> medIDs = [];
     _protocols.forEach((element) {
       if (element.Certification == certification &&
@@ -144,11 +145,13 @@ class _ProtocolState extends State<ProtocolPage> {
         List<String> t = element.Medications.toString()
             .replaceAll(new RegExp(r'[{}]'), '')
             .split(",");
+        t.removeWhere((element) => element == '');
+        String tester = t.toString();
         debugPrint("Protocol has medications: " +
             t.toString() +
             " for certification: " +
             certification.toString());
-        //TODO: Bug where its not taking out the commas on the split
+        medIDs = t;
       }
     });
 
@@ -156,48 +159,81 @@ class _ProtocolState extends State<ProtocolPage> {
 
     List<Medication> medications = [];
 
-    // _medications.forEach((element) {
-    //   if(element.id == )
-    // })
+    _medications.forEach((element) async {
+      if (medIDs.contains(element.ID.toString())) {
+        Medication validMedication =
+            await HandbookDatabase.instance.readMedicationServerID(element.ID);
+        medications.add(validMedication);
+      }
+    });
 
     return medications;
   }
 
   Widget MedDrawer(int certification) {
-    List<Medication> medications =
-        findMedicationsForCertification(certification);
-    return Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text('Medications'),
-          ),
-          ListTile(
-            title: const Text('Medication 1'),
-            onTap: () {
-              addMedication(1);
-              debugPrint("numer1");
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Medication 2'),
-            onTap: () {
-              addMedication(2);
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
+    return FutureBuilder(
+        future: findMedicationsForCertification(certification),
+        builder: (ctx, snapshot) {
+          // Checking if future is resolved
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If we got an error
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              List<Medication> medications = snapshot.data as List<Medication>;
+              return Drawer(
+                  // Add a ListView to the drawer. This ensures the user can scroll
+                  // through the options in the drawer if there isn't enough vertical
+                  // space to fit everything.
+                  child: ListView.builder(
+                      itemCount: medications.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return new ListTile(
+                          title: Text('${medications[index].Name}'),
+                          onTap: () {},
+                        );
+                      })
+                  // ListView(
+                  //   // Important: Remove any padding from the ListView.
+                  //   padding: EdgeInsets.zero,
+                  //   children: [
+                  //     const DrawerHeader(
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.blue,
+                  //       ),
+                  //       child: Text('Medications'),
+                  //     ),
+                  //     ListTile(
+                  //       title: const Text('Medication 1'),
+                  //       onTap: () {
+                  //         addMedication(1);
+                  //         debugPrint("numer1");
+                  //         Navigator.pop(context);
+                  //       },
+                  //     ),
+                  //     ListTile(
+                  //       title: const Text('Medication 2'),
+                  //       onTap: () {
+                  //         addMedication(2);
+                  //         Navigator.pop(context);
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
+                  );
+            }
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 
   Widget specificPage() {
