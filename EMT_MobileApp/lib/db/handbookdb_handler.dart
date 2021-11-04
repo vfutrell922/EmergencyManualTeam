@@ -284,6 +284,28 @@ class HandbookDatabase {
     return protocols;
   }
 
+  Future<List<Medication>> readMedicationsWithIDs(List<int> ids) async {
+    final db = await instance.database;
+    List<Medication> meds = [];
+    ids.forEach((id) async {
+      final maps = await db.query(
+        tableMedications,
+        columns: MedicationFields.values,
+        where: '${MedicationFields.id} = ? ',
+        whereArgs: [id],
+      );
+
+      if (maps.isNotEmpty) {
+        meds.add(Medication.fromJson(maps.first));
+      } else {
+        throw Exception('ID $id not found');
+      }
+    });
+
+    debugPrint("Returning medications with the ids " + ids.toString());
+    return meds;
+  }
+
   Future<int> updateProtocol(Protocol protocol) async {
     final db = await instance.database;
 
