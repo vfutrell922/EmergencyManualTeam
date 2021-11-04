@@ -22,6 +22,14 @@ class additionalDataLog {
   const additionalDataLog({
     required this.Medications,
   });
+
+  Map<String, dynamic> toJson() => {
+        additionalDataLogFields.Medications: Medications,
+      };
+  static additionalDataLog fromJson(Map<String, Object?> json) =>
+      additionalDataLog(
+        Medications: json[additionalDataLogFields.Medications] as List<String>,
+      );
 }
 
 class medLog {
@@ -32,11 +40,11 @@ class medLog {
 
   const medLog({this.type, this.dosage, this.route, this.timeStamp});
 
-  Map<String, dynamic> toJson(String time) => {
-        medLogFields.type: 'Medication',
-        medLogFields.dosage: '50mg',
-        medLogFields.route: 'LT',
-        medLogFields.timeStamp: 'rn',
+  Map<String, dynamic> toJson() => {
+        medLogFields.type: this.type,
+        medLogFields.dosage: this.dosage,
+        medLogFields.route: this.route,
+        medLogFields.timeStamp: timeStamp,
       };
   static medLog fromJson(Map<String, Object?> json) => medLog(
         type: json[medLogFields.type] as String?,

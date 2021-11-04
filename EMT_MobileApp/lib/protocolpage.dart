@@ -3,6 +3,7 @@
 // for their Senior Project 2021 at the University of Utah.
 import 'dart:typed_data';
 
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'db/handbookdb_handler.dart';
@@ -12,7 +13,7 @@ import 'model/medication.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'logbar.dart';
 import 'db/logdb_handler.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'globals.dart' as globals;
 
 class ProtocolPage extends StatefulWidget {
   final String name;
@@ -125,13 +126,15 @@ class _ProtocolState extends State<ProtocolPage> {
     return ret;
   }
 
-  Future addMedication(int medicationID) async {
-    String medication = '';
+  Future addMedication(String name, String dosageInfo, String routeInfo) async {
     DateTime startTime = DateTime.now();
     String formattedTime = DateFormat.Hms().format(startTime);
     medLog newMedication = new medLog(
-        type: "Tylonel", dosage: "40mg", route: "IO", timeStamp: formattedTime);
-    dynamic jsonString = newMedication.toJson(formattedTime);
+        type: name,
+        dosage: dosageInfo,
+        route: routeInfo,
+        timeStamp: formattedTime);
+    dynamic jsonString = newMedication.toJson();
     await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
   }
 
@@ -147,7 +150,6 @@ class _ProtocolState extends State<ProtocolPage> {
             .replaceAll(new RegExp(r'[{}]'), '')
             .split(",");
         t.removeWhere((element) => element == '');
-        String tester = t.toString();
         debugPrint("Protocol has medications: " +
             t.toString() +
             " for certification: " +
@@ -155,8 +157,6 @@ class _ProtocolState extends State<ProtocolPage> {
         medIDs = t;
       }
     });
-
-    //TODO: next step is to check the ids of medications for the ones we're looking for
 
     List<Medication> medications = [];
 
@@ -191,8 +191,7 @@ class _ProtocolState extends State<ProtocolPage> {
             } else if (snapshot.hasData) {
               List<Medication> medications = snapshot.data as List<Medication>;
               String dosage = "";
-              String _myActivity = '';
-              String _myActivityResult = '';
+              String _myRoute = '';
               final _formKey = GlobalKey<FormState>();
               return Drawer(
                   // Add a ListView to the drawer. This ensures the user can scroll
@@ -204,105 +203,131 @@ class _ProtocolState extends State<ProtocolPage> {
                         return new ListTile(
                             title: Text('${medications[index].Name}'),
                             onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                      title: Text('Add Medication'),
-                                      content: Form(
-                                        key: _formKey,
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              TextFormField(
-                                                controller:
-                                                    _textFieldController,
-                                                decoration: InputDecoration(
-                                                    hintText: "Dosage"),
-                                                onSaved: (String? value) {
-                                                  dosage = value!;
-                                                },
-                                                validator: (String? value) {
-                                                  return (value == null ||
-                                                          value.isEmpty)
-                                                      ? 'Please Insert Dosage.'
-                                                      : null;
-                                                },
-                                              ),
-                                              // Container(
-                                              //   padding: EdgeInsets.all(16),
-                                              //   child: DropDownFormField(
-                                              //     titleText: 'My workout',
-                                              //     hintText: 'Please choose one',
-                                              //     value: _myActivity,
-                                              //     onSaved: (value) {
-                                              //       setState(() {
-                                              //         _myActivity = value;
-                                              //       });
-                                              //     },
-                                              //     onChanged: (value) {
-                                              //       setState(() {
-                                              //         _myActivity = value;
-                                              //       });
-                                              //     },
-                                              //     dataSource: [
-                                              //       {
-                                              //         "display": "Running",
-                                              //         "value": "Running",
-                                              //       },
-                                              //       {
-                                              //         "display": "Climbing",
-                                              //         "value": "Climbing",
-                                              //       },
-                                              //       {
-                                              //         "display": "Walking",
-                                              //         "value": "Walking",
-                                              //       },
-                                              //       {
-                                              //         "display": "Swimming",
-                                              //         "value": "Swimming",
-                                              //       },
-                                              //     ],
-                                              //     textField: 'display',
-                                              //     valueField: 'value',
-                                              //   ),
-                                              // ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 16.0),
-                                                child: ElevatedButton(
-                                                    onPressed: () {
-                                                      if (_formKey.currentState!
-                                                          .validate()) {
-                                                        // If the form is valid, display a snackbar. In the real world,
-                                                        // you'd often call a server or save the information in a database.
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          const SnackBar(
-                                                              content: Text(
-                                                                  'Processing Data')),
-                                                        );
-                                                      }
+                              if (globals.currentLogID != -1) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                        title: Text('Add Medication'),
+                                        content: StatefulBuilder(builder:
+                                            (BuildContext context,
+                                                StateSetter setState) {
+                                          return Form(
+                                            key: _formKey,
+                                            child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  TextFormField(
+                                                    controller:
+                                                        _textFieldController,
+                                                    decoration: InputDecoration(
+                                                        hintText: "Dosage"),
+                                                    onSaved: (value) {
+                                                      dosage = value!;
                                                     },
-                                                    child: const Text('Save')),
-                                              )
-                                            ]),
-                                      ));
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     Text("Choice Box"),
-                                  //     DropdownButtonFormField(
-                                  //       items: ["IM", ]
-                                  //     );
-                                  //         })
-                                  //   ],
-                                  // )
-                                },
-                              );
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        dosage = value;
+                                                      });
+                                                    },
+                                                    validator: (String? value) {
+                                                      return (value == null ||
+                                                              value.isEmpty)
+                                                          ? 'Please Insert Dosage.'
+                                                          : null;
+                                                    },
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.all(16),
+                                                    child: DropDownFormField(
+                                                      titleText: 'Route',
+                                                      hintText: 'Insert Route',
+                                                      value: _myRoute,
+                                                      onSaved: (value) {
+                                                        setState(() {
+                                                          _myRoute = value;
+                                                        });
+                                                      },
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          _myRoute = value;
+                                                        });
+                                                      },
+                                                      dataSource: [
+                                                        {
+                                                          "display": "IM",
+                                                          "value": "IM",
+                                                        },
+                                                        {
+                                                          "display": "IV",
+                                                          "value": "IV",
+                                                        },
+                                                        {
+                                                          "display": "IO",
+                                                          "value": "IO",
+                                                        },
+                                                        {
+                                                          "display": "NEB",
+                                                          "value": "NEB",
+                                                        },
+                                                      ],
+                                                      textField: 'display',
+                                                      valueField: 'value',
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 16.0),
+                                                    child: ElevatedButton(
+                                                        onPressed: () {
+                                                          if (_formKey
+                                                              .currentState!
+                                                              .validate()) {
+                                                            addMedication(
+                                                                '${medications[index].Name}',
+                                                                dosage,
+                                                                _myRoute);
+                                                          }
+                                                          _textFieldController
+                                                              .clear();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child:
+                                                            const Text('Save')),
+                                                  )
+                                                ]),
+                                          );
+                                        }));
+                                  },
+                                );
+                              } else {
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                          title: const Text('No Active Log'),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: const <Widget>[
+                                                Text(
+                                                    'There is no in progress log.'),
+                                                Text(
+                                                    'Please start a log to add a medication.'),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('Cancel'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ));
+                              }
                             });
                       }));
             }
