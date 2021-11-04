@@ -29,9 +29,16 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Protocols
         [Authorize(Roles = "CareGiver,Administrator,Director")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Protocols.ToListAsync());
+            var protocols = from p in _context.Protocols select p;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                protocols = protocols.Where(x => x.Name.Contains(search));
+            }
+
+            return View(await protocols.ToListAsync());
         }
 
         // GET: Protocols/Details/5

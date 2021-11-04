@@ -12,6 +12,12 @@
 }
 
 <h1>Index</h1>
+<form asp-controller="Guidelines" asp-action="Index">
+    <p>
+        Name: <input type="text" name="search" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
 
 <p>
     @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))

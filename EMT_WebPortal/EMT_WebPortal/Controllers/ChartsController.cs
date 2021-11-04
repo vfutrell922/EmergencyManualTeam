@@ -25,9 +25,16 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Charts
         [Authorize(Roles = "CareGiver,Administrator,Director")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Charts.ToListAsync());
+            var charts = from c in _context.Charts select c;
+
+            if (!String.IsNullOrEmpty(search)) 
+            {
+                charts = charts.Where(x => x.Name.Contains(search));
+            }
+
+            return View(await charts.ToListAsync());
         }
 
         // GET: Charts/Details/5
