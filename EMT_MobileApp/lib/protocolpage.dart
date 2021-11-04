@@ -154,11 +154,12 @@ class _ProtocolState extends State<ProtocolPage> {
 
     //TODO: next step is to check the ids of medications for the ones we're looking for
 
+    List<Medication> medications = [];
+
     // _medications.forEach((element) {
     //   if(element.id == )
     // })
 
-    List<Medication> medications = [];
     return medications;
   }
 
