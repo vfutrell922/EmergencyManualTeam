@@ -2,6 +2,8 @@
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +50,7 @@ class medLog {
 
   const medLog({this.type, this.dosage, this.route, this.timeStamp});
 
-  Map<String, dynamic> toJson(String time) => {
+  Map<String, dynamic> toJson() => {
         medLogFields.type: 'Medication',
         medLogFields.dosage: '50mg',
         medLogFields.route: 'LT',
@@ -67,6 +69,7 @@ class _HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _textFieldController = TextEditingController();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -94,7 +97,34 @@ class _HomeState extends State<HomePage> {
               title: const Text('Medication 1'),
               onTap: () {
                 addMedication(1);
-                debugPrint("numer1");
+                String dosageInfo;
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          title: Text('Add Medication'),
+                          content: Form(
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                TextFormField(
+                                  controller: _textFieldController,
+                                  decoration: InputDecoration(
+                                      hintText: "Enter Some Text"),
+                                ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Text("Choice Box"),
+                                //     DropdownButtonFormField(
+                                //       items: ["IM", ]
+                                //     );
+                                //         })
+                                //   ],
+                                // )
+                              ])));
+                    });
                 Navigator.pop(context);
               },
             ),
@@ -120,12 +150,11 @@ class _HomeState extends State<HomePage> {
   }
 
   Future addMedication(int medicationID) async {
-    String medication = '';
     DateTime startTime = DateTime.now();
     String formattedTime = DateFormat.Hms().format(startTime);
     medLog newMedication = new medLog(
         type: "Tylonel", dosage: "40mg", route: "IO", timeStamp: formattedTime);
-    dynamic jsonString = newMedication.toJson(formattedTime);
+    dynamic jsonString = newMedication.toJson();
     await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
   }
 }

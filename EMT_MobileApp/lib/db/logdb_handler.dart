@@ -22,6 +22,14 @@ class additionalDataLog {
   const additionalDataLog({
     required this.Medications,
   });
+
+  Map<String, dynamic> toJson() => {
+        additionalDataLogFields.Medications: Medications,
+      };
+  static additionalDataLog fromJson(Map<String, Object?> json) =>
+      additionalDataLog(
+        Medications: json[additionalDataLogFields.Medications] as List<String>,
+      );
 }
 
 class LogDatabase {
