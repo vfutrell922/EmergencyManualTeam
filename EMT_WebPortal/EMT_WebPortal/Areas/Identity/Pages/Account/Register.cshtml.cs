@@ -22,6 +22,7 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<EMT_WebPortalUser> _signInManager;
         private readonly UserManager<EMT_WebPortalUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
@@ -52,7 +53,8 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}", ErrorMessage = "Password must contain at least 1 lowercase, uppercase, and digit")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -75,8 +77,13 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new EMT_WebPortalUser { UserName = Input.Email, Email = Input.Email };
+                string[] usernameComponents = Input.Email.Split('@');
+                var user = new EMT_WebPortalUser { UserName = usernameComponents[0], Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                if (!result.Succeeded) 
+                {
+                    
+                }
                 result = await _userManager.AddToRoleAsync(user, "CareGiver");
                 if (result.Succeeded)
                 {
@@ -91,7 +98,7 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"An account was created for mwaprotocol.com using this address. Confirm by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -113,4 +120,6 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
             return Page();
         }
     }
+
+
 }

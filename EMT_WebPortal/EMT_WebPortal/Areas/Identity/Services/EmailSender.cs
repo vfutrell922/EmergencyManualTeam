@@ -1,98 +1,60 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using EMT_WebPortal.Data;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿/*
+ * Author: Vincent Futrell
+ * Last Modified: 11/3/2021
+ * This class handles the sending of the confirmation emails.
+ * code is from the microsoft docs tutorial @ https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-5.0&tabs=visual-studio
+ * with alterations by the Author.
+ */
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
+using EMT_WebPortal.Areas.Identity.Services;
+using System;
+using System.IO;
 using Amazon;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
-using EMT_WebPortal.Areas.Identity.Data;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using WebPWrecover.Services;
-using EMT_WebPortal.Areas.Identity.Services;
 
-namespace EMT_WebPortal
+namespace WebPWrecover.Services
 {
-    public class Startup
+    public class EmailSender : IEmailSender
     {
-
-        private readonly IWebHostEnvironment currentEnvironment;
-
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
         {
-            currentEnvironment = env;
-            Configuration = configuration;
+            Options = optionsAccessor.Value;
         }
 
-        public IConfiguration Configuration { get; }
-        
+        public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public Task SendEmailAsync(string email, string subject, string message)
         {
-            services.AddControllersWithViews();
-            if (currentEnvironment.IsDevelopment())
-            {
-                services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
-
-            }
-            //If in the production environment, get the DB connection string from AWS Secrets manager.
-            else 
-            {
-                services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
-            }
-            services.AddMvc();
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<AuthMessageSenderOptions>(Configuration);
-        }
-       
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapRazorPages();
-            });
+            return Execute(Options.SendGridKey, subject, message, email);
         }
 
-        public static string GetEMTManualConnectionString()
+        public Task Execute(string apiKey, string subject, string message, string email)
         {
-            string secretName = "EMTManualContextConnectionString";
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("admin@mwaprotocol.com"),
+                Subject = subject,
+                PlainTextContent = message,
+                HtmlContent = message
+            };
+            msg.AddTo(new EmailAddress(email));
+
+            // Disable click tracking.
+            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            msg.SetClickTracking(false, false);
+
+            return client.SendEmailAsync(msg);
+        }
+
+        public static string GetSecret()
+        {
+            string secretName = "EMTManual_SendGrid_APIKey";
             string region = "us-east-2";
             string secret = "";
 
@@ -114,9 +76,7 @@ namespace EMT_WebPortal
             {
                 response = client.GetSecretValueAsync(request).Result;
             }
-#pragma warning disable CS0168 // Variable is declared but never used
             catch (DecryptionFailureException e)
-#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
                 // Deal with the exception here, and/or rethrow at your discretion.

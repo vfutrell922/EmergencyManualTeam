@@ -1,16 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>96a880e4-1ed2-4b20-b4e4-bab50be0297a</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="UploadedImages\**" />
     <Content Remove="UploadedImages\**" />
     <EmbeddedResource Remove="UploadedImages\**" />
     <None Remove="UploadedImages\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AWSSDK.SecretsManager" Version="3.7.0.3" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
@@ -28,10 +27,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SendGrid" Version="9.24.4" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
-
-
-
 </Project>

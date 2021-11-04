@@ -1,25 +1,20 @@
 // EMT Medic Manual App for Mountain West Ambulance
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
-import 'package:emergencymanual/icons.dart'; //TODO sierra
+import 'package:emergencymanual/icons.dart';
+import 'package:emergencymanual/logdetailspage.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'model/chart.dart';
+import 'db/handbookdb_handler.dart';
+import 'logbar.dart';
 
 class GridLayout {
   final String title;
-  final IconData icon;
 
-  GridLayout({required this.title, required this.icon});
+  GridLayout({required this.title});
 }
-
-List<GridLayout> iconOptions = [
-  GridLayout(
-      title: 'Pulseless Determination Criteria', icon: IconApp.heartbeat),
-  GridLayout(title: 'Air Medical Prehospital Triage', icon: IconApp.ambulance),
-  GridLayout(title: 'Prehospital Agitation', icon: IconApp.h_sigh),
-  GridLayout(title: 'Post-ROSC Care Checklist', icon: IconApp.medkit),
-  GridLayout(title: 'STEMI Bypass Protocol', icon: IconApp.stethoscope),
-  GridLayout(title: 'Field Management of Hypoglycemia', icon: IconApp.user_md),
-];
 
 class QuickLinksPage extends StatefulWidget {
   @override
@@ -27,72 +22,92 @@ class QuickLinksPage extends StatefulWidget {
 }
 
 class _QuickLinksState extends State<QuickLinksPage> {
-  @override
+  late List<Chart> _charts;
+
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: getCharts(),
+        builder: (ctx, snapshot) {
+          // Checking if future is resolved
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If we got an error
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              return QuickLinks(context);
+            }
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
+  Future<List<Chart>> getCharts() async {
+    List<Chart> charts = await HandbookDatabase.instance.getQuickLinkCharts();
+    _charts = charts;
+    return charts;
+  }
+
+  Widget QuickLinks(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: LogBar(),
         appBar: AppBar(
-          title: Text('Emergency Manual'),
+          title: Text('Quick Links'),
           centerTitle: true,
           backgroundColor: Color(0xFFFFFF),
         ),
-        body: QuickLinksPanel());
+        body: new GridView.custom(
+            padding: EdgeInsets.all(10.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              childAspectRatio: (2 / 2),
+            ),
+            childrenDelegate: SliverChildListDelegate(
+              _charts
+                  .map((chart) => GestureDetector(
+                      onTap: () {},
+                      child: GestureDetector(
+                        child: Container(
+                            padding: const EdgeInsets.all(16),
+                            color: Colors.teal[200],
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text(chart.Name,
+                                      style: TextStyle(
+                                          fontSize: 22, color: Colors.black),
+                                      textAlign: TextAlign.center)
+                                ],
+                              ),
+                            )),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ImageDialog(chart));
+                        },
+                      )))
+                  .toList(),
+            )));
   }
-}
 
-class ImageDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget ImageDialog(Chart chart) {
+    debugPrint("getting the image dialog");
     return Dialog(
-      child: Container(
-        width: 400,
-        height: 500,
-        decoration: BoxDecoration(
-            //TODO sierra
-            image: DecorationImage(
-                image: ExactAssetImage(
-                    'assets/images/pulselessDeterminationCriteria.png'),
-                fit: BoxFit.cover)),
+        child: Center(
+      child: InteractiveViewer(
+        child: Image.memory(chart.Photo),
+        maxScale: 5.0,
       ),
-    );
-  }
-}
-
-class QuickLinksPanel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new GridView.custom(
-        padding: EdgeInsets.all(10.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          childAspectRatio: (2 / 2),
-        ),
-        childrenDelegate: SliverChildListDelegate(
-          iconOptions
-              .map((data) => GestureDetector(
-                  onTap: () {},
-                  child: GestureDetector(
-                    child: Container(
-                        padding: const EdgeInsets.all(16),
-                        color: Colors.teal[200],
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Icon(data.icon, size: 45),
-                              Text(data.title,
-                                  style: TextStyle(
-                                      fontSize: 22, color: Colors.black),
-                                  textAlign: TextAlign.center)
-                            ],
-                          ),
-                        )),
-                    onTap: () {
-                      showDialog(
-                          context: context, builder: (_) => ImageDialog());
-                    },
-                  )))
-              .toList(),
-        ));
+    ));
   }
 }

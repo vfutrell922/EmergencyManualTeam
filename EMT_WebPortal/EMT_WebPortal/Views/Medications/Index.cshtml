@@ -8,8 +8,8 @@
 
 <p>
     @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
-    {  
-     <input type="button" onclick="location.href='@Url.Action("Create", "Medications")'" value="Create New" class="btn btn-outline-success" />
+    {
+        <input type="button" onclick="location.href='@Url.Action("Create", "Medications")'" value="Create New" class="btn btn-outline-success" />
     }
 </p>
 <table class="table">
@@ -43,41 +43,63 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Action)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Indication)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contraindication)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precaution)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdverseEffects)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdultDosage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChildDosage)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info" })
-                @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
-                {
-                    @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary" })
-                    @Html.ActionLink("Delete", "Delete", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-danger" })
-                }
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Action)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Indication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contraindication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precaution)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdverseEffects)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdultDosage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChildDosage)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info", @style = "width:120px;" })
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-primary", @style = "width:120px;" })
+                        <button data-href="/Medications/Delete/@item.ID" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDelete" style="width:120px;">Delete</button>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div id="confirmDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Chart?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this Medication?</p>
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
+                <a id="deleteConfirmButton" class="btn btn-outline-danger">Yes</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="~/js/Delete.js"></script>

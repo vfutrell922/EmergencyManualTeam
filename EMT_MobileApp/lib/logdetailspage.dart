@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:emergencymanual/icons.dart';
 import 'model/log.dart';
+import 'logbar.dart';
 
 class LogDetailsPage extends StatefulWidget {
   final Log curLog;
@@ -13,13 +14,6 @@ class LogDetailsPage extends StatefulWidget {
   @override
   _LogDetailsState createState() => _LogDetailsState(curLog: curLog);
 }
-
-class LogBar extends StatefulWidget {
-  @override
-  _LogState createState() => _LogState();
-}
-
-int _selectedIndex = 0;
 
 class _LogDetailsState extends State<LogDetailsPage> {
   final Log curLog;
@@ -75,41 +69,5 @@ class _LogDetailsState extends State<LogDetailsPage> {
       ),
       bottomNavigationBar: LogBar(),
     );
-  }
-}
-
-class _LogState extends State<LogBar> {
-  @override
-  Widget build(BuildContext context) {
-    return new BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        });
   }
 }
