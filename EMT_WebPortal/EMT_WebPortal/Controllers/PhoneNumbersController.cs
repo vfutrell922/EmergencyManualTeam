@@ -22,9 +22,16 @@ namespace EMT_WebPortal.Controllers
 
         // GET: PhoneNumbers
         [Authorize(Roles = "CareGiver,Administrator,Director")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.PhoneNumbers.ToListAsync());
+            var numbers = from n in _context.PhoneNumbers select n;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                numbers = numbers.Where(x => x.hospitalName.Contains(search));
+            }
+
+            return View(await numbers.ToListAsync());
         }
 
         // GET: PhoneNumbers/Details/5

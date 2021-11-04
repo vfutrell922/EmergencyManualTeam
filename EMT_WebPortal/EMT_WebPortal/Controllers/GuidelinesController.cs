@@ -22,9 +22,16 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Guidelines
         [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Guidelines.ToListAsync());
+            var guidelines = from c in _context.Guidelines select c;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                guidelines = guidelines.Where(x => x.Name.Contains(search));
+            }
+
+            return View(await guidelines.ToListAsync());
         }
 
         // GET: Guidelines/Details/5

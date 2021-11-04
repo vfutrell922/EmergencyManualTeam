@@ -6,6 +6,13 @@
 
 <h1>Index</h1>
 
+<form asp-controller="PhoneNumbers" asp-action="Index">
+    <p>
+        Name: <input type="text" name="search" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 <p>
     <input type="button" onclick="location.href='@Url.Action("Create", "PhoneNumbers")'" value="Create New" class="btn btn-outline-success" />
 </p>
