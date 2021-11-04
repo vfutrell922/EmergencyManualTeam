@@ -86,34 +86,6 @@ class _HomeState extends State<HomePage> {
               title: const Text('Medication 1'),
               onTap: () {
                 addMedication(1);
-                String dosageInfo;
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                          title: Text('Add Medication'),
-                          content: Form(
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                TextFormField(
-                                  controller: _textFieldController,
-                                  decoration: InputDecoration(
-                                      hintText: "Enter Some Text"),
-                                ),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Text("Choice Box"),
-                                //     DropdownButtonFormField(
-                                //       items: ["IM", ]
-                                //     );
-                                //         })
-                                //   ],
-                                // )
-                              ])));
-                    });
                 Navigator.pop(context);
               },
             ),
@@ -144,7 +116,8 @@ class _HomeState extends State<HomePage> {
     medLog newMedication = new medLog(
         type: "Tylonel", dosage: "40mg", route: "IO", timeStamp: formattedTime);
     dynamic jsonString = newMedication.toJson();
-    await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
+    await LogDatabase.instance
+        .additionalDataUpdate((jsonString.toString()), true);
   }
 }
 

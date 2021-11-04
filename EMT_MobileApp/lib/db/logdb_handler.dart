@@ -110,10 +110,10 @@ class LogDatabase {
 
   // called anytime the log is running and they add more info
   // or if they go back and update info
-  // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
-  Future<void> additionalDataUpdate(String data) async {
+  // todo make data also optional
+  Future<void> additionalDataUpdate(String data, bool add,
+      [int index = 0]) async {
     //TODO this stuff will eventually be global instead
-    List<String> dataList = [];
     if (globals.currentLogID != -1) {
       Log curLog = await LogDatabase.instance.read(globals.currentLogID);
       if (curLog.additionalData != null) {
@@ -126,7 +126,11 @@ class LogDatabase {
 
         //Adds new data JSON to the medications
         List<String> newMeds = currentData.Medications;
-        newMeds.add(data);
+        if (add) {
+          newMeds.add(data);
+        } else {
+          newMeds.removeAt(index);
+        }
         additionalDataLog newData = new additionalDataLog(Medications: newMeds);
 
         //Sends new logs to database
@@ -150,6 +154,44 @@ class LogDatabase {
     }
   }
 
+  Future<List> additionalDataDecode(int id) async {
+    List<dynamic> givenMeds = [];
+    Log curLog = await LogDatabase.instance.read(id);
+    if (curLog.additionalData != null) {
+      List<dynamic> jsonMeds =
+          jsonDecode(curLog.additionalData!)["Medications"];
+      List<dynamic> meds = [];
+      for (int i = 0; i < jsonMeds.length; i++) {
+        String med = jsonMeds[i];
+
+        //med = med [];
+        med = med.substring(1);
+        med = med.substring(0, med.length - 1);
+
+        //med.replaceAll(": ", ", ");
+
+        String temp = med.split(": ").toString();
+
+        List jsonParts = temp.split(", ");
+        jsonParts[0] = jsonParts[0].substring(1);
+        jsonParts[jsonParts.length - 1] = jsonParts[jsonParts.length - 1]
+            .substring(0, jsonParts[jsonParts.length - 1].length - 1);
+
+        List medParts = [];
+        for (int i = 0; i < jsonParts.length; i++) {
+          if (i % 2 == 1) {
+            medParts.add(jsonParts[i]);
+          }
+        }
+
+        meds.add(medParts);
+      }
+
+      return meds;
+    }
+    return [];
+  }
+
   // Updates the log in the database
   Future<int> updateLog(Log log) async {
     final db = await instance.database;
@@ -162,19 +204,6 @@ class LogDatabase {
 
     return await db
         .delete(tableLogs, where: '${LogFields.id} = ?', whereArgs: [id]);
-  }
-
-  // TODO method to add to json object for additional data
-  dynamic appendAdditionalData(dynamic data) {
-    // doesn't need to return anything
-  }
-
-  // sierra TODO need this?
-  dynamic myEncode(dynamic item) {
-    if (item is DateTime) {
-      return item.toIso8601String();
-    } // TODO have other types for meds, etc. to know what to add on end?
-    return item;
   }
 
   // TODO method to parse data from additional data
