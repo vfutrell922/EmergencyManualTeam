@@ -30,7 +30,7 @@ namespace WebPWrecover.Services
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
+            return Execute(GetSecret(), subject, message, email);
         }
 
         public Task Execute(string apiKey, string subject, string message, string email)
@@ -126,7 +126,10 @@ namespace WebPWrecover.Services
                 string decodedBinarySecret = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(reader.ReadToEnd()));
             }
 
-            return secret;
+            string[] secretParts = secret.Split(':');
+            int secretLength = secretParts[1].Length;
+            string returnString = secretParts[1].Substring(1, secretLength - 3);
+            return returnString;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace EMT_WebPortal
             //If in the production environment, get the DB connection string from AWS Secrets manager.
             else 
             {
-                services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EMTManualContext")));
+                services.AddDbContext<EMTManualContext>(options => options.UseSqlServer(GetEMTManualConnectionString()));
             }
             services.AddMvc();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -90,6 +90,10 @@ namespace EMT_WebPortal
             });
         }
 
+        /// <summary>
+        /// Reutrns the decrypted connection string for the EMTManual DB
+        /// </summary>
+        /// <returns></returns>
         public static string GetEMTManualConnectionString()
         {
             string secretName = "EMTManualContextConnectionString";
@@ -166,7 +170,10 @@ namespace EMT_WebPortal
                 string decodedBinarySecret = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(reader.ReadToEnd()));
             }
 
-            return secret;
+            string[] secretParts = secret.Split(':');
+            int secretLength = secretParts[1].Length;
+            string returnString = secretParts[1].Substring(1, secretLength - 3);
+            return returnString;
         }
     }
 }
