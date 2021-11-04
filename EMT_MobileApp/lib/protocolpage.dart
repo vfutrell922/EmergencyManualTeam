@@ -12,6 +12,7 @@ import 'model/medication.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'logbar.dart';
 import 'db/logdb_handler.dart';
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 
 class ProtocolPage extends StatefulWidget {
   final String name;
@@ -171,6 +172,7 @@ class _ProtocolState extends State<ProtocolPage> {
   }
 
   Widget MedDrawer(int certification) {
+    TextEditingController _textFieldController = TextEditingController();
     return FutureBuilder(
         future: findMedicationsForCertification(certification),
         builder: (ctx, snapshot) {
@@ -188,6 +190,10 @@ class _ProtocolState extends State<ProtocolPage> {
               // if we got our data
             } else if (snapshot.hasData) {
               List<Medication> medications = snapshot.data as List<Medication>;
+              String dosage = "";
+              String _myActivity = '';
+              String _myActivityResult = '';
+              final _formKey = GlobalKey<FormState>();
               return Drawer(
                   // Add a ListView to the drawer. This ensures the user can scroll
                   // through the options in the drawer if there isn't enough vertical
@@ -196,38 +202,109 @@ class _ProtocolState extends State<ProtocolPage> {
                       itemCount: medications.length,
                       itemBuilder: (BuildContext context, int index) {
                         return new ListTile(
-                          title: Text('${medications[index].Name}'),
-                          onTap: () {},
-                        );
-                      })
-                  // ListView(
-                  //   // Important: Remove any padding from the ListView.
-                  //   padding: EdgeInsets.zero,
-                  //   children: [
-                  //     const DrawerHeader(
-                  //       decoration: BoxDecoration(
-                  //         color: Colors.blue,
-                  //       ),
-                  //       child: Text('Medications'),
-                  //     ),
-                  //     ListTile(
-                  //       title: const Text('Medication 1'),
-                  //       onTap: () {
-                  //         addMedication(1);
-                  //         debugPrint("numer1");
-                  //         Navigator.pop(context);
-                  //       },
-                  //     ),
-                  //     ListTile(
-                  //       title: const Text('Medication 2'),
-                  //       onTap: () {
-                  //         addMedication(2);
-                  //         Navigator.pop(context);
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
-                  );
+                            title: Text('${medications[index].Name}'),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                      title: Text('Add Medication'),
+                                      content: Form(
+                                        key: _formKey,
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              TextFormField(
+                                                controller:
+                                                    _textFieldController,
+                                                decoration: InputDecoration(
+                                                    hintText: "Dosage"),
+                                                onSaved: (String? value) {
+                                                  dosage = value!;
+                                                },
+                                                validator: (String? value) {
+                                                  return (value == null ||
+                                                          value.isEmpty)
+                                                      ? 'Please Insert Dosage.'
+                                                      : null;
+                                                },
+                                              ),
+                                              // Container(
+                                              //   padding: EdgeInsets.all(16),
+                                              //   child: DropDownFormField(
+                                              //     titleText: 'My workout',
+                                              //     hintText: 'Please choose one',
+                                              //     value: _myActivity,
+                                              //     onSaved: (value) {
+                                              //       setState(() {
+                                              //         _myActivity = value;
+                                              //       });
+                                              //     },
+                                              //     onChanged: (value) {
+                                              //       setState(() {
+                                              //         _myActivity = value;
+                                              //       });
+                                              //     },
+                                              //     dataSource: [
+                                              //       {
+                                              //         "display": "Running",
+                                              //         "value": "Running",
+                                              //       },
+                                              //       {
+                                              //         "display": "Climbing",
+                                              //         "value": "Climbing",
+                                              //       },
+                                              //       {
+                                              //         "display": "Walking",
+                                              //         "value": "Walking",
+                                              //       },
+                                              //       {
+                                              //         "display": "Swimming",
+                                              //         "value": "Swimming",
+                                              //       },
+                                              //     ],
+                                              //     textField: 'display',
+                                              //     valueField: 'value',
+                                              //   ),
+                                              // ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 16.0),
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      if (_formKey.currentState!
+                                                          .validate()) {
+                                                        // If the form is valid, display a snackbar. In the real world,
+                                                        // you'd often call a server or save the information in a database.
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          const SnackBar(
+                                                              content: Text(
+                                                                  'Processing Data')),
+                                                        );
+                                                      }
+                                                    },
+                                                    child: const Text('Save')),
+                                              )
+                                            ]),
+                                      ));
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     Text("Choice Box"),
+                                  //     DropdownButtonFormField(
+                                  //       items: ["IM", ]
+                                  //     );
+                                  //         })
+                                  //   ],
+                                  // )
+                                },
+                              );
+                            });
+                      }));
             }
           }
           return Center(
