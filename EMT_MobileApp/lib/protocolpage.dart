@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'model/medication.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'logbar.dart';
 import 'db/logdb_handler.dart';
@@ -24,6 +25,7 @@ class ProtocolPage extends StatefulWidget {
 class _ProtocolState extends State<ProtocolPage> {
   late List<Protocol> _protocols;
   late List<Chart> _charts;
+  late List<Medication> _medications;
 
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -54,7 +56,11 @@ class _ProtocolState extends State<ProtocolPage> {
   Future<List<Protocol>> SetUp() async {
     debugPrint("Setting up protocol page");
     await findCharts();
-    return await findProtocols();
+    return await findProtocols().then((value) async {
+      return await findMedications().then((meds) async {
+        return value;
+      });
+    });
   }
 
   Future<List<Protocol>> findProtocols() async {
@@ -69,6 +75,13 @@ class _ProtocolState extends State<ProtocolPage> {
         await HandbookDatabase.instance.getChartsForProtocol(widget.name);
     _charts = charts;
     return charts;
+  }
+
+  Future<List<Medication>> findMedications() async {
+    List<Medication> medications =
+        await HandbookDatabase.instance.readAllMedications();
+    _medications = medications;
+    return medications;
   }
 
   String findProtocolWithCertification(int certification) {
@@ -121,7 +134,37 @@ class _ProtocolState extends State<ProtocolPage> {
     await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
   }
 
-  Widget MedDrawer() {
+  List<Medication> findMedicationsForCertification(int certification) {
+    List<String> medIDs = [];
+    _protocols.forEach((element) {
+      if (element.Certification == certification &&
+          element.HasAssociatedMedication == 1 &&
+          element.Medications != null) {
+        medIDs.add(element.Medications.toString());
+        List<String> t = element.Medications.toString()
+            .replaceAll(new RegExp(r'[{}]'), '')
+            .split(",");
+        debugPrint("Protocol has medications: " +
+            t.toString() +
+            " for certification: " +
+            certification.toString());
+        //TODO: Bug where its not taking out the commas on the split
+      }
+    });
+
+    //TODO: next step is to check the ids of medications for the ones we're looking for
+
+    // _medications.forEach((element) {
+    //   if(element.id == )
+    // })
+
+    List<Medication> medications = [];
+    return medications;
+  }
+
+  Widget MedDrawer(int certification) {
+    List<Medication> medications =
+        findMedicationsForCertification(certification);
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -205,7 +248,7 @@ class _ProtocolState extends State<ProtocolPage> {
           body: TabBarView(
             children: <Widget>[
               Scaffold(
-                  endDrawer: MedDrawer(),
+                  endDrawer: MedDrawer(3),
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.yellow,
@@ -224,7 +267,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     ),
                   )),
               Scaffold(
-                  endDrawer: MedDrawer(),
+                  endDrawer: MedDrawer(0),
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.blue,
@@ -241,7 +284,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     ),
                   )),
               Scaffold(
-                  endDrawer: MedDrawer(),
+                  endDrawer: MedDrawer(1),
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.green,
@@ -258,7 +301,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     ),
                   )),
               Scaffold(
-                  endDrawer: MedDrawer(),
+                  endDrawer: MedDrawer(2),
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.red,
@@ -275,7 +318,7 @@ class _ProtocolState extends State<ProtocolPage> {
                     ),
                   )),
               Scaffold(
-                endDrawer: MedDrawer(),
+                endDrawer: MedDrawer(-1),
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.grey,

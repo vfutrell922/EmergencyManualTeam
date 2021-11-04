@@ -65,7 +65,6 @@ class HandbookDatabase {
     final GuidelineType = 'TEXT';
     final OLMCRequiredType = 'INTEGER NOT NULL';
     final HasAssociatedMedicationType = 'INTEGER';
-    //TODO: is this right?
     final MedicationsType = 'TEXT';
     final ChartType = 'TEXT';
     final OtherInformationType = 'TEXT';
@@ -283,6 +282,21 @@ class HandbookDatabase {
     debugPrint("Returning protocols " + protocols.length.toString());
     return protocols;
   }
+
+  // Future<String> getMedicationsFromProtocolNameAndCertification(
+  //     String name, int certification) async {
+  //   final db = await instance.database;
+  //   String whereString = '${ProtocolFields.Name} =?';
+  //   List<dynamic> whereArguments = [name];
+  //   final result = await db.query(tableProtocols,
+  //       where: whereString, whereArgs: whereArguments);
+
+  //   List<Protocol> protocols =
+  //       List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
+
+  //   debugPrint("Returning protocols " + protocols.length.toString());
+  //   return protocols;
+  // }
 
   Future<List<Medication>> readMedicationsWithIDs(List<int> ids) async {
     final db = await instance.database;
