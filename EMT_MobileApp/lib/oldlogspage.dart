@@ -41,7 +41,7 @@ class _OldLogsPageState extends State<OldLogsPage> {
     List<Log> dbList = await LogDatabase.instance.readAll();
 
     setState(() {
-      logs = dbList;
+      logs = new List.from(dbList.reversed);
     });
   }
 
