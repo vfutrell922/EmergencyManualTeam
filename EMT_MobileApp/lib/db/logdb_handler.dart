@@ -52,7 +52,6 @@ class medLog {
         route: json[medLogFields.route] as String,
         timeStamp: json[medLogFields.timeStamp] as String,
       );
-
 }
 
 class LogDatabase {
@@ -117,6 +116,13 @@ class LogDatabase {
     if (maps.isNotEmpty) {
       return Log.fromJson(maps.first);
     } else {
+      List<Log> dbList = await LogDatabase.instance.readAll();
+      List temp = [];
+
+      for (int i = 0; i < dbList.length; i++) {
+        temp.add(dbList[i].id.toString() + dbList[i].runNum.toString());
+      }
+      int stopHere = 0;
       throw Exception('ID $id not found');
     }
   }

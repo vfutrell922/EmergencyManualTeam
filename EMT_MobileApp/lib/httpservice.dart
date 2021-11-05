@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
+import 'globals.dart' as globals;
 
 import 'package:flutter/foundation.dart';
 

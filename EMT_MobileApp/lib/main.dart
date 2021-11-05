@@ -9,6 +9,7 @@ import 'httpservice.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
+import 'globals.dart' as globals;
 import 'db/handbookdb_handler.dart';
 import 'package:flutter/foundation.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   final HttpService httpService = HttpService();
   @override
   Widget build(BuildContext context) {
+    globals.initNextLogID();
     collectHandbook();
     return MaterialApp(
       title: 'EMT Manual',

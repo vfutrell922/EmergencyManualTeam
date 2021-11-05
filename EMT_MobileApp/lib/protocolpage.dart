@@ -135,7 +135,8 @@ class _ProtocolState extends State<ProtocolPage> {
         route: routeInfo,
         timeStamp: formattedTime);
     dynamic jsonString = newMedication.toJson();
-    await LogDatabase.instance.additionalDataUpdate((jsonString.toString()));
+    await LogDatabase.instance
+        .additionalDataUpdate((jsonString.toString()), true);
   }
 
   Future<List<Medication>> findMedicationsForCertification(
