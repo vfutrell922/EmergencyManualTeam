@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     HandbookDatabase.instance.clearChartTable();
     httpService.getCharts().then((List<Chart> charts) async {
       for (var i = 0; i < charts.length; i++) {
-        // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
+        // debugPrint("Chart Entry >>> " + charts[i].Protocol.toString());
         await HandbookDatabase.instance.addChart(charts[i]);
       }
     });

@@ -85,8 +85,8 @@ class _LogDetailsState extends State<LogDetailsPage> {
               itemBuilder: (BuildContext context, int index) {
                 return new Card(
                     child: ListTile(
-                  title: Row(children: <Widget>[
-                    Text('Data ${data[index]}'),
+                  title: Column(children: <Widget>[
+                    SingleChildScrollView(child: Text('Data ${data[index]}')),
                     IconButton(
                         icon: const Icon(Icons.delete),
                         tooltip: 'Delete Log',
