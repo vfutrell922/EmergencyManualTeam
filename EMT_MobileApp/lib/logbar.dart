@@ -15,7 +15,6 @@ int _selectedIndex = 0;
 
 class _LogState extends State<LogBar> {
   void initState() {
-    globals.initNextLogID();
     super.initState();
   }
 
@@ -51,9 +50,9 @@ class _LogState extends State<LogBar> {
           });
           if (index == 0) {
             if (globals.currentLogID == -1) {
-              addLog();
               globals.currentLogID = globals.nextLogID;
               globals.nextLogID++;
+              addLog();
               print("enter");
             } else {
               showDialog<String>(

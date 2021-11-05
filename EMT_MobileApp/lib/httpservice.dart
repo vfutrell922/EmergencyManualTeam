@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:http/http.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'model/medication.dart';
+import 'globals.dart' as globals;
 
 import 'package:flutter/foundation.dart';
 
@@ -11,6 +13,7 @@ final String siteName = "https://mwaprotocol.com";
 class HttpService {
   final String protocolsURL = siteName + "/api/protocolsget";
   final String chartsURL = siteName + "/api/chartsget";
+  final String medicationsURL = siteName + "/api/medicationsget";
 
   String? findMedications(String medicationInfo) {
     if (medicationInfo.split(',').length > 2) {
@@ -30,13 +33,11 @@ class HttpService {
         break;
       }
     }
-    //Iterable l = json.decode(body);
-    List l = json.decode(body).toList();
+    List k = json.decode(body).toList();
 
-    debugPrint("Iterable: " + l.toString());
-    List<Protocol> protocols = List<Protocol>.from(l.map((model) =>
+    List<Protocol> protocols = List<Protocol>.from(k.map((model) =>
         Protocol.fromWebJson(
-            model, findMedications(medicationData[l.indexOf(model)]))));
+            model, findMedications(medicationData[k.indexOf(model)]))));
     return protocols;
   }
 
@@ -48,6 +49,21 @@ class HttpService {
       return readProtocols(res.body);
     } else {
       throw "Unable to retrieve protocols.";
+    }
+  }
+
+  Future<List<Medication>> getMedications() async {
+    Response res = await get(medicationsURL);
+
+    if (res.statusCode == 200) {
+      debugPrint("Got medication response");
+      Iterable l = json.decode(res.body);
+
+      List<Medication> medications = List<Medication>.from(
+          l.map((model) => Medication.fromWebJson(model)));
+      return medications;
+    } else {
+      throw "Unable to retrieve medications.";
     }
   }
 

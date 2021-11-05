@@ -1,7 +1,7 @@
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
 
-int nextLogID = 0;
+int nextLogID = 1;
 
 void initNextLogID() async {
   List<Log> dbList = await LogDatabase.instance.readAll();
