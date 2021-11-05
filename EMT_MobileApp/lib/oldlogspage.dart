@@ -38,10 +38,6 @@ class _OldLogsPageState extends State<OldLogsPage> {
   }
 
   void _getLogs() async {
-    //TODO: Where we will actually fetch from the database
-    //dummmy data right now
-    //List tempList = ["Nov 10, 2020", "Nov 11, 2020", "Nov 12, 2020"];
-
     List<Log> dbList = await LogDatabase.instance.readAll();
 
     setState(() {
@@ -51,23 +47,23 @@ class _OldLogsPageState extends State<OldLogsPage> {
 
   Widget _buildLogsList() {
     return ListView.builder(
-      //itemCount: logs == null ? 0 : logs.length,
       itemCount: logs.length,
       itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
-          title: Text('Run ID: ${logs[index].runNum}'),
-          subtitle: Text('Run Time: ${logs[index].startTime}'),
-          //TODO sierra Trailing icon here, check yaml file
-          onTap: () {
-            debugPrint('Add data: ${logs[index].additionalData}');
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  //TODO sierra example //TODO sierra !!!!
-                  builder: (context) =>
-                      new LogDetailsPage(curLog: logs[index])),
-            );
-          },
+        return new Card(
+          child: ListTile(
+              title: Text('Run ID: ${logs[index].runNum}'),
+              subtitle: Text('Run Time: ${logs[index].startTime}'),
+              selectedTileColor: Colors.grey[300],
+              trailing: Icon(Icons.arrow_forward_ios_rounded),
+              onTap: () {
+                Navigator.of(context)
+                    .push(
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                              new LogDetailsPage(curLog: logs[index])),
+                    )
+                    .then((val) => {_getLogs()});
+              }),
         );
       },
     );
