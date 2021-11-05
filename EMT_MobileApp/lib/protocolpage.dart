@@ -3,7 +3,6 @@
 // for their Senior Project 2021 at the University of Utah.
 import 'dart:typed_data';
 
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'db/handbookdb_handler.dart';
@@ -13,6 +12,7 @@ import 'model/medication.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'logbar.dart';
 import 'db/logdb_handler.dart';
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'globals.dart' as globals;
 
 class ProtocolPage extends StatefulWidget {
