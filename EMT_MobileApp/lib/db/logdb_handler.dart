@@ -113,7 +113,6 @@ class LogDatabase {
   // todo make data also optional
   Future<void> additionalDataUpdate(String data, bool add,
       [int index = 0]) async {
-    //TODO this stuff will eventually be global instead
     if (globals.currentLogID != -1) {
       Log curLog = await LogDatabase.instance.read(globals.currentLogID);
       if (curLog.additionalData != null) {
@@ -205,8 +204,6 @@ class LogDatabase {
     return await db
         .delete(tableLogs, where: '${LogFields.id} = ?', whereArgs: [id]);
   }
-
-  // TODO method to parse data from additional data
 
   Future close() async {
     final db = await instance.database;

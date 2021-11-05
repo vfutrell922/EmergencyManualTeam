@@ -33,32 +33,9 @@ class _LogDetailsState extends State<LogDetailsPage> {
               icon: const Icon(Icons.delete),
               tooltip: 'Delete Log',
               onPressed: () {
-                FutureBuilder(
-                  // Future that needs to be resolved
-                  // inorder to display something on the Canvas
-                  future: _deleteLogDialog(context),
-                  builder: (ctx, snapshot) {
-                    // Checking if future is resolved or not
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // If we got an error
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            '${snapshot.error} occured',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        );
-
-                        // if we got our data
-                      } else if (snapshot.hasData) {
-                        (BuildContext context) => _deleteLogDialog(context);
-                      }
-                    }
-                    // Displaying LoadingSpinner to indicate waiting state
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => _deleteDialog(context),
                 );
               })
         ],
@@ -136,12 +113,12 @@ class _LogDetailsState extends State<LogDetailsPage> {
     );
   }
 
-  Future<Widget> _deleteLogDialog(BuildContext context) async {
+  Widget _deleteDialog(BuildContext context) {
     return new AlertDialog(
       title: Text('Delete Log?'),
       actions: <Widget>[
         new Text(
-            "Are you sure you want to delete log for Run ${curLog.runNum}?"),
+            "Are you sure you want to delete log for Run ${curLog.runNum}  ?"),
         TextButton(
           child: Text('CANCEL'),
           onPressed: () {
@@ -156,20 +133,55 @@ class _LogDetailsState extends State<LogDetailsPage> {
                 color: Colors.red,
               )),
           onPressed: () async {
-            await LogDatabase.instance.deleteLog(curLog.id!);
-            // .then((_) {
-            //   setState(() {
-            //     Navigator.pop(context);
-            //   });
-            //   Navigator.pop(context, true); //send back to oldLogsPage
-            // });
             Navigator.pop(context);
-            Navigator.pop(context, true); //send back to oldLogsPage
+            //Navigator.pop(context, true);
+            await LogDatabase.instance.deleteLog(curLog.id!).then((value) {
+              Navigator.pop(context, true);
+            });
           },
         ),
       ],
     );
   }
+
+//   Future<Widget> _deleteLogDialog(BuildContext context) async {
+//     await Future.delayed(Duration(microseconds: 1));
+// showDialog(
+//         context: context,
+//         builder: (BuildContext context) {
+//     return new AlertDialog(
+//       title: Text('Delete Log?'),
+//       actions: <Widget>[
+//         new Text(
+//             "Are you sure you want to delete log for Run ${curLog.runNum}?"),
+//         TextButton(
+//           child: Text('CANCEL'),
+//           onPressed: () {
+//             setState(() {
+//               Navigator.pop(context);
+//             });
+//           },
+//         ),
+//         TextButton(
+//           child: Text('Delete Log',
+//               style: TextStyle(
+//                 color: Colors.red,
+//               )),
+//           onPressed: () async {
+//             await LogDatabase.instance.deleteLog(curLog.id!);
+//             // .then((_) {
+//             //   setState(() {
+//             //     Navigator.pop(context);
+//             //   });
+//             //   Navigator.pop(context, true); //send back to oldLogsPage
+//             // });
+//             Navigator.pop(context);
+//             Navigator.pop(context, true); //send back to oldLogsPage
+//           },
+//         ),
+//       ],
+//     );
+//   },);}
 
   Widget _deleteDetailDialog(BuildContext context, int index) {
     return new AlertDialog(

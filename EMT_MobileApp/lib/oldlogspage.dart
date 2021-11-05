@@ -38,10 +38,6 @@ class _OldLogsPageState extends State<OldLogsPage> {
   }
 
   void _getLogs() async {
-    //TODO: Where we will actually fetch from the database
-    //dummmy data right now
-    //List tempList = ["Nov 10, 2020", "Nov 11, 2020", "Nov 12, 2020"];
-
     List<Log> dbList = await LogDatabase.instance.readAll();
 
     setState(() {
@@ -62,15 +58,11 @@ class _OldLogsPageState extends State<OldLogsPage> {
               onTap: () {
                 Navigator.of(context)
                     .push(
-                  new MaterialPageRoute(
-                      builder: (context) =>
-                          new LogDetailsPage(curLog: logs[index])),
-                )
-                    .then(
-                  (_) {
-                    setState(() {});
-                  },
-                );
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                              new LogDetailsPage(curLog: logs[index])),
+                    )
+                    .then((val) => {_getLogs()});
               }),
         );
       },
