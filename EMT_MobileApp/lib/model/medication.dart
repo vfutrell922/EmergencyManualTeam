@@ -4,7 +4,8 @@ final String tableMedications = 'medication';
 
 class MedicationFields {
   static final List<String> values = [
-    id,
+    ID,
+    PrimaryKey,
     Name,
     Action,
     Indication,
@@ -16,7 +17,8 @@ class MedicationFields {
     Max
   ];
 
-  static final String id = '_id';
+  static final String ID = 'ID';
+  static final String PrimaryKey = '_PrimaryKey';
   static final String Name = 'Name';
   static final String Action = 'Action';
   static final String Indication = 'Indication';
@@ -29,7 +31,8 @@ class MedicationFields {
 }
 
 class Medication {
-  final int? id;
+  final int ID;
+  final int? PrimaryKey;
   final String Name;
   final String Action;
   final String Indication;
@@ -41,7 +44,8 @@ class Medication {
   final String? Max;
 
   const Medication({
-    this.id,
+    required this.ID,
+    this.PrimaryKey,
     required this.Name,
     required this.Action,
     required this.Indication,
@@ -54,7 +58,8 @@ class Medication {
   });
 
   Medication copy({
-    int? id,
+    int? ID,
+    int? PrimaryKey,
     String? Name,
     String? Action,
     String? Indication,
@@ -66,7 +71,8 @@ class Medication {
     String? Max,
   }) =>
       Medication(
-        id: id ?? this.id,
+        ID: ID ?? this.ID,
+        PrimaryKey: PrimaryKey ?? this.PrimaryKey,
         Name: Name ?? this.Name,
         Action: Action ?? this.Action,
         Indication: Indication ?? this.Indication,
@@ -79,7 +85,8 @@ class Medication {
       );
 
   static Medication fromWebJson(Map<String, Object?> json) => Medication(
-        id: json[MedicationFields.id] as int?,
+        ID: json[MedicationFields.ID] as int,
+        PrimaryKey: json[MedicationFields.PrimaryKey] as int,
         Name: json[MedicationFields.Name] as String,
         Action: json[MedicationFields.Action] as String,
         Indication: json[MedicationFields.Indication] as String,
@@ -92,7 +99,8 @@ class Medication {
       );
 
   static Medication fromJson(Map<String, Object?> json) => Medication(
-      id: json[MedicationFields.id] as int?,
+      ID: json[MedicationFields.ID] as int,
+      PrimaryKey: json[MedicationFields.PrimaryKey] as int,
       Name: json[MedicationFields.Name] as String,
       Action: json[MedicationFields.Action] as String,
       Indication: json[MedicationFields.Indication] as String,
@@ -104,7 +112,8 @@ class Medication {
       Max: json[MedicationFields.Max] as String);
 
   Map<String, Object?> toJson() => {
-        MedicationFields.id: id,
+        MedicationFields.ID: ID,
+        MedicationFields.PrimaryKey: PrimaryKey,
         MedicationFields.Name: Name,
         MedicationFields.Action: Action,
         MedicationFields.Indication: Indication,

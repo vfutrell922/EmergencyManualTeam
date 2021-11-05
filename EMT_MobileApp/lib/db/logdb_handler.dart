@@ -32,6 +32,29 @@ class additionalDataLog {
       );
 }
 
+class medLog {
+  final String? type;
+  final String? dosage;
+  final String? route;
+  final String? timeStamp;
+
+  const medLog({this.type, this.dosage, this.route, this.timeStamp});
+
+  Map<String, dynamic> toJson() => {
+        medLogFields.type: this.type,
+        medLogFields.dosage: this.dosage,
+        medLogFields.route: this.route,
+        medLogFields.timeStamp: timeStamp,
+      };
+  static medLog fromJson(Map<String, Object?> json) => medLog(
+        type: json[medLogFields.type] as String?,
+        dosage: json[medLogFields.dosage] as String,
+        route: json[medLogFields.route] as String,
+        timeStamp: json[medLogFields.timeStamp] as String,
+      );
+
+}
+
 class LogDatabase {
   static final LogDatabase instance = LogDatabase._init();
 

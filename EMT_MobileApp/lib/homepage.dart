@@ -31,28 +31,6 @@ class medLogFields {
   static final String timeStamp = 'timeStamp';
 }
 
-class medLog {
-  final String? type;
-  final String? dosage;
-  final String? route;
-  final String? timeStamp;
-
-  const medLog({this.type, this.dosage, this.route, this.timeStamp});
-
-  Map<String, dynamic> toJson() => {
-        medLogFields.type: 'Medication',
-        medLogFields.dosage: '50mg',
-        medLogFields.route: 'LT',
-        medLogFields.timeStamp: 'rn',
-      };
-  static medLog fromWebJson(Map<String, Object?> json) => medLog(
-        type: json[medLogFields.type] as String?,
-        dosage: json[medLogFields.dosage] as String,
-        route: json[medLogFields.route] as String,
-        timeStamp: json[medLogFields.timeStamp] as String,
-      );
-}
-
 class _HomeState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -68,37 +46,6 @@ class _HomeState extends State<HomePage> {
       ),
       body: HomePagePanel(),
       bottomNavigationBar: LogBar(),
-      endDrawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Medications'),
-            ),
-            ListTile(
-              title: const Text('Medication 1'),
-              onTap: () {
-                addMedication(1);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Medication 2'),
-              onTap: () {
-                addMedication(2);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
@@ -108,16 +55,6 @@ class _HomeState extends State<HomePage> {
         backgroundColor: Colors.red,
       ),
     );
-  }
-
-  Future addMedication(int medicationID) async {
-    DateTime startTime = DateTime.now();
-    String formattedTime = DateFormat.Hms().format(startTime);
-    medLog newMedication = new medLog(
-        type: "Tylonel", dosage: "40mg", route: "IO", timeStamp: formattedTime);
-    dynamic jsonString = newMedication.toJson();
-    await LogDatabase.instance
-        .additionalDataUpdate((jsonString.toString()), true);
   }
 }
 

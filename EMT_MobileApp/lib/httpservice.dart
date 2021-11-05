@@ -34,7 +34,6 @@ class HttpService {
     }
     List k = json.decode(body).toList();
 
-    debugPrint("Iterable: " + k.toString());
     List<Protocol> protocols = List<Protocol>.from(k.map((model) =>
         Protocol.fromWebJson(
             model, findMedications(medicationData[k.indexOf(model)]))));
