@@ -30,7 +30,7 @@ namespace EMT_WebPortal.Controllers
             string[] allMedications = new string[_context.Protocols.Count()];
             int x = 0;
 
-            foreach(Protocol p in _context.Protocols) 
+            foreach (Protocol p in _context.Protocols)
             {
                 allProtocols[x] = p;
                 allMedications[x] = getMedicationIds(p.Id);
@@ -41,11 +41,11 @@ namespace EMT_WebPortal.Controllers
             return JsonConvert.SerializeObject(allMedications) + jsonProtocols;
         }
 
-        private string getMedicationIds(int pid) 
+        private string getMedicationIds(int pid)
         {
             string medIds = "{,";
             var query = _context.Medications_Protocols.Where(m => m.ProtocolId == pid);
-            foreach(MedicationProtocol mp in query) 
+            foreach (MedicationProtocol mp in query)
             {
                 medIds += mp.MedicationId + ",";
             }
@@ -60,7 +60,7 @@ namespace EMT_WebPortal.Controllers
 
             if (id == null)
             {
-                return "404 ID Cannot be null" ;
+                return "404 ID Cannot be null";
             }
 
             Protocol p = _context.Protocols.Find(id);
@@ -74,5 +74,8 @@ namespace EMT_WebPortal.Controllers
             string protocol = JsonConvert.SerializeObject(p);
             return JsonConvert.SerializeObject(medications) + protocol;
         }
+
+
+
     }
 }

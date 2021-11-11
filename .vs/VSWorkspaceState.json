@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\EMT_WebPortal",
+    "\\EMT_WebPortal\\EMT_WebPortal",
+    "\\EMT_WebPortal\\EMT_WebPortal\\Views",
+    "\\EMT_WebPortal\\EMT_WebPortal\\Views\\Protocols",
+    "\\EMT_WebPortal\\EMT_WebPortal\\wwwroot",
+    "\\EMT_WebPortal\\EMT_WebPortal\\wwwroot\\js"
   ],
+  "SelectedNode": "\\EMT_WebPortal\\EMT_WebPortal\\EMT_WebPortal.csproj",
   "PreviewInSolutionExplorer": false
 }

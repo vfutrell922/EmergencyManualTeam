@@ -9,7 +9,7 @@
         tinymce.init({ selector: '#OtherInformationArea' });
         tinymce.init({ selector: '#TreatmentPlanArea' });
     </script>
-
+    <link rel="stylesheet" href="~/css/vf-multiselect.css" />
 }
 
 <h1>Create New Protocol</h1>
@@ -36,10 +36,16 @@
                     <input id="hasMedicationInput" class="form-check-input" asp-for="HasAssociatedMedication" /> @Html.DisplayNameFor(model => model.HasAssociatedMedication)
                 </label>
             </div>
-            <div id="MedicationsSelect" style="display:none" class="form-group">
-                <div class="form-group">
-                    <label class="control-label"></label>
-                    <select id="selectList" multiple="multiple" class="form-control" name="MedicationsIdList" asp-items="ViewBag.MedicationsList"></select>
+            <div id="MedicationsSelect" style="display:none" class="form-group" onsubmit="getSelectedMedications()">
+                <div class="container vf-multiselect-container">
+                    <div class="row">
+                        <input id="medication_input" class="vf-multiselect-input flex" placeholder="Type to search..." onkeyup="vf_multiselect_search()"/>
+                        <input id="up-icon" class="vf-multiselect-dropdown" type="image" src="~/Images/dropdown-menu-icon-down.png" onclick="vf_multiselect_dropclick();return false;" />
+                        <input id="down-icon" class="vf-multiselect-dropdown " type="hidden" src="~/Images/dropdown-menu-icon-up.png" onclick="vf_multiselect_dropclick();return false;" />
+                    </div>
+                </div>
+                <div class="vf-option-list" id="optionList">
+
                 </div>
             </div>
             <div class="form-group">
@@ -62,7 +68,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" onclick="submitSelectedMedications()"/>
             </div>
         </form>
     </div>
@@ -72,6 +78,8 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <script type="text/javascript" src="~/js/ProtocolCreate.js"></script>
+<script type="text/javascript" src="~/js/multiselect.js"></script>
+<
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
