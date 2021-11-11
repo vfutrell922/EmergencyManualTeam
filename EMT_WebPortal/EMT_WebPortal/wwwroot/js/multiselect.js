@@ -43,8 +43,6 @@ function vf_multiselect_search() {
 function expandOptionList(search_string) {
     $("#MedicationsSelect").focus();
 
-    if (expanded) { return;}
-
     var all_meds = $(".vf-option-container");
 
     //hide all nonmatching medications
