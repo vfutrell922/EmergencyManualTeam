@@ -8,6 +8,8 @@ import 'homepage.dart';
 import 'httpservice.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
+import 'model/medication.dart';
+import 'globals.dart' as globals;
 import 'db/handbookdb_handler.dart';
 import 'package:flutter/foundation.dart';
 
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
   final HttpService httpService = HttpService();
   @override
   Widget build(BuildContext context) {
+    globals.initNextLogID();
     collectHandbook();
     return MaterialApp(
       title: 'EMT Manual',
@@ -38,10 +41,20 @@ class MyApp extends StatelessWidget {
     HandbookDatabase.instance.clearChartTable();
     httpService.getCharts().then((List<Chart> charts) async {
       for (var i = 0; i < charts.length; i++) {
-        // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
+        // debugPrint("Chart Entry >>> " + charts[i].Protocol.toString());
         await HandbookDatabase.instance.addChart(charts[i]);
       }
     });
+
+    debugPrint("Getting medication");
+    HandbookDatabase.instance.clearMedicationTable();
+    httpService.getMedications().then((List<Medication> medications) async {
+      for (var i = 0; i < medications.length; i++) {
+        // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
+        await HandbookDatabase.instance.addMedication(medications[i]);
+      }
+    });
+
     return true;
   }
 }

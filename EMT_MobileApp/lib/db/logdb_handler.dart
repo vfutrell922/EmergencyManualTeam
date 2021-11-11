@@ -1,11 +1,58 @@
 import 'dart:async';
+import 'package:emergencymanual/homepage.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:emergencymanual/model/log.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:convert' show JSON;
+import 'package:emergencymanual/globals.dart' as globals;
+import 'dart:convert';
+
+class additionalDataLogFields {
+  static final List<String> values = [
+    Medications,
+  ];
+  static final String Medications = 'Medications';
+}
+
+class additionalDataLog {
+  final List<String> Medications;
+
+  const additionalDataLog({
+    required this.Medications,
+  });
+
+  Map<String, dynamic> toJson() => {
+        additionalDataLogFields.Medications: Medications,
+      };
+  static additionalDataLog fromJson(Map<String, Object?> json) =>
+      additionalDataLog(
+        Medications: json[additionalDataLogFields.Medications] as List<String>,
+      );
+}
+
+class medLog {
+  final String? type;
+  final String? dosage;
+  final String? route;
+  final String? timeStamp;
+
+  const medLog({this.type, this.dosage, this.route, this.timeStamp});
+
+  Map<String, dynamic> toJson() => {
+        medLogFields.type: this.type,
+        medLogFields.dosage: this.dosage,
+        medLogFields.route: this.route,
+        medLogFields.timeStamp: timeStamp,
+      };
+  static medLog fromJson(Map<String, Object?> json) => medLog(
+        type: json[medLogFields.type] as String?,
+        dosage: json[medLogFields.dosage] as String,
+        route: json[medLogFields.route] as String,
+        timeStamp: json[medLogFields.timeStamp] as String,
+      );
+}
 
 class LogDatabase {
   static final LogDatabase instance = LogDatabase._init();
@@ -69,6 +116,13 @@ class LogDatabase {
     if (maps.isNotEmpty) {
       return Log.fromJson(maps.first);
     } else {
+      List<Log> dbList = await LogDatabase.instance.readAll();
+      List temp = [];
+
+      for (int i = 0; i < dbList.length; i++) {
+        temp.add(dbList[i].id.toString() + dbList[i].runNum.toString());
+      }
+      int stopHere = 0;
       throw Exception('ID $id not found');
     }
   }
@@ -85,16 +139,85 @@ class LogDatabase {
 
   // called anytime the log is running and they add more info
   // or if they go back and update info
-  // TODO this will have a lot of backend work (or will need more specific functions) to differentiate what they're updating
-  Future<void> additionalDataUpdate(String data) async {
-    //TODO this stuff will eventually be global instead
-    int hardId = 1;
-    Log curLog = await LogDatabase.instance.read(hardId);
-    print("this is the current log");
-    print(curLog);
+  // todo make data also optional
+  Future<void> additionalDataUpdate(String data, bool add,
+      [int index = 0]) async {
+    if (globals.currentLogID != -1) {
+      Log curLog = await LogDatabase.instance.read(globals.currentLogID);
+      if (curLog.additionalData != null) {
+        //Retrieves the current value from the log
+        List<dynamic> jsonMeds =
+            jsonDecode(curLog.additionalData!)["Medications"];
+        //Creates new addtionDataLog using the previous
+        additionalDataLog currentData =
+            new additionalDataLog(Medications: jsonMeds.cast<String>());
 
-    Log updatedLog = curLog.copy(additionalData: data);
-    await LogDatabase.instance.updateLog(curLog);
+        //Adds new data JSON to the medications
+        List<String> newMeds = currentData.Medications;
+        if (add) {
+          newMeds.add(data);
+        } else {
+          newMeds.removeAt(index);
+        }
+        additionalDataLog newData = new additionalDataLog(Medications: newMeds);
+
+        //Sends new logs to database
+        Log updatedLog =
+            curLog.copy(additionalData: jsonEncode(newData).toString());
+        await LogDatabase.instance.updateLog(updatedLog);
+      } else {
+        //Initializes additionalDataLog
+        additionalDataLog newDataLog =
+            new additionalDataLog(Medications: [data]);
+
+        //Creates JSON
+        String newDataJson = jsonEncode(newDataLog).toString();
+
+        //Sends to database
+        Log updatedLog = curLog.copy(additionalData: newDataJson);
+        await LogDatabase.instance.updateLog(updatedLog);
+      }
+      debugPrint("Addtional Data: ${curLog.additionalData}");
+      print("Addtional Data: ${curLog.additionalData}");
+    }
+  }
+
+  Future<List> additionalDataDecode(int id) async {
+    List<dynamic> givenMeds = [];
+    Log curLog = await LogDatabase.instance.read(id);
+    if (curLog.additionalData != null) {
+      List<dynamic> jsonMeds =
+          jsonDecode(curLog.additionalData!)["Medications"];
+      List<dynamic> meds = [];
+      for (int i = 0; i < jsonMeds.length; i++) {
+        String med = jsonMeds[i];
+
+        //med = med [];
+        med = med.substring(1);
+        med = med.substring(0, med.length - 1);
+
+        //med.replaceAll(": ", ", ");
+
+        String temp = med.split(": ").toString();
+
+        List jsonParts = temp.split(", ");
+        jsonParts[0] = jsonParts[0].substring(1);
+        jsonParts[jsonParts.length - 1] = jsonParts[jsonParts.length - 1]
+            .substring(0, jsonParts[jsonParts.length - 1].length - 1);
+
+        List medParts = [];
+        for (int i = 0; i < jsonParts.length; i++) {
+          if (i % 2 == 1) {
+            medParts.add(jsonParts[i]);
+          }
+        }
+
+        meds.add(medParts);
+      }
+
+      return meds;
+    }
+    return [];
   }
 
   // Updates the log in the database
@@ -110,21 +233,6 @@ class LogDatabase {
     return await db
         .delete(tableLogs, where: '${LogFields.id} = ?', whereArgs: [id]);
   }
-
-  // TODO method to add to json object for additional data
-  dynamic appendAdditionalData(dynamic data) {
-    // doesn't need to return anything
-  }
-
-  // sierra TODO need this?
-  dynamic myEncode(dynamic item) {
-    if (item is DateTime) {
-      return item.toIso8601String();
-    } // TODO have other types for meds, etc. to know what to add on end?
-    return item;
-  }
-
-  // TODO method to parse data from additional data
 
   Future close() async {
     final db = await instance.database;

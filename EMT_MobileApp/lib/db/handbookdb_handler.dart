@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
 import 'package:emergencymanual/model/chart.dart';
+import 'package:emergencymanual/model/medication.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:path/path.dart';
@@ -13,7 +14,7 @@ class HandbookDatabase {
 
   static Database? _database;
 
-  final String dbfilePath = 'handbook_db.db';
+  final String dbfilePath = 'handbookDBer.db';
 
   HandbookDatabase._init();
 
@@ -48,6 +49,14 @@ class HandbookDatabase {
     await db.execute("DELETE FROM $tableCharts");
   }
 
+  void clearMedicationTable() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, dbfilePath);
+
+    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+    await db.execute("DELETE FROM $tableMedications");
+  }
+
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final NameType = 'TEXT NOT NULL';
@@ -56,7 +65,6 @@ class HandbookDatabase {
     final GuidelineType = 'TEXT';
     final OLMCRequiredType = 'INTEGER NOT NULL';
     final HasAssociatedMedicationType = 'INTEGER';
-    //TODO: is this right?
     final MedicationsType = 'TEXT';
     final ChartType = 'TEXT';
     final OtherInformationType = 'TEXT';
@@ -65,6 +73,16 @@ class HandbookDatabase {
     final PhotoType = 'BLOB NOT NULL';
     final IsQuickLinkType = 'INTEGER NOT NULL';
     final ChartProtocolType = 'TEXT';
+
+    final medicationIDType = 'INTEGER NOT NULL';
+    final ActionType = 'TEXT NOT NULL';
+    final IndicationType = 'TEXT NOT NULL';
+    final ContraindicationType = 'TEXT NOT NULL';
+    final PrecautionType = 'TEXT NOT NULL';
+    final AdverseEffectsType = 'TEXT NOT NULL';
+    final AdultDosageType = 'TEXT';
+    final ChildDosageType = 'TEXT';
+    final MaxType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -88,6 +106,20 @@ class HandbookDatabase {
       ${ChartFields.IsQuickLink} $IsQuickLinkType,
       ${ChartFields.Protocol} $ChartProtocolType
     );''');
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS $tableMedications (
+      ${MedicationFields.ID} $medicationIDType,
+      ${MedicationFields.PrimaryKey} $idType,
+      ${MedicationFields.Name} $NameType,
+      ${MedicationFields.Action} $ActionType,
+      ${MedicationFields.Indication} $IndicationType,
+      ${MedicationFields.Contraindication} $ContraindicationType,
+      ${MedicationFields.Precaution} $PrecautionType,
+      ${MedicationFields.AdverseEffects} $AdverseEffectsType,
+      ${MedicationFields.AdultDosage} $AdultDosageType,
+      ${MedicationFields.ChildDosage} $ChildDosageType,
+      ${MedicationFields.Max} $MaxType
+    );''');
   }
 
   Future<Protocol> addProtocol(Protocol protocol) async {
@@ -104,6 +136,14 @@ class HandbookDatabase {
     final id = await db.insert(tableCharts, chart.toJson());
 
     return chart.copy(id: id);
+  }
+
+  Future<Medication> addMedication(Medication medication) async {
+    final db = await instance.database;
+    debugPrint("Entering Medication");
+    final id = await db.insert(tableMedications, medication.toJson());
+
+    return medication.copy(ID: id);
   }
 
   Future<Protocol> readProtocol(int id) async {
@@ -140,6 +180,40 @@ class HandbookDatabase {
     }
   }
 
+  Future<Medication> readMedication(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableMedications,
+      columns: MedicationFields.values,
+      where: '${MedicationFields.PrimaryKey} = ? ',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Medication.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<Medication> readMedicationServerID(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableMedications,
+      columns: MedicationFields.values,
+      where: '${MedicationFields.ID} = ? ',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Medication.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
   Future<List<Protocol>> readAllProtocols() async {
     final db = await instance.database;
 
@@ -158,6 +232,16 @@ class HandbookDatabase {
     final result = await db.query(tableCharts, orderBy: orderBy);
 
     return result.map((json) => Chart.fromJson(json)).toList();
+  }
+
+  Future<List<Medication>> readAllMedications() async {
+    final db = await instance.database;
+
+    final orderBy = '${MedicationFields.PrimaryKey} ASC';
+
+    final result = await db.query(tableMedications, orderBy: orderBy);
+
+    return result.map((json) => Medication.fromJson(json)).toList();
   }
 
   Future<List<String>> readNonRepeatingProtocolNames() async {
@@ -216,6 +300,43 @@ class HandbookDatabase {
         List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
     debugPrint("Returning protocols " + protocols.length.toString());
     return protocols;
+  }
+
+  // Future<String> getMedicationsFromProtocolNameAndCertification(
+  //     String name, int certification) async {
+  //   final db = await instance.database;
+  //   String whereString = '${ProtocolFields.Name} =?';
+  //   List<dynamic> whereArguments = [name];
+  //   final result = await db.query(tableProtocols,
+  //       where: whereString, whereArgs: whereArguments);
+
+  //   List<Protocol> protocols =
+  //       List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
+
+  //   debugPrint("Returning protocols " + protocols.length.toString());
+  //   return protocols;
+  // }
+
+  Future<List<Medication>> readMedicationsWithIDs(List<int> ids) async {
+    final db = await instance.database;
+    List<Medication> meds = [];
+    ids.forEach((id) async {
+      final maps = await db.query(
+        tableMedications,
+        columns: MedicationFields.values,
+        where: '${MedicationFields.PrimaryKey} = ? ',
+        whereArgs: [id],
+      );
+
+      if (maps.isNotEmpty) {
+        meds.add(Medication.fromJson(maps.first));
+      } else {
+        throw Exception('ID $id not found');
+      }
+    });
+
+    debugPrint("Returning medications with the ids " + ids.toString());
+    return meds;
   }
 
   Future<int> updateProtocol(Protocol protocol) async {

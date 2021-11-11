@@ -2,8 +2,12 @@
 // by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
 // for their Senior Project 2021 at the University of Utah.
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'db/logdb_handler.dart';
 import 'quicklinkspage.dart';
 import 'searchprotocolspage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,11 +18,25 @@ class HomePage extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class medLogFields {
+  static final List<String> values = [
+    type,
+    dosage,
+    route,
+    timeStamp,
+  ];
+  static final String type = 'type';
+  static final String dosage = 'dosage';
+  static final String route = 'route';
+  static final String timeStamp = 'timeStamp';
+}
+
 class _HomeState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _textFieldController = TextEditingController();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -28,41 +46,6 @@ class _HomeState extends State<HomePage> {
       ),
       body: HomePagePanel(),
       bottomNavigationBar: LogBar(),
-      endDrawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Medications'),
-            ),
-            ListTile(
-              title: const Text('Medication 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Medication 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!

@@ -146,7 +146,7 @@ class _LogPageState extends State<LogPage> {
             decoration: const InputDecoration(
                 border: OutlineInputBorder(), hintText: 'add more data'),
             onChanged: (text) {
-              LogDatabase.instance.additionalDataUpdate(text);
+              //LogDatabase.instance.additionalDataAdd(text);
             },
           )
         ],
