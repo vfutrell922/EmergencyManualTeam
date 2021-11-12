@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     globals.initNextLogID();
     collectHandbook();
     return MaterialApp(
-      title: 'EMT Manual',
+      title: 'Medic Manual',
       home: HomePage(),
     );
   }

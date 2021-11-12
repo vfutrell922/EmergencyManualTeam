@@ -40,7 +40,7 @@ class _HomeState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Emergency Manual'),
+        title: Text('Medic Manual'),
         centerTitle: true,
         backgroundColor: Color(0xFFFFFF),
       ),
