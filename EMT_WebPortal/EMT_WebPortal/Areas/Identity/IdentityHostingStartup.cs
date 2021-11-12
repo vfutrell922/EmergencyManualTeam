@@ -21,7 +21,7 @@ namespace EMT_WebPortal.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<EMT_WebPortalUserContext>(options =>
-                    options.UseSqlServer(/*context.Configuration.GetConnectionString("EMT_WebPortalUserContextConnection")*/GetUserDBConnectionString()));
+                    options.UseSqlServer(context.Configuration.GetConnectionString("EMT_WebPortalUserContextConnection")/*GetUserDBConnectionString()*/));
 
                 services.AddDefaultIdentity<EMT_WebPortalUser>(options => 
                 {
