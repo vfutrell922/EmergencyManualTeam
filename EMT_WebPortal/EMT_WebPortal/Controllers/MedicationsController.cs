@@ -22,9 +22,16 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Medications
         [Authorize(Roles = "CareGiver,Administrator,WebMaster")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Medications.ToListAsync());
+            var medications = from m in _context.Medications select m;
+
+            if (!String.IsNullOrEmpty(search)) 
+            {
+                medications = medications.Where(x => x.Name.Contains(search));
+            }
+
+            return View(await medications.ToListAsync());
         }
 
         // GET: Medications/Details/5

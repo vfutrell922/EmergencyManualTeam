@@ -81,6 +81,10 @@ namespace EMT_WebPortal
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name:"AboutUs",
+                    pattern: "AboutUs",
+                    defaults: new {controller = "AboutUs", action = "AboutUs" });
 
                 endpoints.MapControllerRoute(
                     name: "default",

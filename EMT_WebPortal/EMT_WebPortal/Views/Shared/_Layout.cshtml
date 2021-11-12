@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://cdn.tiny.cloud/1/5i1owr8qm7y8f3xymduk42c3s0t5s0j9c9wik1tivzp71spd/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/path/to/tinymce.min.js"></script>
 </head>
 @RenderSection("Head", required: false)
 <body>
@@ -43,6 +42,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PhoneNumbers" asp-action="Index">OLMC Contacts</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
                         {

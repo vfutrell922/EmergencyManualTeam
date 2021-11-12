@@ -44,7 +44,7 @@ namespace EMT_WebPortal.Controllers
 
             if (id == null)
             {
-                return "404 ID Cannot be null" ;
+                return "404 ID Cannot be null";
             }
 
             Medication p = _context.Medications.Find(id);
@@ -55,6 +55,63 @@ namespace EMT_WebPortal.Controllers
             }
 
             return JsonConvert.SerializeObject(p);
+        }
+
+        /// <summary>
+        /// Returns a list of medications. If alphabetize is true, the list will be in alphabetical order.
+        /// If the optional search string is provided, all medications whose name contain the string will
+        /// be returned.
+        /// </summary>
+        /// <param name="alphabetize"></param>
+        /// <param name="search_string"></param>
+        /// <returns></returns>
+        [HttpGet("getmultiselect/{alphabetize}/{search_string?}")]
+        public string GetMultiselect(string alphabetize, string search_string = null)
+        {
+            string return_values;
+            
+
+            if (search_string != null)
+            {
+                var query = from m in _context.Medications where m.Name.Contains(search_string) select m;
+                Medication[] allMedications = new Medication[query.Count()];
+                if (alphabetize == "true")
+                {
+                    query = query.OrderBy(x => x.Name);
+                }
+
+                int x = 0;
+                foreach(Medication m in query) 
+                {
+                    allMedications[x] = m;
+                    x++;
+                }
+
+                return_values = JsonConvert.SerializeObject(allMedications);
+            }
+
+            else
+            {
+                var query = from m in _context.Medications select m;
+                Medication[] allMedications = new Medication[query.Count()];
+
+                if (alphabetize == "true")
+                {
+                    query = query.OrderBy(x => x.Name);
+                }
+
+                int x = 0;
+
+                foreach (Medication m in query)
+                {
+                    allMedications[x] = m;
+                    x++;
+                }
+
+                return_values = JsonConvert.SerializeObject(allMedications);
+            }
+
+            return return_values;
         }
     }
 }

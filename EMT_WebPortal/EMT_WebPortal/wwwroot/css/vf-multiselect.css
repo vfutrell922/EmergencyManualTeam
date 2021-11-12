@@ -1,0 +1,49 @@
+﻿/*
+    Style sheet for the vf-multiselect dropdown list 
+    for ASP.NET core MVC
+    Author: Vincent Garrett Futrell
+    Last Modified: 11/9/2021
+*/
+.vf-multiselect-container{
+    display: inline-flex;
+    outline: 2px solid black;
+    height: 30px;
+    width: 350px;
+}
+
+.vf-multiselect-input{
+    order:1;
+    display:inline-flex;
+    border: none;
+    height: 30px;
+    width: 320px;
+}
+
+.vf-multiselect-dropdown{
+    order:2;
+    height: 30px;
+    width: 30px;
+}
+
+.vf-option-container{
+    display: inline;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.vf-option-box{
+    padding-right: 20px;
+}
+
+.vf-option-list{
+    display:none;
+    padding:2px;
+    border: 2px solid black;
+    max-height:400px;
+    width: 100%;
+    overflow:scroll;
+}
+
+.vf-medId{
+    display:none;
+}

@@ -6,6 +6,13 @@
 
 <h1>Index</h1>
 
+<form asp-controller="Medications" asp-action="Index">
+    <p>
+        Name: <input type="text" name="search" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 <p>
     @if (User.IsInRole("Administrator") || User.IsInRole("WebMaster"))
     {
@@ -25,19 +32,7 @@
                 @Html.DisplayNameFor(model => model.Indication)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contraindication)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Precaution)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdverseEffects)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdultDosage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChildDosage)
             </th>
             <th></th>
         </tr>
@@ -50,25 +45,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Action)
+                    @Html.Raw(item.Action)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Indication)
+                    @Html.Raw(item.Indication)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Contraindication)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precaution)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdverseEffects)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdultDosage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ChildDosage)
+                    @Html.Raw(item.Precaution)
                 </td>
                 <td>
                     @Html.ActionLink("Details", "Details", "Medications", new { id = item.ID }, new { @class = "btn btn-outline-info", @style = "width:120px;" })

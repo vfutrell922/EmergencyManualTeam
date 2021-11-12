@@ -29,9 +29,16 @@ namespace EMT_WebPortal.Controllers
 
         // GET: Protocols
         [Authorize(Roles = "CareGiver,Administrator,Director")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            return View(await _context.Protocols.ToListAsync());
+            var protocols = from p in _context.Protocols select p;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                protocols = protocols.Where(x => x.Name.Contains(search));
+            }
+
+            return View(await protocols.ToListAsync());
         }
 
         // GET: Protocols/Details/5
@@ -75,14 +82,14 @@ namespace EMT_WebPortal.Controllers
                 await _context.SaveChangesAsync();
 
                // int task = await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT EMTManualContext.dbo.Medications_Protocols ON;");
-                foreach(var item in MedicationsIdList) 
+                foreach(int i in MedicationsIdList) 
                 {
                     MedicationProtocol mp = new MedicationProtocol()
                     {
-                        MedicationId = item,
+                        MedicationId = i,
                         ProtocolId = protocol.Id,
                         Protocol = protocol,
-                        Medication = _context.Medications.Where(x => x.ID == item).FirstOrDefault()
+                        Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault()
                     };
                     _context.Medications_Protocols.Add(mp);
                 }
@@ -113,6 +120,17 @@ namespace EMT_WebPortal.Controllers
             {
                 return NotFound();
             }
+
+            //Get the Id's of associated medications
+            var medication_ids = _context.Medications_Protocols.Where(x => x.ProtocolId == id);
+            int[] id_array = new int[medication_ids.Count()];
+            int x = 0;
+            foreach(MedicationProtocol mp in medication_ids)
+            {
+                id_array[x] = mp.MedicationId;
+                x++;
+            }
+            ViewBag.MedicationIds = id_array;
             ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name", protocol.Guideline);
             return View(protocol);
         }
@@ -122,7 +140,7 @@ namespace EMT_WebPortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Certification,PatientType,HasAssociatedMedication,OtherInformation,TreatmentPlan,Guideline,OLMCRequired")] Protocol protocol, List<int> MedicationsIdList)
         {
             if (id != protocol.Id)
             {
@@ -134,6 +152,7 @@ namespace EMT_WebPortal.Controllers
                 try
                 {
                     _context.Update(protocol);
+                    UpdateMedications(id, MedicationsIdList, protocol);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -151,6 +170,33 @@ namespace EMT_WebPortal.Controllers
             }
             ViewData["GuidelineId"] = new SelectList(_context.Guidelines, "Name", "Name", protocol.Guideline);
             return View(protocol);
+        }
+
+
+        /// <summary>
+        /// Removes the old medication relations in the db and add the new
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="medicationIds"></param>
+        /// <param name="protocol"></param>
+        private void UpdateMedications(int id, List<int> medicationIds, Protocol protocol)
+        {
+            var old_ids = _context.Medications_Protocols.Where(x => x.ProtocolId == id);
+            foreach(MedicationProtocol mp in old_ids)
+            {
+                _context.Medications_Protocols.Remove(mp);
+            }
+            _context.SaveChangesAsync().Wait();
+            foreach(int i in medicationIds)
+            {
+                MedicationProtocol mp = new MedicationProtocol();
+                mp.MedicationId = i;
+                mp.ProtocolId = id;
+                mp.Protocol = protocol;
+                mp.Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault();
+                _context.Medications_Protocols.Add(mp);
+            }
+           _context.SaveChangesAsync().Wait();
         }
 
         // GET: Protocols/Delete/5
