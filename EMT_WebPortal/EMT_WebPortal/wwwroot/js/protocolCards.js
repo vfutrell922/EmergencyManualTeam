@@ -5,15 +5,14 @@
  */
 $(document).ready(populateCards());
 
+
+/**
+ * Populates the view with protocol cards
+ * */
 function populateCards() {
 
-    getProtocolNames();
-
-    //getProtocols();
-
-
-    //foreach protocol make a tab
-    //foreach tab assign to a card
+    BuildProtocolCards();
+    PopulateTabs();
 }
 
 
@@ -55,7 +54,7 @@ function addLabel(card, name, patient_type) {
     var new_name_label = document.createElement('p');
     var new_patient_label = document.createElement('p');
 
-    new_label_div.classList = "procard-label-div col-12";
+    new_label_div.classList = "procard-card-label col-12";
     new_name_label.innerHTML = name;
     new_name_label.classList = "col-12";
     new_patient_label.innerHTML = patient_type;
@@ -67,14 +66,125 @@ function addLabel(card, name, patient_type) {
 }
 
 
-/*
- * The following functions are used to get the necessary data from the server via API endpoints ******************************/
+/**
+ * The following functions are used to construct the protocol tabs and append them to their associated card
+ * */
+
+/**
+ * Creates and adds a tab to the associated card for the provided protocol
+ * @param {any} protocol
+ */
+function addTab(protocol) {
+    var tab = createTab(protocol);
+    var card = getRelatedCard(protocol.Name, protocol.PatientType);
+    card.appendChild(tab);
+}
+
+/**
+ * Returns a tab for the protocol as a div element
+ * @param {any} protocol
+ */
+function createTab(protocol) {
+
+    var tab = buildTabContainer();
+    var label = buildTabLabel(protocol);
+    var button_container = buildButtonContainer();
+
+    tab.appendChild(label);
+    tab.appendChild(button_container);
+
+    return tab;
+}
+
+/**
+ * Returns a 'div' element of the procard-tab-container class
+ * */
+function buildTabContainer() {
+    var tab_container = document.createElement('div');
+    tab_container.classList = "col-12 procard-tab-container";
+    return tab_container;
+}
 
 
 /**
- * Returns an array of unique protocol names
+ * Returns the tab label with the protocols certification
+ * @param {any} protocol
+ */
+function buildTabLabel(protocol) {
+    var tab_label_container = document.createElement('div');
+    var tab_label = document.createElement('p');
+    let certification = getCertificationString(protocol.Certification);
+
+    tab_label_container.classList = "col-3 procard-tab-label-" + certification;
+    tab_label.innerText = certification;
+    tab_label_container.appendChild(tab_label);
+
+    return tab_label_container;
+}
+
+//TODO: Finish this method
+function buildButtonContainer() {
+    var button_container = document.createElement('div');
+    button_container.classList = "col-9 procard-button-container";
+    let text = document.createElement('p');
+    text.innerHTML = "button container";
+    button_container.appendChild(text);
+    return button_container;
+}
+
+/**
+ * Returns the card with the matching name and patient_type
+ * @param {any} name
+ * @param {any} patient_type
+ */
+function getRelatedCard(name, patient_type_id) {
+    var all_cards = $(".protocol-card");
+    let matching_id = name + "-" + getPatientString(patient_type_id) + "-" + "card";
+    for (let i = 0; i < all_cards.length; i++) {
+        if (all_cards[i].id == matching_id) {
+            return all_cards[i];
+        }
+    }
+}
+
+
+/**
+ * Returns the patient_type
+ * @param {any} id
+ */
+function getPatientString(id) {
+    switch (id) {
+        case 0:
+            return "ADULT";
+        case 1:
+            return "PEDIATRIC";
+        case 2:
+            return "ALL";
+    }
+}
+
+/**
+ * Returns the patient_type
+ * @param {any} id
+ */
+function getCertificationString(id) {
+    switch (id) {
+        case 0:
+            return "EMT";
+        case 1:
+            return "AEMT";
+        case 2:
+            return "PARA";
+        case 3:
+            return "ALL";
+    }
+}
+
+
+/**
+ * Builds a card for each permutation of <protocol.name, protocol.patient_type> and adds them to the view
  * */
-function getProtocolNames() {
+function BuildProtocolCards() {
 
    $.ajax({
         type: "GET",
@@ -93,18 +203,24 @@ function getProtocolNames() {
 }
 
 /**
- * Returns an array of all protocols on the DB
+ * Builds a tab for every protocol and appends it to the proper card
  * */
-function getProtocols() {
+function PopulateTabs() {
     var values;
    $.ajax({
         type: "GET",
         url: "/api/protocolsget",
         contentType: "application/json; charset=utf-8",
        success: function (data) {
+           let collections = data.split(']')
+           var protocols = JSON.parse(collections[1] + "]");
+           for (let i = 0; i < protocols.length; i++) {
+               var protocol = protocols[i];
+               addTab(protocol);
+           }
 
-        }
+       }
     });
 
-    return val;
+
 }
