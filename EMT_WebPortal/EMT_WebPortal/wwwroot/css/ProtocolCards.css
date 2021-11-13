@@ -1,0 +1,16 @@
+﻿p{
+ 
+}
+
+.protocol-card {
+    border: 1px solid black;
+    background-color:antiquewhite;
+    margin: 15px 15px 15px 15px;
+}
+
+.procard-label-div{
+    border: 1px solid black;
+    background-color:aliceblue;
+    justify-items: center;
+}
+
