@@ -10,7 +10,6 @@ $(document).ready(populateCards());
  * Populates the view with protocol cards
  * */
 function populateCards() {
-
     BuildProtocolCards();
     PopulateTabs();
 }
@@ -257,9 +256,20 @@ function PopulateTabs() {
                var protocol = protocols[i];
                addTab(protocol);
            }
-
+           HideEmptyCards();
        }
-    });
+   });
+}
 
+function HideEmptyCards() {
+    var cards = $(".protocol-card");
 
+    for (let i = 0; i < cards.length; i++) {
+        if (cards[i].childElementCount <= 1) {
+            cards[i].style = "display:none";
+        }
+        else {
+            cards[i].style = "display:block";
+        }
+    }
 }
