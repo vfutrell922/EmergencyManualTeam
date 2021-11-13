@@ -52,6 +52,9 @@ function expandOptionList(search_string) {
             if (!current_med.id.toLowerCase().includes(search_string.toLowerCase())) {
                 current_med.style.display = "none";
             }
+            else {
+                current_med.style.display = "block";
+            }
         }
     }
     //or display all
