@@ -88,7 +88,7 @@ function createTab(protocol) {
 
     var tab = buildTabContainer();
     var label = buildTabLabel(protocol);
-    var button_container = buildButtonContainer();
+    var button_container = buildButtonContainer(protocol.Id);
 
     tab.appendChild(label);
     tab.appendChild(button_container);
@@ -122,14 +122,53 @@ function buildTabLabel(protocol) {
     return tab_label_container;
 }
 
-//TODO: Finish this method
-function buildButtonContainer() {
+/**
+ * */
+function buildButtonContainer(id) {
     var button_container = document.createElement('div');
-    button_container.classList = "col-9 procard-button-container";
-    let text = document.createElement('p');
-    text.innerHTML = "button container";
-    button_container.appendChild(text);
+
+    button_container.classList = "row col-9 procard-button-container";
+
+    var details_button = createDetailsButton(id);
+    var edit_button = createEditButton(id);
+    var delete_button = createDeleteButton(id);
+
+    button_container.appendChild(details_button);
+    button_container.appendChild(delete_button);
+    button_container.appendChild(edit_button);
+
     return button_container;
+}
+
+function createDetailsButton(id) {
+    var new_button = document.createElement('input');
+    let link = "/Protocols/Details/" + id;
+    new_button.type = "button";
+    new_button.classList = "col-6 btn btn-outline-info";
+    new_button.setAttribute("onclick", "location.href='" + link + "'");
+    new_button.value = "Details";
+    return new_button;
+}
+
+function createEditButton(id) {
+    var new_button = document.createElement('input');
+    let link = "/Protocols/Edit/" + id;
+    new_button.type = "button";
+    new_button.value = "Edit";
+    new_button.classList = "col-12 btn btn-outline-primary";
+    new_button.setAttribute("onclick", "location.href='" + link + "'");
+    return new_button;
+}
+
+function createDeleteButton(id) {
+    var new_button = document.createElement('button');
+    new_button.type = "button";
+    new_button.innerHTML = "Delete";
+    new_button.classList = "col-6 btn btn-outline-danger";
+    new_button.setAttribute("data-href", "/Protocols/Delete/" + id);
+    new_button.setAttribute("data-toggle", "modal");
+    new_button.setAttribute("data-target", "#confirmDelete");
+    return new_button;
 }
 
 /**

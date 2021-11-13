@@ -11,17 +11,9 @@
     </p>
 </form>
 
-@foreach (Protocol pro in Model)
-{
-    <p class="protocol-name" style="display:none">@pro.Name</p>
-    <p class="protocol-Cert" style="display:none">@pro.Certification</p>
-    <p class="protocol-Patient" style="display:none">@pro.PatientType</p>
-}
-
 <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
 <div id="tableContainer" class="container card-table">
     <div id="cardTable" class="row"></div>
-
 </div>
 
 <div id="confirmDelete" class="modal fade" role="dialog">
