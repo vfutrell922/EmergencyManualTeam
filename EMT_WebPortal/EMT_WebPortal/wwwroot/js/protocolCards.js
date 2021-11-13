@@ -5,13 +5,88 @@
  */
 $(document).ready(populateCards());
 
-
 /**
  * Populates the view with protocol cards
  * */
 function populateCards() {
     BuildProtocolCards();
     PopulateTabs();
+}
+
+/**
+ * Displays only the cards whose protocol names contain the input
+ * @param {any} input
+ */
+function cardSearch(input) {
+    let search_string = input.value;
+    var all_cards = $(".protocol-card");
+    for (let i = 0; i < all_cards.length; i++) {
+        var this_card = all_cards[i];
+        var label = this_card.querySelector(".procard-name-label");
+        var name = label.innerHTML;
+        if (!name.toLowerCase().includes(search_string.toLowerCase()) || all_cards[i].childElementCount <= 1) {
+            all_cards[i].style = "display:none"; 
+        }
+        else {
+            all_cards[i].style = "display:block";
+        }
+    }
+}
+
+
+/**
+ * Builds a card for each permutation of <protocol.name, protocol.patient_type> and adds them to the view
+ * */
+function BuildProtocolCards() {
+
+    $.ajax({
+        type: "GET",
+        url: "/api/protocolsget/getcardnames",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                addCard(data[i], "ADULT");
+                addCard(data[i], "PEDIATRIC");
+                addCard(data[i], "ALL")
+            }
+        }
+    });
+
+}
+
+/**
+ * Builds a tab for every protocol and appends it to the proper card
+ * */
+function PopulateTabs() {
+    var values;
+    $.ajax({
+        type: "GET",
+        url: "/api/protocolsget",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            let collections = data.split(']')
+            var protocols = JSON.parse(collections[1] + "]");
+            for (let i = 0; i < protocols.length; i++) {
+                var protocol = protocols[i];
+                addTab(protocol);
+            }
+            HideEmptyCards();
+        }
+    });
+}
+
+function HideEmptyCards() {
+    var cards = $(".protocol-card");
+
+    for (let i = 0; i < cards.length; i++) {
+        if (cards[i].childElementCount <= 1) {
+            cards[i].style = "display:none";
+        }
+        else {
+            cards[i].style = "display:block";
+        }
+    }
 }
 
 
@@ -55,9 +130,9 @@ function addLabel(card, name, patient_type) {
 
     new_label_div.classList = "procard-card-label col-12";
     new_name_label.innerHTML = name;
-    new_name_label.classList = "col-12";
+    new_name_label.classList = "col-12 procard-name-label";
     new_patient_label.innerHTML = patient_type;
-    new_patient_label.classList = "col-12";
+    new_patient_label.classList = "col-12 procard-patient-label";
 
     new_label_div.appendChild(new_name_label);
     new_label_div.appendChild(new_patient_label);
@@ -219,57 +294,4 @@ function getCertificationString(id) {
 }
 
 
-/**
- * Builds a card for each permutation of <protocol.name, protocol.patient_type> and adds them to the view
- * */
-function BuildProtocolCards() {
 
-   $.ajax({
-        type: "GET",
-        url: "/api/protocolsget/getcardnames",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            for (let i = 0; i < data.length; i++) {
-                addCard(data[i], "ADULT");
-                addCard(data[i], "PEDIATRIC");
-                addCard(data[i], "ALL")
-            }
-        }
-    });
-
-}
-
-/**
- * Builds a tab for every protocol and appends it to the proper card
- * */
-function PopulateTabs() {
-    var values;
-   $.ajax({
-        type: "GET",
-        url: "/api/protocolsget",
-        contentType: "application/json; charset=utf-8",
-       success: function (data) {
-           let collections = data.split(']')
-           var protocols = JSON.parse(collections[1] + "]");
-           for (let i = 0; i < protocols.length; i++) {
-               var protocol = protocols[i];
-               addTab(protocol);
-           }
-           HideEmptyCards();
-       }
-   });
-}
-
-function HideEmptyCards() {
-    var cards = $(".protocol-card");
-
-    for (let i = 0; i < cards.length; i++) {
-        if (cards[i].childElementCount <= 1) {
-            cards[i].style = "display:none";
-        }
-        else {
-            cards[i].style = "display:block";
-        }
-    }
-}

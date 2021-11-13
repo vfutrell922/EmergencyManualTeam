@@ -4,12 +4,7 @@
 }
 <h1>Index</h1>
 
-<form asp-controller="Protocols" asp-action="Index">
-    <p>
-        Name: <input type="text" name="search" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
+<input type="text" placeholder="Type to search..." class="col-3" onkeydown="cardSearch(this)" onkeyup="cardSearch(this)"/>
 
 <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
 <div id="tableContainer" class="container card-table">
