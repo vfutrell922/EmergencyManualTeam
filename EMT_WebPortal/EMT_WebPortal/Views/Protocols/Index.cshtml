@@ -1,8 +1,4 @@
-﻿@model IEnumerable<EMT_WebPortal.Models.Protocol>
-
-@{
-    ViewData["Title"] = "Index";
-}
+﻿
 
 <h1>Index</h1>
 
@@ -13,66 +9,24 @@
     </p>
 </form>
 
+@foreach(Protocol pro in Model)
+{
+    <p class="protocol-name" style="display:none">@pro.Name</p>
+    <p class="protocol-Cert" style="display:none">@pro.Certification</p>
+    <p class="protocol-Patient" style="display:none">@pro.PatientType</p>
+}
 
-<p>
-    <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
-</p>
+
+<div class="container card-table">
+</div>
+ <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
+
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Certification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PatientType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherInformation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TreatmentPlan)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Certification)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PatientType)
-                </td>
-                <td>
-                    @if (item.OtherInformation == null || item.OtherInformation.Length <= 100)
-                    {
-                        @Html.Raw(item.OtherInformation)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.OtherInformation.ToString().Substring(0, 100) + "...")
-                    }
-                </td>
-                <td>
-                    @if (item.TreatmentPlan == null || item.TreatmentPlan.Length <= 100)
-                    {
-                        @Html.Raw(item.TreatmentPlan)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.TreatmentPlan.ToString().Substring(0, 100) + "...")
-                    }
-                </td>
 
-                <td>
+
+
+                @*<td>
                     @Html.ActionLink("Details", "Details", "Protocols", new { id = item.Id }, new { @class = "btn btn-outline-info", @style = "width:120px;" })
                     @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
                     {
@@ -80,7 +34,7 @@
                         <button data-href="/Protocols/Delete/@item.Id" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDelete" style="width:120px;">Delete</button>
                     }
                 </td>
-            </tr>
+            </tr>*@
         }
     </tbody>
 </table>

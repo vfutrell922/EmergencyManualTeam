@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date last Modified: 11/12/2021
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EMT_WebPortal.Controllers
 {
+
     [Route("api/[controller]")]
     public class ProtocolsGetController : Controller
     {
@@ -22,6 +28,12 @@ namespace EMT_WebPortal.Controllers
             _context = context;
         }
         // GET: api/<controller>
+        /// <summary>
+        /// Returns an array of strings followed by an array of Protocol JSON objects. The values of the string
+        /// array are the comma separated ids of the associated medications in the protocol array where (string[x] == "12,13,19" are the associated
+        /// medication ids for protocols[x]
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public string Get()
         {
@@ -54,6 +66,11 @@ namespace EMT_WebPortal.Controllers
         }
 
         // GET api/<controller>/5
+        /// <summary>
+        /// Returns the medication whose id == id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public string Get(int? id)
         {
@@ -75,7 +92,21 @@ namespace EMT_WebPortal.Controllers
             return JsonConvert.SerializeObject(medications) + protocol;
         }
 
+        /// <summary>
+        /// Returns a list of all unique protocol names
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getcardnames")]
+        public string GetCardNames()
+        {
+            HashSet<string> names = new HashSet<string>();
+            foreach(Protocol p in _context.Protocols)
+            {
+                names.Add(p.Name);
+            }
 
+            return JsonConvert.SerializeObject(names);
+        }
 
     }
 }
