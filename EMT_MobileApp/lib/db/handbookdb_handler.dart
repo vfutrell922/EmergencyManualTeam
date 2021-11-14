@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
 import 'package:emergencymanual/model/chart.dart';
 import 'package:emergencymanual/model/medication.dart';
+import 'package:emergencymanual/model/phonenumber.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:path/path.dart';
@@ -33,29 +34,39 @@ class HandbookDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  void clearProtocolTable() async {
+  void clearDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, dbfilePath);
-
     Database db = await openDatabase(path, version: 1, onCreate: _createDB);
     await db.execute("DELETE FROM $tableProtocols");
-  }
-
-  void clearChartTable() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbfilePath);
-
-    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
     await db.execute("DELETE FROM $tableCharts");
-  }
-
-  void clearMedicationTable() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbfilePath);
-
-    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
     await db.execute("DELETE FROM $tableMedications");
+    await db.execute("DELETE FROM $tablePhoneNumbers");
   }
+
+  // void clearProtocolTable() async {
+  //   final dbPath = await getDatabasesPath();
+  //   final path = join(dbPath, dbfilePath);
+
+  //   Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+  //   await db.execute("DELETE FROM $tableProtocols");
+  // }
+
+  // void clearChartTable() async {
+  //   final dbPath = await getDatabasesPath();
+  //   final path = join(dbPath, dbfilePath);
+
+  //   Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+  //   await db.execute("DELETE FROM $tableCharts");
+  // }
+
+  // void clearMedicationTable() async {
+  //   final dbPath = await getDatabasesPath();
+  //   final path = join(dbPath, dbfilePath);
+
+  //   Database db = await openDatabase(path, version: 1, onCreate: _createDB);
+  //   await db.execute("DELETE FROM $tableMedications");
+  // }
 
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
@@ -83,6 +94,9 @@ class HandbookDatabase {
     final AdultDosageType = 'TEXT';
     final ChildDosageType = 'TEXT';
     final MaxType = 'TEXT';
+
+    final HospitalNameType = 'TEXT';
+    final NumberType = 'TEXT';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -120,11 +134,16 @@ class HandbookDatabase {
       ${MedicationFields.ChildDosage} $ChildDosageType,
       ${MedicationFields.Max} $MaxType
     );''');
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS $tablePhoneNumbers (
+      ${PhoneNumberFields.ID} $idType,
+      ${PhoneNumberFields.HospitalName} $HospitalNameType,
+      ${PhoneNumberFields.Number} $NumberType,
+    );''');
   }
 
   Future<Protocol> addProtocol(Protocol protocol) async {
     final db = await instance.database;
-    debugPrint("Entering Protocol");
     final id = await db.insert(tableProtocols, protocol.toJson());
 
     return protocol.copy(id: id);
@@ -132,7 +151,6 @@ class HandbookDatabase {
 
   Future<Chart> addChart(Chart chart) async {
     final db = await instance.database;
-    debugPrint("Entering Chart");
     final id = await db.insert(tableCharts, chart.toJson());
 
     return chart.copy(id: id);
@@ -140,10 +158,16 @@ class HandbookDatabase {
 
   Future<Medication> addMedication(Medication medication) async {
     final db = await instance.database;
-    debugPrint("Entering Medication");
     final id = await db.insert(tableMedications, medication.toJson());
-
     return medication.copy(ID: id);
+  }
+
+  Future<PhoneNumber> addPhoneNumber(PhoneNumber phonenum) async {
+    final db = await instance.database;
+    debugPrint("Entering PhoneNumber");
+    final id = await db.insert(tablePhoneNumbers, phonenum.toJson());
+
+    return phonenum.copy(ID: id);
   }
 
   Future<Protocol> readProtocol(int id) async {

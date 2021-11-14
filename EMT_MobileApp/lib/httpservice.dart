@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:emergencymanual/model/phonenumber.dart';
 import 'package:http/http.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
@@ -14,32 +15,7 @@ class HttpService {
   final String protocolsURL = siteName + "/api/protocolsget";
   final String chartsURL = siteName + "/api/chartsget";
   final String medicationsURL = siteName + "/api/medicationsget";
-
-  String? findMedications(String medicationInfo) {
-    if (medicationInfo.split(',').length > 2) {
-      return medicationInfo;
-    }
-    return null;
-  }
-
-  List<Protocol> readProtocols(String body) {
-    int i = 0;
-    List<String> medicationData = <String>[];
-    for (i; i <= body.length; i++) {
-      if (body[i] == "]") {
-        Iterable l = json.decode(body.substring(0, i + 1));
-        medicationData = List<String>.from(l.map((model) => model.toString()));
-        body = body.substring(i + 1, body.length);
-        break;
-      }
-    }
-    List k = json.decode(body).toList();
-
-    List<Protocol> protocols = List<Protocol>.from(k.map((model) =>
-        Protocol.fromWebJson(
-            model, findMedications(medicationData[k.indexOf(model)]))));
-    return protocols;
-  }
+  final String phonenumsURL = siteName + "/api/phonenumbersget";
 
   Future<List<Protocol>> getProtocols() async {
     Response res = await get(protocolsURL);
@@ -80,5 +56,46 @@ class HttpService {
     } else {
       throw "Unable to retrieve charts.";
     }
+  }
+
+  Future<List<PhoneNumber>> getPhoneNumbers() async {
+    Response res = await get(phonenumsURL);
+
+    if (res.statusCode == 200) {
+      debugPrint("Got chart response");
+      Iterable l = json.decode(res.body);
+
+      List<PhoneNumber> phonenums =
+          List<PhoneNumber>.from(l.map((model) => PhoneNumber.fromJson(model)));
+      return phonenums;
+    } else {
+      throw "Unable to retrieve charts.";
+    }
+  }
+
+  String? findMedications(String medicationInfo) {
+    if (medicationInfo.split(',').length > 2) {
+      return medicationInfo;
+    }
+    return null;
+  }
+
+  List<Protocol> readProtocols(String body) {
+    int i = 0;
+    List<String> medicationData = <String>[];
+    for (i; i <= body.length; i++) {
+      if (body[i] == "]") {
+        Iterable l = json.decode(body.substring(0, i + 1));
+        medicationData = List<String>.from(l.map((model) => model.toString()));
+        body = body.substring(i + 1, body.length);
+        break;
+      }
+    }
+    List k = json.decode(body).toList();
+
+    List<Protocol> protocols = List<Protocol>.from(k.map((model) =>
+        Protocol.fromWebJson(
+            model, findMedications(medicationData[k.indexOf(model)]))));
+    return protocols;
   }
 }
