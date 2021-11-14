@@ -9,6 +9,7 @@ import 'httpservice.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
+import 'model/phonenumber.dart';
 import 'globals.dart' as globals;
 import 'db/handbookdb_handler.dart';
 import 'package:flutter/foundation.dart';
