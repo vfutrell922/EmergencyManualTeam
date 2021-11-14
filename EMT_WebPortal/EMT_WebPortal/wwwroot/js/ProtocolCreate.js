@@ -1,4 +1,10 @@
-﻿$(document).ready(function () {
+﻿/*
+ *  Author: Vincent Futrell
+ *  Date Last Modified: 11/05/2021
+ *  This file contains the script to expose the medications select
+ */
+
+$(document).ready(function () {
 
     $("#hasMedicationInput").change(showList);
 
