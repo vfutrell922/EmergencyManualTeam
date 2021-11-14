@@ -36,7 +36,6 @@ class _HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textFieldController = TextEditingController();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

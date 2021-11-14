@@ -21,10 +21,32 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     globals.initNextLogID();
     collectHandbook();
-    return MaterialApp(
-      title: 'Medic Manual',
-      home: HomePage(),
-    );
+    return FutureBuilder(
+        future: collectHandbook(),
+        builder: (ctx, snapshot) {
+          // Checking if future is resolved
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If we got an error
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              return MaterialApp(
+                title: 'Medic Manual',
+                home: HomePage(),
+              );
+            }
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 
   Future<bool> collectHandbook() async {
@@ -52,6 +74,15 @@ class MyApp extends StatelessWidget {
       for (var i = 0; i < medications.length; i++) {
         // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
         await HandbookDatabase.instance.addMedication(medications[i]);
+      }
+    });
+
+    debugPrint("Getting phone numbers");
+    HandbookDatabase.instance.clearPhoneNumberTable();
+    httpService.getPhoneNumbers().then((List<PhoneNumber> phonenums) async {
+      for (var i = 0; i < phonenums.length; i++) {
+        // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
+        await HandbookDatabase.instance.addPhoneNumber(phonenums[i]);
       }
     });
 
