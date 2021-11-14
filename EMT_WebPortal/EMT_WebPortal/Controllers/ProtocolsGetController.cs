@@ -27,7 +27,7 @@ namespace EMT_WebPortal.Controllers
         {
             int protocolCount = _context.Protocols.Count();
             Protocol[] allProtocols = new Protocol[protocolCount];
-            string[] allMedications = new string[_context.Protocols.Count()];
+            string[] allMedications = new string[protocolCount];
             int x = 0;
 
             foreach (Protocol p in _context.Protocols)
