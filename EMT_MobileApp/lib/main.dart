@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     globals.initNextLogID();
-    collectHandbook();
     return FutureBuilder(
         future: collectHandbook(),
         builder: (ctx, snapshot) {
@@ -71,7 +70,7 @@ class MyApp extends StatelessWidget {
     debugPrint("Getting medication");
     httpService.getMedications().then((List<Medication> medications) async {
       for (var i = 0; i < medications.length; i++) {
-        // debugPrint("Medication Entry >>> " + charts[i].toJson().toString());
+        // debugPrint("Medication Entry >>> " + medications[i].toJson().toString());
         await HandbookDatabase.instance.addMedication(medications[i]);
       }
     });
@@ -79,7 +78,7 @@ class MyApp extends StatelessWidget {
     debugPrint("Getting phone numbers");
     httpService.getPhoneNumbers().then((List<PhoneNumber> phonenums) async {
       for (var i = 0; i < phonenums.length; i++) {
-        // debugPrint("PhoneNum Entry >>> " + charts[i].toJson().toString());
+        debugPrint("PhoneNum Entry >>> " + phonenums[i].toJson().toString());
         await HandbookDatabase.instance.addPhoneNumber(phonenums[i]);
       }
     });

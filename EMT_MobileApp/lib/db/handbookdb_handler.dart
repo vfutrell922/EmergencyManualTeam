@@ -41,32 +41,8 @@ class HandbookDatabase {
     await db.execute("DELETE FROM $tableProtocols");
     await db.execute("DELETE FROM $tableCharts");
     await db.execute("DELETE FROM $tableMedications");
-    await db.execute("DELETE FROM $tablePhoneNumbers");
+    // await db.execute("DELETE FROM $tablePhoneNumbers");
   }
-
-  // void clearProtocolTable() async {
-  //   final dbPath = await getDatabasesPath();
-  //   final path = join(dbPath, dbfilePath);
-
-  //   Database db = await openDatabase(path, version: 1, onCreate: _createDB);
-  //   await db.execute("DELETE FROM $tableProtocols");
-  // }
-
-  // void clearChartTable() async {
-  //   final dbPath = await getDatabasesPath();
-  //   final path = join(dbPath, dbfilePath);
-
-  //   Database db = await openDatabase(path, version: 1, onCreate: _createDB);
-  //   await db.execute("DELETE FROM $tableCharts");
-  // }
-
-  // void clearMedicationTable() async {
-  //   final dbPath = await getDatabasesPath();
-  //   final path = join(dbPath, dbfilePath);
-
-  //   Database db = await openDatabase(path, version: 1, onCreate: _createDB);
-  //   await db.execute("DELETE FROM $tableMedications");
-  // }
 
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
@@ -138,7 +114,7 @@ class HandbookDatabase {
     CREATE TABLE IF NOT EXISTS $tablePhoneNumbers (
       ${PhoneNumberFields.ID} $idType,
       ${PhoneNumberFields.HospitalName} $HospitalNameType,
-      ${PhoneNumberFields.Number} $NumberType,
+      ${PhoneNumberFields.Number} $NumberType
     );''');
   }
 
