@@ -9,6 +9,7 @@ import 'httpservice.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
+import 'model/phonenumber.dart';
 import 'globals.dart' as globals;
 import 'db/handbookdb_handler.dart';
 import 'package:flutter/foundation.dart';
@@ -20,16 +21,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     globals.initNextLogID();
-    collectHandbook();
-    return MaterialApp(
-      title: 'Medic Manual',
-      home: HomePage(),
-    );
+    return FutureBuilder(
+        future: collectHandbook(),
+        builder: (ctx, snapshot) {
+          // Checking if future is resolved
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If we got an error
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              return MaterialApp(
+                title: 'Medic Manual',
+                home: HomePage(),
+              );
+            }
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 
   Future<bool> collectHandbook() async {
-    debugPrint("Getting protocols");
-    HandbookDatabase.instance.clearProtocolTable();
+    HandbookDatabase.instance.clearDB();
+    // debugPrint("Getting protocols");
     httpService.getProtocols().then((List<Protocol> protocols) async {
       for (var i = 0; i < protocols.length; i++) {
         // debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
@@ -37,8 +59,7 @@ class MyApp extends StatelessWidget {
       }
     });
 
-    debugPrint("Getting charts");
-    HandbookDatabase.instance.clearChartTable();
+    // debugPrint("Getting charts");
     httpService.getCharts().then((List<Chart> charts) async {
       for (var i = 0; i < charts.length; i++) {
         // debugPrint("Chart Entry >>> " + charts[i].Protocol.toString());
@@ -46,12 +67,19 @@ class MyApp extends StatelessWidget {
       }
     });
 
-    debugPrint("Getting medication");
-    HandbookDatabase.instance.clearMedicationTable();
+    // debugPrint("Getting medication");
     httpService.getMedications().then((List<Medication> medications) async {
       for (var i = 0; i < medications.length; i++) {
-        // debugPrint("Chart Entry >>> " + charts[i].toJson().toString());
+        // debugPrint("Medication Entry >>> " + medications[i].toJson().toString());
         await HandbookDatabase.instance.addMedication(medications[i]);
+      }
+    });
+
+    // debugPrint("Getting phone numbers");
+    httpService.getPhoneNumbers().then((List<PhoneNumber> phonenums) async {
+      for (var i = 0; i < phonenums.length; i++) {
+        // debugPrint("PhoneNum Entry >>> " + phonenums[i].toJson().toString());
+        await HandbookDatabase.instance.addPhoneNumber(phonenums[i]);
       }
     });
 

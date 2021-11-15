@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
 import 'package:emergencymanual/model/chart.dart';
 import 'package:emergencymanual/model/medication.dart';
+import 'package:emergencymanual/model/phonenumber.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:path/path.dart';
@@ -33,28 +34,14 @@ class HandbookDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  void clearProtocolTable() async {
+  void clearDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, dbfilePath);
-
     Database db = await openDatabase(path, version: 1, onCreate: _createDB);
     await db.execute("DELETE FROM $tableProtocols");
-  }
-
-  void clearChartTable() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbfilePath);
-
-    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
     await db.execute("DELETE FROM $tableCharts");
-  }
-
-  void clearMedicationTable() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbfilePath);
-
-    Database db = await openDatabase(path, version: 1, onCreate: _createDB);
     await db.execute("DELETE FROM $tableMedications");
+    await db.execute("DELETE FROM $tablePhoneNumbers");
   }
 
   Future _createDB(Database db, int version) async {
@@ -83,6 +70,9 @@ class HandbookDatabase {
     final AdultDosageType = 'TEXT';
     final ChildDosageType = 'TEXT';
     final MaxType = 'TEXT';
+
+    final HospitalNameType = 'TEXT NOT NULL';
+    final NumberType = 'TEXT NOT NULL';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -120,11 +110,16 @@ class HandbookDatabase {
       ${MedicationFields.ChildDosage} $ChildDosageType,
       ${MedicationFields.Max} $MaxType
     );''');
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS $tablePhoneNumbers (
+      ${PhoneNumberFields.Id} $idType,
+      ${PhoneNumberFields.hospitalName} $HospitalNameType,
+      ${PhoneNumberFields.numberString} $NumberType
+    );''');
   }
 
   Future<Protocol> addProtocol(Protocol protocol) async {
     final db = await instance.database;
-    debugPrint("Entering Protocol");
     final id = await db.insert(tableProtocols, protocol.toJson());
 
     return protocol.copy(id: id);
@@ -132,7 +127,6 @@ class HandbookDatabase {
 
   Future<Chart> addChart(Chart chart) async {
     final db = await instance.database;
-    debugPrint("Entering Chart");
     final id = await db.insert(tableCharts, chart.toJson());
 
     return chart.copy(id: id);
@@ -140,10 +134,15 @@ class HandbookDatabase {
 
   Future<Medication> addMedication(Medication medication) async {
     final db = await instance.database;
-    debugPrint("Entering Medication");
     final id = await db.insert(tableMedications, medication.toJson());
-
     return medication.copy(ID: id);
+  }
+
+  Future<PhoneNumber> addPhoneNumber(PhoneNumber phonenum) async {
+    final db = await instance.database;
+    final id = await db.insert(tablePhoneNumbers, phonenum.toJson());
+
+    return phonenum.copy(Id: id);
   }
 
   Future<Protocol> readProtocol(int id) async {
@@ -244,6 +243,16 @@ class HandbookDatabase {
     return result.map((json) => Medication.fromJson(json)).toList();
   }
 
+  Future<List<PhoneNumber>> readAllPhoneNumbers() async {
+    final db = await instance.database;
+
+    final orderBy = '${PhoneNumberFields.Id} ASC';
+
+    final result = await db.query(tablePhoneNumbers, orderBy: orderBy);
+
+    return result.map((json) => PhoneNumber.fromJson(json)).toList();
+  }
+
   Future<List<String>> readNonRepeatingProtocolNames() async {
     final db = await instance.database;
 
@@ -270,8 +279,6 @@ class HandbookDatabase {
 
     List<Chart> charts =
         List<Chart>.from(result.map((model) => Chart.fromJson(model)));
-    debugPrint("Returning charts for specified protocol length: " +
-        charts.length.toString());
     return charts;
   }
 
@@ -298,24 +305,9 @@ class HandbookDatabase {
 
     List<Protocol> protocols =
         List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-    debugPrint("Returning protocols " + protocols.length.toString());
+    // debugPrint("Returning protocols " + protocols.length.toString());
     return protocols;
   }
-
-  // Future<String> getMedicationsFromProtocolNameAndCertification(
-  //     String name, int certification) async {
-  //   final db = await instance.database;
-  //   String whereString = '${ProtocolFields.Name} =?';
-  //   List<dynamic> whereArguments = [name];
-  //   final result = await db.query(tableProtocols,
-  //       where: whereString, whereArgs: whereArguments);
-
-  //   List<Protocol> protocols =
-  //       List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-
-  //   debugPrint("Returning protocols " + protocols.length.toString());
-  //   return protocols;
-  // }
 
   Future<List<Medication>> readMedicationsWithIDs(List<int> ids) async {
     final db = await instance.database;

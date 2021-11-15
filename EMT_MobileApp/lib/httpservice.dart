@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:emergencymanual/model/phonenumber.dart';
 import 'package:http/http.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
@@ -14,6 +15,58 @@ class HttpService {
   final String protocolsURL = siteName + "/api/protocolsget";
   final String chartsURL = siteName + "/api/chartsget";
   final String medicationsURL = siteName + "/api/medicationsget";
+  final String phonenumsURL = siteName + "/api/phonenumbersget";
+
+  Future<List<Protocol>> getProtocols() async {
+    Response res = await get(protocolsURL);
+
+    if (res.statusCode == 200) {
+      return readProtocols(res.body);
+    } else {
+      throw "Unable to retrieve protocols.";
+    }
+  }
+
+  Future<List<Medication>> getMedications() async {
+    Response res = await get(medicationsURL);
+
+    if (res.statusCode == 200) {
+      Iterable l = json.decode(res.body);
+
+      List<Medication> medications = List<Medication>.from(
+          l.map((model) => Medication.fromWebJson(model)));
+      return medications;
+    } else {
+      throw "Unable to retrieve medications.";
+    }
+  }
+
+  Future<List<Chart>> getCharts() async {
+    Response res = await get(chartsURL);
+
+    if (res.statusCode == 200) {
+      Iterable l = json.decode(res.body);
+
+      List<Chart> charts =
+          List<Chart>.from(l.map((model) => Chart.fromWebJson(model)));
+      return charts;
+    } else {
+      throw "Unable to retrieve charts.";
+    }
+  }
+
+  Future<List<PhoneNumber>> getPhoneNumbers() async {
+    Response res = await get(phonenumsURL);
+
+    if (res.statusCode == 200) {
+      Iterable l = json.decode(res.body);
+      List<PhoneNumber> phonenums = List<PhoneNumber>.from(
+          l.map((model) => PhoneNumber.fromWebJson(model)));
+      return phonenums;
+    } else {
+      throw "Unable to retrieve phone numbers.";
+    }
+  }
 
   String? findMedications(String medicationInfo) {
     if (medicationInfo.split(',').length > 2) {
@@ -39,46 +92,5 @@ class HttpService {
         Protocol.fromWebJson(
             model, findMedications(medicationData[k.indexOf(model)]))));
     return protocols;
-  }
-
-  Future<List<Protocol>> getProtocols() async {
-    Response res = await get(protocolsURL);
-
-    if (res.statusCode == 200) {
-      debugPrint("Got protocol response");
-      return readProtocols(res.body);
-    } else {
-      throw "Unable to retrieve protocols.";
-    }
-  }
-
-  Future<List<Medication>> getMedications() async {
-    Response res = await get(medicationsURL);
-
-    if (res.statusCode == 200) {
-      debugPrint("Got medication response");
-      Iterable l = json.decode(res.body);
-
-      List<Medication> medications = List<Medication>.from(
-          l.map((model) => Medication.fromWebJson(model)));
-      return medications;
-    } else {
-      throw "Unable to retrieve medications.";
-    }
-  }
-
-  Future<List<Chart>> getCharts() async {
-    Response res = await get(chartsURL);
-
-    if (res.statusCode == 200) {
-      debugPrint("Got chart response");
-      Iterable l = json.decode(res.body);
-
-      List<Chart> charts =
-          List<Chart>.from(l.map((model) => Chart.fromWebJson(model)));
-      return charts;
-    } else {
-      throw "Unable to retrieve charts.";
-    }
   }
 }

@@ -6,14 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
-import 'homepage.dart';
+import 'phonepage.dart';
 
 class OldLogsPage extends StatefulWidget {
   @override
   _OldLogsPageState createState() => _OldLogsPageState();
 }
-
-int _selectedIndex = 0;
 
 class _OldLogsPageState extends State<OldLogsPage> {
   List<Log> logs = [];
@@ -26,6 +24,7 @@ class _OldLogsPageState extends State<OldLogsPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: PhoneButton(context),
       appBar: AppBar(
         title: Text('Logs'),
         centerTitle: true,
