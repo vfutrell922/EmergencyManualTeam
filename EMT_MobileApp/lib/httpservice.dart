@@ -60,8 +60,6 @@ class HttpService {
 
     if (res.statusCode == 200) {
       Iterable l = json.decode(res.body);
-
-      debugPrint("Got phone number response: " + l.toString());
       List<PhoneNumber> phonenums = List<PhoneNumber>.from(
           l.map((model) => PhoneNumber.fromWebJson(model)));
       return phonenums;

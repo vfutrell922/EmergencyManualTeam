@@ -40,7 +40,6 @@ class _PhonePageState extends State<PhonePage> {
   void _getPhoneNumbers() async {
     List<PhoneNumber> tempList =
         await HandbookDatabase.instance.readAllPhoneNumbers();
-    debugPrint("phone numbers: " + tempList.toString());
 
     setState(() {
       phonenums = tempList;
