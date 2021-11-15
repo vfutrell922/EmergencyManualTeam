@@ -59,15 +59,6 @@ class _PhonePageState extends State<PhonePage> {
     });
   }
 
-  Widget PhoneNumberEntry(PhoneNumber pn) {
-    return new ListTile(
-      title: Text(pn.hospitalName),
-      onTap: () {
-        launch("tel://" + pn.numberString);
-      },
-    );
-  }
-
   Widget _buildPhoneNumsList() {
     return ListView.builder(
       itemCount: phonenums.length,
@@ -129,8 +120,5 @@ class _PhonePageState extends State<PhonePage> {
         ));
       },
     );
-    // itemBuilder: (BuildContext context, int index) {
-    //   return PhoneNumberEntry(phonenums[index]);
-    // },
   }
 }
