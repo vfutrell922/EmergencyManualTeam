@@ -110,7 +110,7 @@ class _SearchPageState extends State<SearchProtocolsPage> {
           child: Container(
               height: 45.0,
               decoration: BoxDecoration(
-                color: const Color(0xff7c94b6),
+                color: Color.fromRGBO(172, 206, 242, 1),
               ),
               child: new Column(
                 children: <Widget>[

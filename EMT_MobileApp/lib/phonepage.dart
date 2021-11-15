@@ -71,6 +71,7 @@ class _PhonePageState extends State<PhonePage> {
           child: Container(
               height: 45.0,
               decoration: BoxDecoration(
+                color: Color.fromRGBO(172, 206, 242, 1),
                 border: Border.all(
                   color: Colors.black,
                   width: 2,
