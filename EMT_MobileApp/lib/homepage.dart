@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:emergencymanual/phonepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -47,8 +48,10 @@ class _HomeState extends State<HomePage> {
       bottomNavigationBar: LogBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your onPressed code here!
-          launch("tel://18884475594");
+          Navigator.push(
+            context,
+            new MaterialPageRoute(builder: (context) => new PhonePage()),
+          );
         },
         child: const Icon(Icons.local_phone),
         backgroundColor: Colors.red,

@@ -21,7 +21,6 @@ class HttpService {
     Response res = await get(protocolsURL);
 
     if (res.statusCode == 200) {
-      debugPrint("Got protocol response");
       return readProtocols(res.body);
     } else {
       throw "Unable to retrieve protocols.";
@@ -32,7 +31,6 @@ class HttpService {
     Response res = await get(medicationsURL);
 
     if (res.statusCode == 200) {
-      debugPrint("Got medication response");
       Iterable l = json.decode(res.body);
 
       List<Medication> medications = List<Medication>.from(
@@ -47,7 +45,6 @@ class HttpService {
     Response res = await get(chartsURL);
 
     if (res.statusCode == 200) {
-      debugPrint("Got chart response");
       Iterable l = json.decode(res.body);
 
       List<Chart> charts =
@@ -62,14 +59,14 @@ class HttpService {
     Response res = await get(phonenumsURL);
 
     if (res.statusCode == 200) {
-      debugPrint("Got chart response");
       Iterable l = json.decode(res.body);
 
-      List<PhoneNumber> phonenums =
-          List<PhoneNumber>.from(l.map((model) => PhoneNumber.fromJson(model)));
+      debugPrint("Got phone number response: " + l.toString());
+      List<PhoneNumber> phonenums = List<PhoneNumber>.from(
+          l.map((model) => PhoneNumber.fromWebJson(model)));
       return phonenums;
     } else {
-      throw "Unable to retrieve charts.";
+      throw "Unable to retrieve phone numbers.";
     }
   }
 

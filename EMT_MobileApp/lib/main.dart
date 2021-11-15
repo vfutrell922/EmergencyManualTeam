@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
 
   Future<bool> collectHandbook() async {
     HandbookDatabase.instance.clearDB();
-    debugPrint("Getting protocols");
+    // debugPrint("Getting protocols");
     httpService.getProtocols().then((List<Protocol> protocols) async {
       for (var i = 0; i < protocols.length; i++) {
         // debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
       }
     });
 
-    debugPrint("Getting charts");
+    // debugPrint("Getting charts");
     httpService.getCharts().then((List<Chart> charts) async {
       for (var i = 0; i < charts.length; i++) {
         // debugPrint("Chart Entry >>> " + charts[i].Protocol.toString());
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       }
     });
 
-    debugPrint("Getting medication");
+    // debugPrint("Getting medication");
     httpService.getMedications().then((List<Medication> medications) async {
       for (var i = 0; i < medications.length; i++) {
         // debugPrint("Medication Entry >>> " + medications[i].toJson().toString());
@@ -75,10 +75,10 @@ class MyApp extends StatelessWidget {
       }
     });
 
-    debugPrint("Getting phone numbers");
+    // debugPrint("Getting phone numbers");
     httpService.getPhoneNumbers().then((List<PhoneNumber> phonenums) async {
       for (var i = 0; i < phonenums.length; i++) {
-        debugPrint("PhoneNum Entry >>> " + phonenums[i].toJson().toString());
+        // debugPrint("PhoneNum Entry >>> " + phonenums[i].toJson().toString());
         await HandbookDatabase.instance.addPhoneNumber(phonenums[i]);
       }
     });

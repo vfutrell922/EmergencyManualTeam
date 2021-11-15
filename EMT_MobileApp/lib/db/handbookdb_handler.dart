@@ -41,7 +41,7 @@ class HandbookDatabase {
     await db.execute("DELETE FROM $tableProtocols");
     await db.execute("DELETE FROM $tableCharts");
     await db.execute("DELETE FROM $tableMedications");
-    // await db.execute("DELETE FROM $tablePhoneNumbers");
+    await db.execute("DELETE FROM $tablePhoneNumbers");
   }
 
   Future _createDB(Database db, int version) async {
@@ -71,8 +71,8 @@ class HandbookDatabase {
     final ChildDosageType = 'TEXT';
     final MaxType = 'TEXT';
 
-    final HospitalNameType = 'TEXT';
-    final NumberType = 'TEXT';
+    final HospitalNameType = 'TEXT NOT NULL';
+    final NumberType = 'TEXT NOT NULL';
 
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tableProtocols (
@@ -112,9 +112,9 @@ class HandbookDatabase {
     );''');
     await db.execute('''
     CREATE TABLE IF NOT EXISTS $tablePhoneNumbers (
-      ${PhoneNumberFields.ID} $idType,
-      ${PhoneNumberFields.HospitalName} $HospitalNameType,
-      ${PhoneNumberFields.Number} $NumberType
+      ${PhoneNumberFields.Id} $idType,
+      ${PhoneNumberFields.hospitalName} $HospitalNameType,
+      ${PhoneNumberFields.numberString} $NumberType
     );''');
   }
 
@@ -140,10 +140,9 @@ class HandbookDatabase {
 
   Future<PhoneNumber> addPhoneNumber(PhoneNumber phonenum) async {
     final db = await instance.database;
-    debugPrint("Entering PhoneNumber");
     final id = await db.insert(tablePhoneNumbers, phonenum.toJson());
 
-    return phonenum.copy(ID: id);
+    return phonenum.copy(Id: id);
   }
 
   Future<Protocol> readProtocol(int id) async {
@@ -242,6 +241,17 @@ class HandbookDatabase {
     final result = await db.query(tableMedications, orderBy: orderBy);
 
     return result.map((json) => Medication.fromJson(json)).toList();
+  }
+
+  Future<List<PhoneNumber>> readAllPhoneNumbers() async {
+    final db = await instance.database;
+
+    final orderBy = '${PhoneNumberFields.Id} ASC';
+
+    final result = await db.query(tablePhoneNumbers, orderBy: orderBy);
+
+    debugPrint("Result from db query for pns: " + result.toString());
+    return result.map((json) => PhoneNumber.fromJson(json)).toList();
   }
 
   Future<List<String>> readNonRepeatingProtocolNames() async {
