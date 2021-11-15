@@ -250,7 +250,6 @@ class HandbookDatabase {
 
     final result = await db.query(tablePhoneNumbers, orderBy: orderBy);
 
-    debugPrint("Result from db query for pns: " + result.toString());
     return result.map((json) => PhoneNumber.fromJson(json)).toList();
   }
 
@@ -280,8 +279,6 @@ class HandbookDatabase {
 
     List<Chart> charts =
         List<Chart>.from(result.map((model) => Chart.fromJson(model)));
-    debugPrint("Returning charts for specified protocol length: " +
-        charts.length.toString());
     return charts;
   }
 
@@ -308,24 +305,9 @@ class HandbookDatabase {
 
     List<Protocol> protocols =
         List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-    debugPrint("Returning protocols " + protocols.length.toString());
+    // debugPrint("Returning protocols " + protocols.length.toString());
     return protocols;
   }
-
-  // Future<String> getMedicationsFromProtocolNameAndCertification(
-  //     String name, int certification) async {
-  //   final db = await instance.database;
-  //   String whereString = '${ProtocolFields.Name} =?';
-  //   List<dynamic> whereArguments = [name];
-  //   final result = await db.query(tableProtocols,
-  //       where: whereString, whereArgs: whereArguments);
-
-  //   List<Protocol> protocols =
-  //       List<Protocol>.from(result.map((model) => Protocol.fromJson(model)));
-
-  //   debugPrint("Returning protocols " + protocols.length.toString());
-  //   return protocols;
-  // }
 
   Future<List<Medication>> readMedicationsWithIDs(List<int> ids) async {
     final db = await instance.database;
