@@ -46,16 +46,7 @@ class _HomeState extends State<HomePage> {
       ),
       body: HomePagePanel(),
       bottomNavigationBar: LogBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            new MaterialPageRoute(builder: (context) => new PhonePage()),
-          );
-        },
-        child: const Icon(Icons.local_phone),
-        backgroundColor: Colors.red,
-      ),
+      floatingActionButton: PhoneButton(context),
     );
   }
 }
