@@ -48,22 +48,73 @@ class _OldLogsPageState extends State<OldLogsPage> {
     return ListView.builder(
       itemCount: logs.length,
       itemBuilder: (BuildContext context, int index) {
-        return new Card(
-          child: ListTile(
-              title: Text('Run ID: ${logs[index].runNum}'),
-              subtitle: Text('Run Time: ${logs[index].startTime}'),
-              selectedTileColor: Colors.grey[300],
-              trailing: Icon(Icons.arrow_forward_ios_rounded),
-              onTap: () {
-                Navigator.of(context)
-                    .push(
-                      new MaterialPageRoute(
-                          builder: (context) =>
-                              new LogDetailsPage(curLog: logs[index])),
-                    )
-                    .then((val) => {_getLogs()});
-              }),
-        );
+        return Card(
+            child: new GestureDetector(
+          onTap: () {
+            Navigator.of(context)
+                .push(
+                  new MaterialPageRoute(
+                      builder: (context) =>
+                          new LogDetailsPage(curLog: logs[index])),
+                )
+                .then((val) => {_getLogs()});
+          },
+          child: Container(
+              child: new Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    new Container(
+                      child: Text(
+                        'Run ID: ${logs[index].runNum}',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 25.0),
+                      ),
+                    ),
+                    new GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(
+                              new MaterialPageRoute(
+                                  builder: (context) =>
+                                      new LogDetailsPage(curLog: logs[index])),
+                            )
+                            .then((val) => {_getLogs()});
+                      },
+                      child: new Container(
+                          margin: const EdgeInsets.all(0.0),
+                          child: new Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 30.0,
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Run Time: ${logs[index].startTime}',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 15.0),
+                      ),
+                    ]),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 0.0),
+                child: Container(
+                  height: 5.0,
+                ),
+              ),
+            ],
+          )),
+        ));
       },
     );
   }

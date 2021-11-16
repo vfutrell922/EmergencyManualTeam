@@ -26,10 +26,10 @@ Future<bool> checkInternetAndUpdateHandbookdb() async {
 
 Future<bool> collectHandbook() async {
   HandbookDatabase.instance.clearDB();
-  debugPrint("Getting protocols");
+  // debugPrint("Getting protocols");
   httpService.getProtocols().then((List<Protocol> protocols) async {
     for (var i = 0; i < protocols.length; i++) {
-      debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
+      // debugPrint("Protocol Entry >>> " + protocols[i].toJson().toString());
       await HandbookDatabase.instance.addProtocol(protocols[i]);
     }
   });

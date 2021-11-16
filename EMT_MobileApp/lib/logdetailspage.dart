@@ -43,19 +43,7 @@ class _LogDetailsState extends State<LogDetailsPage> {
       ),
       body: Center(
         child: _buildDetails(context),
-
-        // child: new Column(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: <Widget>[
-        //       new Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           new Text("Date Performed: March 10, 2021"),
-        //         ],
-        //       )
-        //     ]),
       ),
-      bottomNavigationBar: LogBar(),
     );
   }
 

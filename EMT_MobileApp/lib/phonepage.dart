@@ -90,10 +90,6 @@ class _PhonePageState extends State<PhonePage> {
                             textAlign: TextAlign.left,
                             style: TextStyle(fontSize: 30.0),
                           ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15.0),
-                                  topRight: Radius.circular(15.0))),
                         ),
                         new GestureDetector(
                           onTap: () {
