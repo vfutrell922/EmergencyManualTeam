@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'model/chart.dart';
 import 'db/handbookdb_handler.dart';
 import 'logbar.dart';
+import 'phonepage.dart';
 
 class GridLayout {
   final String title;
@@ -58,6 +59,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
 
   Widget QuickLinks(BuildContext context) {
     return Scaffold(
+        floatingActionButton: PhoneButton(context),
         bottomNavigationBar: LogBar(),
         appBar: AppBar(
           title: Text('Quick Links'),

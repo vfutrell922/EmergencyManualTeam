@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:emergencymanual/phonepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -36,7 +37,6 @@ class _HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textFieldController = TextEditingController();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -46,14 +46,7 @@ class _HomeState extends State<HomePage> {
       ),
       body: HomePagePanel(),
       bottomNavigationBar: LogBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-          launch("tel://18884475594");
-        },
-        child: const Icon(Icons.local_phone),
-        backgroundColor: Colors.red,
-      ),
+      floatingActionButton: PhoneButton(context),
     );
   }
 }

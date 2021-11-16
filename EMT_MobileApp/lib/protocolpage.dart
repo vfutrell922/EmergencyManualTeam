@@ -12,6 +12,7 @@ import 'model/medication.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'logbar.dart';
 import 'db/logdb_handler.dart';
+import 'phonepage.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'globals.dart' as globals;
 
@@ -344,6 +345,7 @@ class _ProtocolState extends State<ProtocolPage> {
         initialIndex: 1,
         length: 5,
         child: Scaffold(
+          floatingActionButton: PhoneButton(context),
           bottomNavigationBar: LogBar(),
           appBar: AppBar(
               backgroundColor: Color(0xFFFFFF),

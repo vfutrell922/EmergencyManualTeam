@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'protocolpage.dart';
 import 'logbar.dart';
+import 'phonepage.dart';
 
 import 'db/handbookdb_handler.dart';
 
@@ -54,6 +55,7 @@ class _SearchPageState extends State<SearchProtocolsPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: PhoneButton(context),
       bottomNavigationBar: LogBar(),
       appBar: AppBar(
         title: Text('Protocol Glossary'),
@@ -96,18 +98,80 @@ class _SearchPageState extends State<SearchProtocolsPage> {
     return ListView.builder(
       itemCount: protocols == null ? 0 : filteredProtocols.length,
       itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
-          title: Text(filteredProtocols[index]),
-          onTap: () => {
+        return Card(
+            child: new GestureDetector(
+          onTap: () {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
                     builder: (context) =>
-                        new ProtocolPage(filteredProtocols[index]))),
+                        new ProtocolPage(filteredProtocols[index])));
           },
-        );
+          child: Container(
+              height: 45.0,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(172, 206, 242, 1),
+              ),
+              child: new Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        new Container(
+                          child: Text(
+                            filteredProtocols[index],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 15.0),
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0),
+                                  topRight: Radius.circular(15.0))),
+                        ),
+                        new GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => new ProtocolPage(
+                                        filteredProtocols[index])));
+                          },
+                          child: new Container(
+                              margin: const EdgeInsets.all(0.0),
+                              child: new Icon(
+                                Icons.arrow_forward,
+                                color: Colors.black,
+                                size: 30.0,
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 0.0),
+                    child: Container(
+                      height: 5.0,
+                    ),
+                  ),
+                ],
+              )),
+        ));
       },
     );
+    //     return new ListTile(
+    //       title: Text(filteredProtocols[index]),
+    //       onTap: () => {
+    //         Navigator.push(
+    //             context,
+    //             new MaterialPageRoute(
+    //                 builder: (context) =>
+    //                     new ProtocolPage(filteredProtocols[index]))),
+    //       },
+    //     );
+    //   },
+    // );
   }
 
   void _getProtocols() async {
