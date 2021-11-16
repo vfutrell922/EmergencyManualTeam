@@ -37,10 +37,10 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input id="hasMedicationInput" class="form-check-input" asp-for="HasAssociatedMedication" /> @Html.DisplayNameFor(model => model.HasAssociatedMedication)
+                    <input id="hasMedicationInput" type="checkbox" asp-for="HasAssociatedMedication" /> @Html.DisplayNameFor(model => model.HasAssociatedMedication)
                 </label>
             </div>
-            <div id="MedicationsSelect" style="display:block" class="form-group" onsubmit="getSelectedMedications()">
+            <div id="MedicationsSelect" style="display:none" class="form-group" onsubmit="getSelectedMedications()">
                 <div class="container vf-multiselect-container">
                     <div class="row">
                         <input id="medication_input" class="vf-multiselect-input flex" placeholder="Type to search..." onkeydown="vf_multiselect_search()"/>
