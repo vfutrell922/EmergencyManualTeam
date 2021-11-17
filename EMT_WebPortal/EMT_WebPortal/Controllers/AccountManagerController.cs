@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 09/13/2021
+ * This file contains the controller class for the AccountManager 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

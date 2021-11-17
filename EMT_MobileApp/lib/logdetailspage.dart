@@ -151,9 +151,10 @@ class _LogDetailsState extends State<LogDetailsPage> {
                 color: Colors.red,
               )),
           onPressed: () async {
+            //Navigator.pop(context);
             await LogDatabase.instance
                 .additionalDataUpdate(
-                    curLog.additionalData![index], false, index)
+                    curLog.additionalData![index], false, curLog.id!, index)
                 .then((value) {
               setState(() {
                 Navigator.pop(context);

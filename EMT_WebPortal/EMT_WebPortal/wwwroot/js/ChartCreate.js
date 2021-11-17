@@ -1,4 +1,10 @@
-﻿var selectElement = document.querySelector("input[name='file']");
+﻿/**
+ * Author: Vincent Futrell
+ * Date Last Modified: 10/24/2021
+ * This file contains the scripts for the Charts create page 
+ * */
+
+var selectElement = document.querySelector("input[name='file']");
 selectElement.addEventListener('change', fillName);
 
 function fillName()

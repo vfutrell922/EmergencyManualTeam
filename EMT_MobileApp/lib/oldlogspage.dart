@@ -39,6 +39,8 @@ class _OldLogsPageState extends State<OldLogsPage> {
   void _getLogs() async {
     List<Log> dbList = await LogDatabase.instance.readAll();
 
+    //dbList.forEach((Log curlog) { curlog.runNum == null ? curlog.runNum = -1});
+
     setState(() {
       logs = new List.from(dbList.reversed);
     });

@@ -197,7 +197,13 @@ function buildTabLabel(protocol) {
 }
 
 /**
- * */
+ * The functions below deal with creating and populating the button container.
+ **/
+
+/**
+ * Returns the populated button container for the associated protocol
+ * @param {any} id
+ */
 function buildButtonContainer(id) {
     var button_container = document.createElement('div');
 
@@ -214,31 +220,44 @@ function buildButtonContainer(id) {
     return button_container;
 }
 
+
+/**
+ * Returns the details button for the associated tab
+ * @param {any} id
+ */
 function createDetailsButton(id) {
     var new_button = document.createElement('input');
     let link = "/Protocols/Details/" + id;
     new_button.type = "button";
-    new_button.classList = "col-6 btn btn-outline-info";
+    new_button.classList = "col-5 btn btn-outline-info procard-button";
     new_button.setAttribute("onclick", "location.href='" + link + "'");
     new_button.value = "Details";
     return new_button;
 }
 
+/**
+ * Returns the edit button for the associated tab
+ * @param {any} id
+ */
 function createEditButton(id) {
     var new_button = document.createElement('input');
     let link = "/Protocols/Edit/" + id;
     new_button.type = "button";
     new_button.value = "Edit";
-    new_button.classList = "col-12 btn btn-outline-primary";
+    new_button.classList = "col-12 btn btn-outline-primary procard-button";
     new_button.setAttribute("onclick", "location.href='" + link + "'");
     return new_button;
 }
 
+/**
+ * Returns the Delete button for the associated tab
+ * @param {any} id
+ */
 function createDeleteButton(id) {
     var new_button = document.createElement('button');
     new_button.type = "button";
     new_button.innerHTML = "Delete";
-    new_button.classList = "col-6 btn btn-outline-danger";
+    new_button.classList = "col-5 btn btn-outline-danger procard-button";
     new_button.setAttribute("data-href", "/Protocols/Delete/" + id);
     new_button.setAttribute("data-toggle", "modal");
     new_button.setAttribute("data-target", "#confirmDelete");

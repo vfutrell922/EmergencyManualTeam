@@ -9,12 +9,10 @@
 </script>
 <link rel="stylesheet" href="~/css/vf-multiselect.css" />
 
-<h1>Edit</h1>
-
-<h4>Protocol</h4>
+<h4>Edit Protocol</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div class="container">
         <form asp-action="Edit">
             @foreach (int i in ViewBag.MedicationIds)
             {
@@ -22,57 +20,72 @@
             }
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="row field-row">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Certification" class="control-label"></label>
-                <select asp-for="Certification" class="form-control" asp-items="Html.GetEnumSelectList<Certifications>()"></select>
+            <div class="row field-row">
+                <div class="col-6">
+                    <label asp-for="Certification" class="control-label"></label>
+                    <select asp-for="Certification" class="form-control" asp-items="Html.GetEnumSelectList<Certifications>()"></select>
+                </div>
+                <div class="col-6">
+                    <label asp-for="PatientType" class="control-label"></label>
+                    <select asp-for="PatientType" class="form-control" asp-items="Html.GetEnumSelectList<PatientTypes>()"></select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PatientType" class="control-label"></label>
-                <select asp-for="PatientType" class="form-control" asp-items="Html.GetEnumSelectList<PatientTypes>()"></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input id="hasMedicationInput" type="checkbox" asp-for="HasAssociatedMedication" /> @Html.DisplayNameFor(model => model.HasAssociatedMedication)
-                </label>
-            </div>
-            <div id="MedicationsSelect" style="display:none" class="form-group" onsubmit="getSelectedMedications()">
-                <div class="container vf-multiselect-container">
-                    <div class="row">
-                        <input id="medication_input" class="vf-multiselect-input flex" placeholder="Type to search..." onkeydown="vf_multiselect_search()"/>
-                        <input class="vf-multiselect-dropdown " type="image" src="~/Images/dropdown-menu-icon-down.png" onclick="vf_multiselect_dropclick();return false;" />
+
+            <div class="row"><p>Medications</p></div>
+            <div class="row medication-row">
+                <div class="form-group form-check col-3">
+                    <label class="form-check-label">
+                        <input id="hasMedicationInput" type="checkbox" asp-for="HasAssociatedMedication" /> There are medications associated with this protocol
+                    </label>
+                </div>
+                <div id="MedicationsSelect" style="display:none" class="form-group col-9" onsubmit="getSelectedMedications()">
+                    <div class="container">
+                        <div class="row vf-multiselect-container">
+                            <input id="medication_input" class="vf-multiselect-input flex" placeholder="Type to search..." onkeydown="vf_multiselect_search()" />
+                            <input class="vf-multiselect-dropdown " type="image" src="~/Images/dropdown-menu-icon-down.png" onclick="vf_multiselect_dropclick();return false;" />
+                        </div>
+                    </div>
+                    <div class="vf-option-list" id="optionList">
+
                     </div>
                 </div>
-                <div class="vf-option-list" id="optionList">
+            </div>
 
+            <div class="row field-row">
+                <div class="col-12">
+                    <label asp-for="OtherInformation" class="control-label row"></label>
+                    <input id="OtherInformationArea" asp-for="OtherInformation" class="form-control row" />
+                    <span asp-validation-for="OtherInformation" class="text-danger row"></span>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="OtherInformation" class="control-label"></label>
-                <input id="OtherInformationArea" asp-for="OtherInformation" class="form-control" />
-                <span asp-validation-for="OtherInformation" class="text-danger"></span>
+            <div class="row field-row">
+                <div class="col-12">
+                    <label asp-for="TreatmentPlan" class="row"></label>
+                    <input id="TreatmentPlanArea" asp-for="TreatmentPlan" class="row" />
+                    <span asp-validation-for="TreatmentPlan" class="text-danger row"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TreatmentPlan" class="control-label"></label>
-                <input id="TreatmentPlanArea" asp-for="TreatmentPlan" class="form-control" />
-                <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
+
+            <div class="row field-row">
+                <div class="form-group col-6">
+                    <label asp-for="Guideline" class="control-label"></label>
+                    <select asp-for="Guideline" class="form-control" asp-items="ViewBag.GuidelineId"></select>
+                    <span asp-validation-for="Guideline" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check col-6 olmc-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="OLMCRequired" /> @Html.DisplayNameFor(model => model.OLMCRequired)
+                    </label>
+                </div>
             </div>
+
             <div class="form-group">
-                <label asp-for="Guideline" class="control-label"></label>
-                <select asp-for="Guideline" class="form-control" asp-items="ViewBag.GuidelineId"></select>
-                <span asp-validation-for="Guideline" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="OLMCRequired" /> @Html.DisplayNameFor(model => model.OLMCRequired)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" onclick="submitSelectedMedications()"/>
+                <input type="submit" value="Save" class="btn btn-primary" onclick="submitSelectedMedications()" />
             </div>
         </form>
     </div>
