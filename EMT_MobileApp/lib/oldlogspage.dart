@@ -80,14 +80,11 @@ class _OldLogsPageState extends State<OldLogsPage> {
                         children: <Widget>[
                           new GestureDetector(
                             onTap: () {
-                              Navigator.of(context)
-                                  .push(
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                            new LogDetailsPage(
-                                                curLog: logs[index])),
-                                  )
-                                  .then((val) => {_getLogs()});
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _deleteLogDialog(context, logs[index]),
+                              );
                             },
                             child: new Container(
                                 margin: const EdgeInsets.all(0.0),
@@ -160,6 +157,37 @@ class _OldLogsPageState extends State<OldLogsPage> {
           )),
         ));
       },
+    );
+  }
+
+  Widget _deleteLogDialog(BuildContext context, Log curLog) {
+    return new AlertDialog(
+      title: Text('Delete Log?'),
+      actions: <Widget>[
+        new Text(
+            "Are you sure you want to delete log for Run ${curLog.runNum}  ?"),
+        TextButton(
+          child: Text('CANCEL'),
+          onPressed: () {
+            setState(() {
+              Navigator.pop(context);
+            });
+          },
+        ),
+        TextButton(
+          child: Text('Delete Log',
+              style: TextStyle(
+                color: Colors.red,
+              )),
+          onPressed: () async {
+            await LogDatabase.instance.deleteLog(curLog.id!).then((value) {
+              setState(() {
+                Navigator.pop(context);
+              });
+            });
+          },
+        ),
+      ],
     );
   }
 }
