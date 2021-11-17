@@ -184,6 +184,10 @@ class _OldLogsPageState extends State<OldLogsPage> {
               setState(() {
                 Navigator.pop(context);
               });
+              Navigator.push(
+                context,
+                new MaterialPageRoute(builder: (context) => new OldLogsPage()),
+              );
             });
           },
         ),

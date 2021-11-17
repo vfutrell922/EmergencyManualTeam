@@ -51,9 +51,9 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
               children: <Widget>[
                 Text("Run Number:"),
                 new Container(
-                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  margin: const EdgeInsets.all(0.0),
                   width: 35.0,
-                  height: 45.0,
+                  height: 35.0,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.black,
