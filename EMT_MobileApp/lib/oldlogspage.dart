@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
 import 'phonepage.dart';
+import 'editlogspage.dart';
 
 class OldLogsPage extends StatefulWidget {
   @override
@@ -97,14 +98,11 @@ class _OldLogsPageState extends State<OldLogsPage> {
                           ),
                           new GestureDetector(
                             onTap: () {
-                              Navigator.of(context)
-                                  .push(
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                            new LogDetailsPage(
-                                                curLog: logs[index])),
-                                  )
-                                  .then((val) => {_getLogs()});
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    EditLogOverlay(),
+                              );
                             },
                             child: new Container(
                                 margin: const EdgeInsets.all(0.0),
