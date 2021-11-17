@@ -74,22 +74,66 @@ class _OldLogsPageState extends State<OldLogsPage> {
                         style: TextStyle(fontSize: 25.0),
                       ),
                     ),
-                    new GestureDetector(
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(
-                              new MaterialPageRoute(
-                                  builder: (context) =>
-                                      new LogDetailsPage(curLog: logs[index])),
-                            )
-                            .then((val) => {_getLogs()});
-                      },
-                      child: new Container(
-                          margin: const EdgeInsets.all(0.0),
-                          child: new Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 30.0,
-                          )),
+                    new Container(
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new LogDetailsPage(
+                                                curLog: logs[index])),
+                                  )
+                                  .then((val) => {_getLogs()});
+                            },
+                            child: new Container(
+                                margin: const EdgeInsets.all(0.0),
+                                child: new Icon(
+                                  Icons.delete,
+                                  size: 30.0,
+                                )),
+                          ),
+                          new GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new LogDetailsPage(
+                                                curLog: logs[index])),
+                                  )
+                                  .then((val) => {_getLogs()});
+                            },
+                            child: new Container(
+                                margin: const EdgeInsets.all(0.0),
+                                child: new Icon(
+                                  Icons.create_outlined,
+                                  size: 30.0,
+                                )),
+                          ),
+                          new GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new LogDetailsPage(
+                                                curLog: logs[index])),
+                                  )
+                                  .then((val) => {_getLogs()});
+                            },
+                            child: new Container(
+                                margin: const EdgeInsets.all(0.0),
+                                child: new Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 30.0,
+                                )),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
