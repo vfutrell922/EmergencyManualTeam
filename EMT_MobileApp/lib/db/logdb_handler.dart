@@ -141,45 +141,49 @@ class LogDatabase {
   // or if they go back and update info
   // todo make data also optional
   Future<void> additionalDataUpdate(String data, bool add,
-      [int index = 0]) async {
+      [int prevLogID = 0, int index = 0]) async {
+    Log curLog;
     if (globals.currentLogID != -1) {
-      Log curLog = await LogDatabase.instance.read(globals.currentLogID);
-      if (curLog.additionalData != null) {
-        //Retrieves the current value from the log
-        List<dynamic> jsonMeds =
-            jsonDecode(curLog.additionalData!)["Medications"];
-        //Creates new addtionDataLog using the previous
-        additionalDataLog currentData =
-            new additionalDataLog(Medications: jsonMeds.cast<String>());
-
-        //Adds new data JSON to the medications
-        List<String> newMeds = currentData.Medications;
-        if (add) {
-          newMeds.add(data);
-        } else {
-          newMeds.removeAt(index);
-        }
-        additionalDataLog newData = new additionalDataLog(Medications: newMeds);
-
-        //Sends new logs to database
-        Log updatedLog =
-            curLog.copy(additionalData: jsonEncode(newData).toString());
-        await LogDatabase.instance.updateLog(updatedLog);
-      } else {
-        //Initializes additionalDataLog
-        additionalDataLog newDataLog =
-            new additionalDataLog(Medications: [data]);
-
-        //Creates JSON
-        String newDataJson = jsonEncode(newDataLog).toString();
-
-        //Sends to database
-        Log updatedLog = curLog.copy(additionalData: newDataJson);
-        await LogDatabase.instance.updateLog(updatedLog);
-      }
-      debugPrint("Addtional Data: ${curLog.additionalData}");
-      print("Addtional Data: ${curLog.additionalData}");
+      // adding data to current log
+      curLog = await LogDatabase.instance.read(globals.currentLogID);
+    } else {
+      //modifying past data
+      curLog = await LogDatabase.instance.read(prevLogID);
     }
+    if (curLog.additionalData != null) {
+      //Retrieves the current value from the log
+      List<dynamic> jsonMeds =
+          jsonDecode(curLog.additionalData!)["Medications"];
+      //Creates new addtionDataLog using the previous
+      additionalDataLog currentData =
+          new additionalDataLog(Medications: jsonMeds.cast<String>());
+
+      //Adds new data JSON to the medications
+      List<String> newMeds = currentData.Medications;
+      if (add) {
+        newMeds.add(data);
+      } else {
+        newMeds.removeAt(index);
+      }
+      additionalDataLog newData = new additionalDataLog(Medications: newMeds);
+
+      //Sends new logs to database
+      Log updatedLog =
+          curLog.copy(additionalData: jsonEncode(newData).toString());
+      await LogDatabase.instance.updateLog(updatedLog);
+    } else {
+      //Initializes additionalDataLog
+      additionalDataLog newDataLog = new additionalDataLog(Medications: [data]);
+
+      //Creates JSON
+      String newDataJson = jsonEncode(newDataLog).toString();
+
+      //Sends to database
+      Log updatedLog = curLog.copy(additionalData: newDataJson);
+      await LogDatabase.instance.updateLog(updatedLog);
+    }
+    debugPrint("Addtional Data: ${curLog.additionalData}");
+    print("Addtional Data: ${curLog.additionalData}");
   }
 
   Future<List> additionalDataDecode(int id) async {
