@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date Las Modified: 11/16/2021
+ * This file contains the startup code for Identity Hosting.This is where the password policy is declared and the database context is configured.
+ * In Production, the Db connection string should retrieved via AWS Secrets Manager
+ * */
+using System;
 using System.IO;
 using EMT_WebPortal.Areas.Identity.Data;
 using EMT_WebPortal.Data;

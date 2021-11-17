@@ -1,4 +1,8 @@
-﻿
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 06/03/2021
+ * This file contains the method to seed the user database upon initial launch of the application
+ */
 using EMT_WebPortal.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

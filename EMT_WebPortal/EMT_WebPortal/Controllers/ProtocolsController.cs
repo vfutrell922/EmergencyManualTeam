@@ -189,16 +189,20 @@ namespace EMT_WebPortal.Controllers
                 _context.Medications_Protocols.Remove(mp);
             }
             _context.SaveChangesAsync().Wait();
-            foreach(int i in medicationIds)
+
+            if (protocol.HasAssociatedMedication)
             {
-                MedicationProtocol mp = new MedicationProtocol();
-                mp.MedicationId = i;
-                mp.ProtocolId = id;
-                mp.Protocol = protocol;
-                mp.Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault();
-                _context.Medications_Protocols.Add(mp);
+                foreach (int i in medicationIds)
+                {
+                    MedicationProtocol mp = new MedicationProtocol();
+                    mp.MedicationId = i;
+                    mp.ProtocolId = id;
+                    mp.Protocol = protocol;
+                    mp.Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault();
+                    _context.Medications_Protocols.Add(mp);
+                }
+                _context.SaveChangesAsync().Wait();
             }
-           _context.SaveChangesAsync().Wait();
         }
 
         // GET: Protocols/Delete/5

@@ -1,5 +1,5 @@
 //Author: Vincent Futrell
-//Date last modified: 11/08/2021
+//Date last modified: 11/16/2021
 //This file contains the js code for the vf-multiselect dropdown
 var expanded = false;
 
