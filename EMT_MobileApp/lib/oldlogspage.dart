@@ -101,7 +101,7 @@ class _OldLogsPageState extends State<OldLogsPage> {
                               showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) =>
-                                    EditLogOverlay(),
+                                    EditLogOverlay(curLog: logs[index]),
                               );
                             },
                             child: new Container(
