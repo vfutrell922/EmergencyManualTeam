@@ -43,20 +43,32 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
       content: Container(
         decoration: BoxDecoration(
           color: Color.fromRGBO(172, 206, 242, 1),
-          border: Border.all(
-            color: Colors.black,
-            width: 2,
-          ),
         ),
         child: new Column(
           children: <Widget>[
-            TextField(
-                decoration: InputDecoration(border: InputBorder.none),
-                autofocus: true,
-                keyboardType: TextInputType.text,
-                maxLines: null,
-                controller: _RunNumController),
-            Text("EDIT"),
+            new Container(
+                child: new Row(
+              children: <Widget>[
+                Text("Run Number:"),
+                new Container(
+                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  width: 35.0,
+                  height: 45.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  child: TextField(
+                      decoration: InputDecoration(border: InputBorder.none),
+                      autofocus: true,
+                      keyboardType: TextInputType.text,
+                      maxLines: null,
+                      controller: _RunNumController),
+                ),
+              ],
+            )),
           ],
         ),
       ),
