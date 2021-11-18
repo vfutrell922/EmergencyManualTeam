@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
+import 'errordialog.dart';
+import 'oldlogspage.dart';
 
 class EditLogOverlay extends StatefulWidget {
   final Log curLog;
@@ -30,10 +32,33 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
   }
 
   Future _save() async {
-    // widget.taskOpj.note = _noteController.text;
-    // await Tasks.updateTask(widget.taskOpj);
-    // widget.notifyParent();
-    Navigator.pop(context);
+    try {
+      int? newRunNum = int.parse(_RunNumController.text);
+
+      if (newRunNum != '${curLog.runNum}') {
+        Log newLog = Log(
+            runNum: newRunNum,
+            additionalData: curLog.additionalData,
+            id: curLog.id,
+            startTime: curLog.startTime,
+            endTime: curLog.endTime);
+        await LogDatabase.instance.updateLog(newLog).then((id) {
+          setState(() {
+            Navigator.pop(context);
+          });
+          Navigator.push(
+            context,
+            new MaterialPageRoute(builder: (context) => new OldLogsPage()),
+          );
+        });
+      }
+    } catch (FormatException) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            ErrorDialog(msg: "Please enter a number for Run Number."),
+      );
+    }
   }
 
   @override
@@ -41,19 +66,19 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
     return AlertDialog(
       title: Text("Edit Log"),
       content: Container(
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(172, 206, 242, 1),
-        ),
         child: new Column(
           children: <Widget>[
             new Container(
                 child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text("Run Number:"),
+                Text(
+                  "Run Number:",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 20.0),
+                ),
                 new Container(
-                  margin: const EdgeInsets.all(0.0),
                   width: 35.0,
-                  height: 35.0,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.black,
@@ -64,7 +89,9 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
                       decoration: InputDecoration(border: InputBorder.none),
                       autofocus: true,
                       keyboardType: TextInputType.text,
-                      maxLines: null,
+                      maxLines: 1,
+                      style: TextStyle(fontSize: 20.0),
+                      textAlign: TextAlign.center,
                       controller: _RunNumController),
                 ),
               ],
