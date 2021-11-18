@@ -34,7 +34,6 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
   Future _save() async {
     try {
       int? newRunNum = int.parse(_RunNumController.text);
-
       if (newRunNum != '${curLog.runNum}') {
         Log newLog = Log(
             runNum: newRunNum,
@@ -56,7 +55,7 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
       showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
-            ErrorDialog(msg: "Please enter a number for Run Number."),
+            ErrorDialog(msg: "Please enter a number."),
       );
     }
   }
@@ -65,41 +64,34 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text("Edit Log"),
-      content: Container(
-        child: new Column(
+      actions: <Widget>[
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
+            Text(
+              "Run Number:",
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 20.0),
+            ),
             new Container(
-                child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "Run Number:",
-                  textAlign: TextAlign.left,
+              width: 50.0,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1,
+                ),
+              ),
+              child: TextField(
+                  decoration: InputDecoration(border: InputBorder.none),
+                  autofocus: true,
+                  keyboardType: TextInputType.text,
+                  maxLines: 1,
                   style: TextStyle(fontSize: 20.0),
-                ),
-                new Container(
-                  width: 35.0,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                  ),
-                  child: TextField(
-                      decoration: InputDecoration(border: InputBorder.none),
-                      autofocus: true,
-                      keyboardType: TextInputType.text,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 20.0),
-                      textAlign: TextAlign.center,
-                      controller: _RunNumController),
-                ),
-              ],
-            )),
+                  textAlign: TextAlign.center,
+                  controller: _RunNumController),
+            ),
           ],
         ),
-      ),
-      actions: <Widget>[
         new IconButton(
           icon: new Icon(Icons.save),
           onPressed: _save,
@@ -108,34 +100,3 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
     );
   }
 }
-
-// Widget _editDialog(BuildContext context) {
-//   return new AlertDialog(
-//     title: Text('Delete Log?'),
-//     actions: <Widget>[
-//       new Text(
-//           "Are you sure you want to delete log for Run ${curLog.runNum}  ?"),
-//       TextButton(
-//         child: Text('CANCEL'),
-//         onPressed: () {
-//           setState(() {
-//             Navigator.pop(context);
-//           });
-//         },
-//       ),
-//       TextButton(
-//         child: Text('Delete Log',
-//             style: TextStyle(
-//               color: Colors.red,
-//             )),
-//         onPressed: () async {
-//           Navigator.pop(context);
-//           //Navigator.pop(context, true);
-//           await LogDatabase.instance.deleteLog(curLog.id!).then((value) {
-//             Navigator.pop(context, true);
-//           });
-//         },
-//       ),
-//     ],
-//   );
-// }
