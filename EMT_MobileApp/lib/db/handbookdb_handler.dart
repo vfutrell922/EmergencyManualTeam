@@ -1,3 +1,7 @@
+// EMT Medic Manual App for Mountain West Ambulance
+// by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
+// for their Senior Project 2021 at the University of Utah.
+
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
