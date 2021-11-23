@@ -82,12 +82,9 @@ body {
 }
 
 .medication-row{
-    border: 1px solid;
-    border-color: lightgray;
     padding-top: 3px;
     border-radius: 3px;
     margin-top: 0px;
-
 }
 
 .field-row{
