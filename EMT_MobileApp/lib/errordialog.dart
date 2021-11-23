@@ -1,3 +1,6 @@
+// EMT Medic Manual App for Mountain West Ambulance
+// by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
+// for their Senior Project 2021 at the University of Utah.
 import 'package:flutter/material.dart';
 
 class ErrorDialog extends StatefulWidget {
@@ -8,9 +11,11 @@ class ErrorDialog extends StatefulWidget {
 }
 
 class _ErrorDialogState extends State<ErrorDialog> {
+  /// the message to display
   final String msg;
+
   _ErrorDialogState({required this.msg});
-  late TextEditingController _RunNumController;
+
   @override
   void initState() {
     super.initState();

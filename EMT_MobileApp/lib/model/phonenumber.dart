@@ -1,3 +1,7 @@
+// EMT Medic Manual App for Mountain West Ambulance
+// by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
+// for their Senior Project 2021 at the University of Utah.
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -37,6 +41,7 @@ class PhoneNumber {
         numberString: numberString ?? this.numberString,
       );
 
+  ///Store a default string as the hospital name if we get null
   static String MakeHospitalName(String? hn) {
     if (hn == null) {
       return "Unspecified Hospital";
@@ -44,6 +49,7 @@ class PhoneNumber {
       return hn;
   }
 
+  ///Store a default string as the phone number if we get null
   static String MakeNumber(String? pn) {
     if (pn == null) {
       return "Unspecified";
@@ -51,6 +57,7 @@ class PhoneNumber {
       return pn;
   }
 
+  /// Parse a json object as a phone number from the web API response
   static PhoneNumber fromWebJson(Map<String, Object?> json) => PhoneNumber(
         Id: json[PhoneNumberFields.Id] as int?,
         hospitalName:
@@ -59,6 +66,7 @@ class PhoneNumber {
             MakeNumber(json[PhoneNumberFields.numberString] as String?),
       );
 
+  /// Parse a json object as a phone number not from the web API response
   static PhoneNumber fromJson(Map<String, Object?> json) => PhoneNumber(
         Id: json[PhoneNumberFields.Id] as int?,
         hospitalName: json[PhoneNumberFields.hospitalName] as String,

@@ -1,3 +1,6 @@
+// EMT Medic Manual App for Mountain West Ambulance
+// by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
+// for their Senior Project 2021 at the University of Utah.
 import 'package:flutter/material.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
@@ -6,6 +9,7 @@ import 'oldlogspage.dart';
 
 class EditLogOverlay extends StatefulWidget {
   final Log curLog;
+
   EditLogOverlay({required this.curLog});
   @override
   State<StatefulWidget> createState() => _EditLogOverlayState(curLog: curLog);
@@ -13,7 +17,9 @@ class EditLogOverlay extends StatefulWidget {
 
 class _EditLogOverlayState extends State<EditLogOverlay> {
   final Log curLog;
+
   _EditLogOverlayState({required this.curLog});
+
   late TextEditingController _RunNumController;
   @override
   void initState() {
@@ -31,9 +37,11 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
     super.dispose();
   }
 
+  /// Save the editted run number if it is different and a number, and reload page.
   Future _save() async {
     try {
       int? newRunNum = int.parse(_RunNumController.text);
+      //check if the new run number has changed
       if (newRunNum != '${curLog.runNum}') {
         Log newLog = Log(
             runNum: newRunNum,
@@ -41,6 +49,7 @@ class _EditLogOverlayState extends State<EditLogOverlay> {
             id: curLog.id,
             startTime: curLog.startTime,
             endTime: curLog.endTime);
+        //replace the log with the new data
         await LogDatabase.instance.updateLog(newLog).then((id) {
           setState(() {
             Navigator.pop(context);
