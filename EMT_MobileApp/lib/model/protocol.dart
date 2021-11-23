@@ -1,3 +1,7 @@
+// EMT Medic Manual App for Mountain West Ambulance
+// by Molly Clare, Vincent Futrell, Andrew Stender, and Sierra Johnson
+// for their Senior Project 2021 at the University of Utah.
+
 final String tableProtocols = 'protocols';
 
 class ProtocolFields {
@@ -82,6 +86,7 @@ class Protocol {
         TreatmentPlan: TreatmentPlan ?? this.TreatmentPlan,
       );
 
+  /// Parse a json object from the web API response, if possible.
   static Protocol fromWebJson(
           Map<String, Object?> json, String? medicationsList) =>
       Protocol(
@@ -90,7 +95,9 @@ class Protocol {
         Certification: json[ProtocolFields.Certification] as int,
         PatientType: json[ProtocolFields.PatientType] as int,
         Guideline: json[ProtocolFields.Guideline] as String?,
+        // SQLflite does not accept booleans, so convert to int
         OLMCRequired: ((json[ProtocolFields.OLMCRequired] as bool) ? 1 : 0),
+        // since this is nullable, do two checks to return int?
         HasAssociatedMedication:
             ((json[ProtocolFields.HasAssociatedMedication] as bool?) == null
                 ? null
@@ -102,6 +109,7 @@ class Protocol {
         TreatmentPlan: json[ProtocolFields.TreatmentPlan] as String?,
       );
 
+  /// Parse json object as protocol, not from the web api, if already in the form of the SQLflite table
   static Protocol fromJson(Map<String, Object?> json) => Protocol(
         id: json[ProtocolFields.id] as int?,
         Name: json[ProtocolFields.Name] as String,

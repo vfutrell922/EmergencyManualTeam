@@ -27,6 +27,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
 
   Widget build(BuildContext context) {
     return FutureBuilder(
+        //Collect the charts first
         future: getCharts(),
         builder: (ctx, snapshot) {
           // Checking if future is resolved
@@ -51,6 +52,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
         });
   }
 
+  /// Gets the charts that have the quick link flag from the db
   Future<List<Chart>> getCharts() async {
     List<Chart> charts = await HandbookDatabase.instance.getQuickLinkCharts();
     _charts = charts;
@@ -102,6 +104,7 @@ class _QuickLinksState extends State<QuickLinksPage> {
             )));
   }
 
+  /// The displayed chart as a pop up dialog.
   Widget ImageDialog(Chart chart) {
     debugPrint("getting the image dialog");
     return Dialog(
