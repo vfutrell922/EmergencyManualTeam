@@ -56,9 +56,10 @@ class _ProtocolState extends State<ProtocolPage> {
         });
   }
 
+  /// Retreives the protocol information including charts and medications before the page loads.
   Future<List<Protocol>> SetUp() async {
-    debugPrint("Setting up protocol page");
     await findCharts();
+    // retrieve the protocols before the medications
     return await findProtocols().then((value) async {
       return await findMedications().then((meds) async {
         return value;
@@ -87,6 +88,7 @@ class _ProtocolState extends State<ProtocolPage> {
     return medications;
   }
 
+  /// Parses the rich text information of the certification's protocol and gathers it into a single string.
   String findProtocolWithCertification(int certification) {
     String protocol = "";
     _protocols.forEach((element) {
@@ -127,6 +129,7 @@ class _ProtocolState extends State<ProtocolPage> {
     return ret;
   }
 
+  /// Adds a medication to the current log database entry
   Future addMedication(String name, String dosageInfo, String routeInfo) async {
     DateTime startTime = DateTime.now();
     String formattedTime = DateFormat.Hms().format(startTime);
@@ -140,6 +143,7 @@ class _ProtocolState extends State<ProtocolPage> {
         .additionalDataUpdate((jsonString.toString()), true);
   }
 
+  /// Grab the ids for a specific certification as a list
   Future<List<Medication>> findMedicationsForCertification(
       int certification) async {
     List<String> medIDs = [];
@@ -147,7 +151,6 @@ class _ProtocolState extends State<ProtocolPage> {
       if (element.Certification == certification &&
           element.HasAssociatedMedication == 1 &&
           element.Medications != null) {
-        medIDs.add(element.Medications.toString());
         List<String> t = element.Medications.toString()
             .replaceAll(new RegExp(r'[{}]'), '')
             .split(",");
@@ -165,7 +168,7 @@ class _ProtocolState extends State<ProtocolPage> {
     _medications.forEach((element) async {
       if (medIDs.contains(element.ID.toString())) {
         Medication validMedication =
-            await HandbookDatabase.instance.readMedicationServerID(element.ID);
+            await HandbookDatabase.instance.readMedication(element.ID);
         medications.add(validMedication);
       }
     });
@@ -340,6 +343,7 @@ class _ProtocolState extends State<ProtocolPage> {
         });
   }
 
+  /// The loaded Protocol page for the specified protocol
   Widget specificPage() {
     return DefaultTabController(
         initialIndex: 1,

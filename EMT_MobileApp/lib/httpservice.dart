@@ -9,9 +9,11 @@ import 'globals.dart' as globals;
 
 import 'package:flutter/foundation.dart';
 
+///The URL of the project's public web portal
 final String siteName = "https://mwaprotocol.com";
 
 class HttpService {
+  /// API access URLs that are open to the public to retrieve the handbook data
   final String protocolsURL = siteName + "/api/protocolsget";
   final String chartsURL = siteName + "/api/chartsget";
   final String medicationsURL = siteName + "/api/medicationsget";
@@ -21,6 +23,7 @@ class HttpService {
     Response res = await get(protocolsURL);
 
     if (res.statusCode == 200) {
+      // protocols come in the form [list of associated medication ids][list of protocols] so we parse differently
       return readProtocols(res.body);
     } else {
       throw "Unable to retrieve protocols.";
@@ -75,8 +78,10 @@ class HttpService {
     return null;
   }
 
+  /// Parses the protocolsget API response
   List<Protocol> readProtocols(String body) {
     int i = 0;
+    // first parse out the list of medication ids
     List<String> medicationData = <String>[];
     for (i; i <= body.length; i++) {
       if (body[i] == "]") {
@@ -86,8 +91,9 @@ class HttpService {
         break;
       }
     }
-    List k = json.decode(body).toList();
 
+    //parse the second half of the response as protocols
+    List k = json.decode(body).toList();
     List<Protocol> protocols = List<Protocol>.from(k.map((model) =>
         Protocol.fromWebJson(
             model, findMedications(medicationData[k.indexOf(model)]))));

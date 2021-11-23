@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:emergencymanual/model/protocol.dart';
 import 'package:emergencymanual/model/chart.dart';
@@ -11,11 +10,12 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class HandbookDatabase {
+  /// Database to hold the protocols, medications, charts, and phone numbers recieved from the web portal API
   static final HandbookDatabase instance = HandbookDatabase._init();
 
   static Database? _database;
 
-  final String dbfilePath = 'handbookDBer.db';
+  final String dbfilePath = 'handbookDB.db';
 
   HandbookDatabase._init();
 
@@ -34,6 +34,7 @@ class HandbookDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
+  /// Delete all the table data from the database
   void clearDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, dbfilePath);
@@ -196,23 +197,6 @@ class HandbookDatabase {
     }
   }
 
-  Future<Medication> readMedicationServerID(int id) async {
-    final db = await instance.database;
-
-    final maps = await db.query(
-      tableMedications,
-      columns: MedicationFields.values,
-      where: '${MedicationFields.ID} = ? ',
-      whereArgs: [id],
-    );
-
-    if (maps.isNotEmpty) {
-      return Medication.fromJson(maps.first);
-    } else {
-      throw Exception('ID $id not found');
-    }
-  }
-
   Future<List<Protocol>> readAllProtocols() async {
     final db = await instance.database;
 
@@ -253,6 +237,7 @@ class HandbookDatabase {
     return result.map((json) => PhoneNumber.fromJson(json)).toList();
   }
 
+  /// Get a list of the protocol names (non repeated)
   Future<List<String>> readNonRepeatingProtocolNames() async {
     final db = await instance.database;
 
@@ -270,6 +255,7 @@ class HandbookDatabase {
     return ret;
   }
 
+  /// Find the charts that correspond to a specific protocol
   Future<List<Chart>> getChartsForProtocol(String ProtocolName) async {
     final db = await instance.database;
     String whereString = '${ChartFields.Protocol} =?';
@@ -282,6 +268,7 @@ class HandbookDatabase {
     return charts;
   }
 
+  /// Get the charts that have the quick link flag
   Future<List<Chart>> getQuickLinkCharts() async {
     final db = await instance.database;
     String whereString = '${ChartFields.IsQuickLink} =?';
@@ -296,6 +283,7 @@ class HandbookDatabase {
     return charts;
   }
 
+  /// Find the protocols with a certain name
   Future<List<Protocol>> getProtocolsWithName(String name) async {
     final db = await instance.database;
     String whereString = '${ProtocolFields.Name} =?';
@@ -309,6 +297,7 @@ class HandbookDatabase {
     return protocols;
   }
 
+  /// Get a subset of the medications with specified ids
   Future<List<Medication>> readMedicationsWithIDs(List<int> ids) async {
     final db = await instance.database;
     List<Medication> meds = [];
@@ -329,13 +318,6 @@ class HandbookDatabase {
 
     debugPrint("Returning medications with the ids " + ids.toString());
     return meds;
-  }
-
-  Future<int> updateProtocol(Protocol protocol) async {
-    final db = await instance.database;
-
-    return db.update(tableProtocols, protocol.toJson(),
-        where: '$ProtocolFields.id} = ?', whereArgs: [protocol.id]);
   }
 
   Future close() async {

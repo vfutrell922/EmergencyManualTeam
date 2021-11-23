@@ -50,6 +50,7 @@ class _PhonePageState extends State<PhonePage> {
     );
   }
 
+  /// Retreive the phone number objects from the database.
   void _getPhoneNumbers() async {
     List<PhoneNumber> tempList =
         await HandbookDatabase.instance.readAllPhoneNumbers();
