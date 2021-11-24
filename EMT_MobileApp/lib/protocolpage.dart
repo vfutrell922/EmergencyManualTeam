@@ -14,6 +14,7 @@ import 'logbar.dart';
 import 'db/logdb_handler.dart';
 import 'phonepage.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'certificationtabbar.dart';
 import 'globals.dart' as globals;
 
 class ProtocolPage extends StatefulWidget {
@@ -345,146 +346,147 @@ class _ProtocolState extends State<ProtocolPage> {
 
   /// The loaded Protocol page for the specified protocol
   Widget specificPage() {
-    return DefaultTabController(
-        initialIndex: 1,
-        length: 5,
-        child: Scaffold(
-          floatingActionButton: PhoneButton(context),
-          bottomNavigationBar: LogBar(),
-          appBar: AppBar(
-              backgroundColor: Color(0xFFFFFF),
-              title: Text(widget.name),
-              bottom: new TabBar(
-                isScrollable: true,
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.black,
-                tabs: [
-                  new Container(
-                    color: Colors.yellow,
-                    child: new Tab(
-                      child: Text("General"),
-                    ),
-                  ),
-                  new Container(
-                    color: Colors.blue,
-                    child: new Tab(
-                      child: Text("EMT"),
-                    ),
-                  ),
-                  new Container(
-                    color: Colors.green,
-                    child: new Tab(
-                      child: Text("AEMT"),
-                    ),
-                  ),
-                  new Container(
-                    color: Colors.red,
-                    child: new Tab(
-                      child: Text("Paramedic"),
-                    ),
-                  ),
-                  new Container(
-                    color: Colors.grey,
-                    child: new Tab(
-                      child: Text("Charts"),
-                    ),
-                  ),
-                ],
-              )),
-          body: TabBarView(
-            children: <Widget>[
-              Scaffold(
-                  endDrawer: MedDrawer(3),
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.yellow,
-                    foregroundColor: Colors.black,
-                    title: Text(
-                      "General",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  body: new Container(
-                    child: new SingleChildScrollView(
-                      scrollDirection: Axis.vertical, //.horizontal
-                      child: Html(
-                        data: findProtocolWithCertification(3),
-                      ),
-                    ),
-                  )),
-              Scaffold(
-                  endDrawer: MedDrawer(0),
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.black,
-                    title: Text(
-                      "EMT",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  body: new Container(
-                    child: new SingleChildScrollView(
-                      scrollDirection: Axis.vertical, //.horizontal
-                      child: Html(data: findProtocolWithCertification(0)),
-                    ),
-                  )),
-              Scaffold(
-                  endDrawer: MedDrawer(1),
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.black,
-                    title: Text(
-                      "AEMT",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  body: new Container(
-                    child: new SingleChildScrollView(
-                      scrollDirection: Axis.vertical, //.horizontal
-                      child: Html(data: findProtocolWithCertification(1)),
-                    ),
-                  )),
-              Scaffold(
-                  endDrawer: MedDrawer(2),
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.black,
-                    title: Text(
-                      "Paramedic",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  body: new Container(
-                    child: new SingleChildScrollView(
-                      scrollDirection: Axis.vertical, //.horizontal
-                      child: Html(data: findProtocolWithCertification(2)),
-                    ),
-                  )),
-              Scaffold(
-                endDrawer: MedDrawer(-1),
-                appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.grey,
-                  foregroundColor: Colors.black,
-                  title: Text(
-                    "Charts",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                body: new SingleChildScrollView(
-                  scrollDirection: Axis.vertical, //.horizontal
-                  child: Column(
-                    children: <Widget>[
-                      ...displayAllCharts(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
+    return CertificationTabBar();
+    // return DefaultTabController(
+    //     initialIndex: 1,
+    //     length: 5,
+    //     child: Scaffold(
+    //       floatingActionButton: PhoneButton(context),
+    //       bottomNavigationBar: LogBar(),
+    //       appBar: AppBar(
+    //           backgroundColor: Color(0xFFFFFF),
+    //           title: Text(widget.name),
+    //           bottom: new TabBar(
+    //             isScrollable: true,
+    //             labelColor: Colors.black,
+    //             unselectedLabelColor: Colors.black,
+    //             tabs: <Widget>[
+    //               Tab(
+    //                 child: new Container(
+    //                   color: Colors.yellow,
+    //                   child: Text("General"),
+    //                 ),
+    //               ),
+    //               new Container(
+    //                 color: Colors.blue,
+    //                 child: new Tab(
+    //                   child: Text("EMT"),
+    //                 ),
+    //               ),
+    //               new Container(
+    //                 color: Colors.green,
+    //                 child: new Tab(
+    //                   child: Text("AEMT"),
+    //                 ),
+    //               ),
+    //               new Container(
+    //                 color: Colors.red,
+    //                 child: new Tab(
+    //                   child: Text("Paramedic"),
+    //                 ),
+    //               ),
+    //               new Container(
+    //                 color: Colors.grey,
+    //                 child: new Tab(
+    //                   child: Text("Charts"),
+    //                 ),
+    //               ),
+    //             ],
+    //           )),
+    //       body: TabBarView(
+    //         children: <Widget>[
+    //           Scaffold(
+    //               endDrawer: MedDrawer(3),
+    //               appBar: AppBar(
+    //                 automaticallyImplyLeading: false,
+    //                 backgroundColor: Colors.yellow,
+    //                 foregroundColor: Colors.black,
+    //                 title: Text(
+    //                   "General",
+    //                   style: TextStyle(color: Colors.black),
+    //                 ),
+    //               ),
+    //               body: new Container(
+    //                 child: new SingleChildScrollView(
+    //                   scrollDirection: Axis.vertical, //.horizontal
+    //                   child: Html(
+    //                     data: findProtocolWithCertification(3),
+    //                   ),
+    //                 ),
+    //               )),
+    //           Scaffold(
+    //               endDrawer: MedDrawer(0),
+    //               appBar: AppBar(
+    //                 automaticallyImplyLeading: false,
+    //                 backgroundColor: Colors.blue,
+    //                 foregroundColor: Colors.black,
+    //                 title: Text(
+    //                   "EMT",
+    //                   style: TextStyle(color: Colors.black),
+    //                 ),
+    //               ),
+    //               body: new Container(
+    //                 child: new SingleChildScrollView(
+    //                   scrollDirection: Axis.vertical, //.horizontal
+    //                   child: Html(data: findProtocolWithCertification(0)),
+    //                 ),
+    //               )),
+    //           Scaffold(
+    //               endDrawer: MedDrawer(1),
+    //               appBar: AppBar(
+    //                 automaticallyImplyLeading: false,
+    //                 backgroundColor: Colors.green,
+    //                 foregroundColor: Colors.black,
+    //                 title: Text(
+    //                   "AEMT",
+    //                   style: TextStyle(color: Colors.black),
+    //                 ),
+    //               ),
+    //               body: new Container(
+    //                 child: new SingleChildScrollView(
+    //                   scrollDirection: Axis.vertical, //.horizontal
+    //                   child: Html(data: findProtocolWithCertification(1)),
+    //                 ),
+    //               )),
+    //           Scaffold(
+    //               endDrawer: MedDrawer(2),
+    //               appBar: AppBar(
+    //                 automaticallyImplyLeading: false,
+    //                 backgroundColor: Colors.red,
+    //                 foregroundColor: Colors.black,
+    //                 title: Text(
+    //                   "Paramedic",
+    //                   style: TextStyle(color: Colors.black),
+    //                 ),
+    //               ),
+    //               body: new Container(
+    //                 child: new SingleChildScrollView(
+    //                   scrollDirection: Axis.vertical, //.horizontal
+    //                   child: Html(data: findProtocolWithCertification(2)),
+    //                 ),
+    //               )),
+    //           Scaffold(
+    //             endDrawer: MedDrawer(-1),
+    //             appBar: AppBar(
+    //               automaticallyImplyLeading: false,
+    //               backgroundColor: Colors.grey,
+    //               foregroundColor: Colors.black,
+    //               title: Text(
+    //                 "Charts",
+    //                 style: TextStyle(color: Colors.black),
+    //               ),
+    //             ),
+    //             body: new SingleChildScrollView(
+    //               scrollDirection: Axis.vertical, //.horizontal
+    //               child: Column(
+    //                 children: <Widget>[
+    //                   ...displayAllCharts(),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ));
   }
 }
