@@ -81,19 +81,21 @@ namespace EMT_WebPortal.Controllers
                 _context.Add(protocol);
                 await _context.SaveChangesAsync();
 
-               // int task = await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT EMTManualContext.dbo.Medications_Protocols ON;");
-                foreach(int i in MedicationsIdList) 
+                if (protocol.HasAssociatedMedication)
                 {
-                    MedicationProtocol mp = new MedicationProtocol()
+                    foreach (int i in MedicationsIdList)
                     {
-                        MedicationId = i,
-                        ProtocolId = protocol.Id,
-                        Protocol = protocol,
-                        Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault()
-                    };
-                    _context.Medications_Protocols.Add(mp);
+                        MedicationProtocol mp = new MedicationProtocol()
+                        {
+                            MedicationId = i,
+                            ProtocolId = protocol.Id,
+                            Protocol = protocol,
+                            Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault()
+                        };
+                        _context.Medications_Protocols.Add(mp);
+                    }
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
                // await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Medications_Protocols OFF;");
                 return RedirectToAction(nameof(Index));
             }
@@ -187,16 +189,20 @@ namespace EMT_WebPortal.Controllers
                 _context.Medications_Protocols.Remove(mp);
             }
             _context.SaveChangesAsync().Wait();
-            foreach(int i in medicationIds)
+
+            if (protocol.HasAssociatedMedication)
             {
-                MedicationProtocol mp = new MedicationProtocol();
-                mp.MedicationId = i;
-                mp.ProtocolId = id;
-                mp.Protocol = protocol;
-                mp.Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault();
-                _context.Medications_Protocols.Add(mp);
+                foreach (int i in medicationIds)
+                {
+                    MedicationProtocol mp = new MedicationProtocol();
+                    mp.MedicationId = i;
+                    mp.ProtocolId = id;
+                    mp.Protocol = protocol;
+                    mp.Medication = _context.Medications.Where(x => x.ID == i).FirstOrDefault();
+                    _context.Medications_Protocols.Add(mp);
+                }
+                _context.SaveChangesAsync().Wait();
             }
-           _context.SaveChangesAsync().Wait();
         }
 
         // GET: Protocols/Delete/5

@@ -1,89 +1,19 @@
-﻿@model IEnumerable<EMT_WebPortal.Models.Protocol>
-
-@{
-    ViewData["Title"] = "Index";
+﻿<!--
+ Author: Vincent Futrell
+ Date Last Modified: 11/16/2021
+    This file contains the HTMl for the Charts Index page
+-->
+@section Head{ 
+    <link rel="stylesheet" type="text/css" href="~/css/ProtocolCards.css"/>
 }
-
 <h1>Index</h1>
 
-<form asp-controller="Protocols" asp-action="Index">
-    <p>
-        Name: <input type="text" name="search" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
+<input type="text" placeholder="Type to search..." class="col-3" onkeydown="cardSearch(this)" onkeyup="cardSearch(this)"/>
 
-
-<p>
-    <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Certification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PatientType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherInformation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TreatmentPlan)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Certification)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PatientType)
-                </td>
-                <td>
-                    @if (item.OtherInformation == null || item.OtherInformation.Length <= 100)
-                    {
-                        @Html.Raw(item.OtherInformation)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.OtherInformation.ToString().Substring(0, 100) + "...")
-                    }
-                </td>
-                <td>
-                    @if (item.TreatmentPlan == null || item.TreatmentPlan.Length <= 100)
-                    {
-                        @Html.Raw(item.TreatmentPlan)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.TreatmentPlan.ToString().Substring(0, 100) + "...")
-                    }
-                </td>
-
-                <td>
-                    @Html.ActionLink("Details", "Details", "Protocols", new { id = item.Id }, new { @class = "btn btn-outline-info", @style = "width:120px;" })
-                    @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", "Protocols", new { id = item.Id }, new { @class = "btn btn-outline-primary", @style = "width:120px;" })
-                        <button data-href="/Protocols/Delete/@item.Id" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDelete" style="width:120px;">Delete</button>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
+<div id="tableContainer" class="container card-table">
+    <div id="cardTable" class="row"></div>
+</div>
 
 <div id="confirmDelete" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -105,3 +35,4 @@
 </div>
 
 <script type="text/javascript" src="~/js/Delete.js"></script>
+<script type="text/javascript" src="~/js/protocolCards.js"></script>

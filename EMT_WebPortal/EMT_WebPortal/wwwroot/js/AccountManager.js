@@ -1,4 +1,10 @@
-﻿//The following functions cause the dropdown title to reflect the selection
+﻿/**
+ * Author: Vincent Futrell
+ * Date Last Modified: 11/09/2021
+ * This file contains the scripts for the account management page
+ * */
+
+//The following functions cause the dropdown's title to reflect the selection
 function selectCaregiver() {
     var user = event.target.getAttribute('data-arg1');
     const dropdownButton = document.getElementById("dropdownMenuButton " + user);
@@ -17,7 +23,9 @@ function selectDirector() {
     dropdownButton.textContent = 'Director';
 }
 
-//Submits the role change to the database
+/**
+ * Changes the role of the assciated account
+ * */
 async function submitChange() {
     var userName = event.target.getAttribute('data-arg1');
     const dropdownButton = document.getElementById("dropdownMenuButton " + userName);
@@ -58,7 +66,9 @@ async function submitChange() {
     }
 }
 
-//Returns the number of users whose role is currently(before the role change) Administrator
+/**
+ * Returns if there is more than one Administrator before the requested change is applied 
+ * */
 function isLastAdmin() {
     let adminCount = 0;
     let allUsersRoles = $(".roles-display");

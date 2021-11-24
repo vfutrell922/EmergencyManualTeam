@@ -160,18 +160,6 @@ class _SearchPageState extends State<SearchProtocolsPage> {
         ));
       },
     );
-    //     return new ListTile(
-    //       title: Text(filteredProtocols[index]),
-    //       onTap: () => {
-    //         Navigator.push(
-    //             context,
-    //             new MaterialPageRoute(
-    //                 builder: (context) =>
-    //                     new ProtocolPage(filteredProtocols[index]))),
-    //       },
-    //     );
-    //   },
-    // );
   }
 
   void _getProtocols() async {
@@ -187,8 +175,10 @@ class _SearchPageState extends State<SearchProtocolsPage> {
 
   void _searchPressed() {
     setState(() {
+      // If the search button has been pressed
       if (this._searchIcon.icon == Icons.search) {
         this._searchIcon = new Icon(Icons.close);
+        // listen for input
         this._appBarTitle = new TextField(
           controller: _filter,
           decoration: new InputDecoration(

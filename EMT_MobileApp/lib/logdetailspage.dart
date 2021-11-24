@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:emergencymanual/icons.dart';
 import 'db/logdb_handler.dart';
 import 'model/log.dart';
-import 'logbar.dart';
+import 'editlogspage.dart';
 
 class LogDetailsPage extends StatefulWidget {
   final Log curLog;
@@ -43,19 +43,7 @@ class _LogDetailsState extends State<LogDetailsPage> {
       ),
       body: Center(
         child: _buildDetails(context),
-
-        // child: new Column(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: <Widget>[
-        //       new Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           new Text("Date Performed: March 10, 2021"),
-        //         ],
-        //       )
-        //     ]),
       ),
-      bottomNavigationBar: LogBar(),
     );
   }
 
@@ -144,45 +132,6 @@ class _LogDetailsState extends State<LogDetailsPage> {
     );
   }
 
-//   Future<Widget> _deleteLogDialog(BuildContext context) async {
-//     await Future.delayed(Duration(microseconds: 1));
-// showDialog(
-//         context: context,
-//         builder: (BuildContext context) {
-//     return new AlertDialog(
-//       title: Text('Delete Log?'),
-//       actions: <Widget>[
-//         new Text(
-//             "Are you sure you want to delete log for Run ${curLog.runNum}?"),
-//         TextButton(
-//           child: Text('CANCEL'),
-//           onPressed: () {
-//             setState(() {
-//               Navigator.pop(context);
-//             });
-//           },
-//         ),
-//         TextButton(
-//           child: Text('Delete Log',
-//               style: TextStyle(
-//                 color: Colors.red,
-//               )),
-//           onPressed: () async {
-//             await LogDatabase.instance.deleteLog(curLog.id!);
-//             // .then((_) {
-//             //   setState(() {
-//             //     Navigator.pop(context);
-//             //   });
-//             //   Navigator.pop(context, true); //send back to oldLogsPage
-//             // });
-//             Navigator.pop(context);
-//             Navigator.pop(context, true); //send back to oldLogsPage
-//           },
-//         ),
-//       ],
-//     );
-//   },);}
-
   Widget _deleteDetailDialog(BuildContext context, int index) {
     return new AlertDialog(
       title: Text('Delete this detail?'),
@@ -202,9 +151,10 @@ class _LogDetailsState extends State<LogDetailsPage> {
                 color: Colors.red,
               )),
           onPressed: () async {
+            //Navigator.pop(context);
             await LogDatabase.instance
                 .additionalDataUpdate(
-                    curLog.additionalData![index], false, index)
+                    curLog.additionalData![index], false, curLog.id!, index)
                 .then((value) {
               setState(() {
                 Navigator.pop(context);

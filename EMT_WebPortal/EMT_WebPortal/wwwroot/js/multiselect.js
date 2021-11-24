@@ -1,5 +1,5 @@
 //Author: Vincent Futrell
-//Date last modified: 11/08/2021
+//Date last modified: 11/16/2021
 //This file contains the js code for the vf-multiselect dropdown
 var expanded = false;
 
@@ -51,6 +51,9 @@ function expandOptionList(search_string) {
             let current_med = all_meds[i];
             if (!current_med.id.toLowerCase().includes(search_string.toLowerCase())) {
                 current_med.style.display = "none";
+            }
+            else {
+                current_med.style.display = "block";
             }
         }
     }

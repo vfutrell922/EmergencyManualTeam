@@ -6,28 +6,30 @@
 */
 .vf-multiselect-container{
     display: inline-flex;
-    outline: 2px solid black;
+    outline: 1px solid lightgrey;
     height: 30px;
-    width: 350px;
+    width: 100%;
+    border-radius: 3px;
+    margin-top: 10px;
 }
 
 .vf-multiselect-input{
-    order:1;
     display:inline-flex;
     border: none;
     height: 30px;
-    width: 320px;
+    width: 95%;
 }
 
 .vf-multiselect-dropdown{
     order:2;
     height: 30px;
-    width: 30px;
+    width: 5%;
+    max-width: 80px;
 }
 
 .vf-option-container{
     display: inline;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     padding: 2px;
 }
 
@@ -38,10 +40,11 @@
 .vf-option-list{
     display:none;
     padding:2px;
-    border: 2px solid black;
+    border: 1px solid lightgray;
     max-height:400px;
     width: 100%;
     overflow:scroll;
+    z-index: 1;
 }
 
 .vf-medId{
