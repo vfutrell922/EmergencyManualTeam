@@ -23,10 +23,15 @@ class ProtocolPage extends StatefulWidget {
   ProtocolPage(@required this.name);
 
   @override
-  _ProtocolState createState() => _ProtocolState();
+  _ProtocolState createState() => _ProtocolState(protocolname: name);
 }
 
 class _ProtocolState extends State<ProtocolPage> {
+  final String protocolname;
+
+  _ProtocolState({required this.protocolname});
+
+  /// data properties
   late List<Protocol> _protocols;
   late List<Chart> _charts;
   late List<Medication> _medications;
@@ -48,7 +53,8 @@ class _ProtocolState extends State<ProtocolPage> {
 
               // if we got our data
             } else if (snapshot.hasData) {
-              return specificPage();
+              return CertificationTabBar(
+                  protocolname, _protocols, _charts, _medications);
             }
           }
           return Center(
@@ -87,47 +93,6 @@ class _ProtocolState extends State<ProtocolPage> {
         await HandbookDatabase.instance.readAllMedications();
     _medications = medications;
     return medications;
-  }
-
-  /// Parses the rich text information of the certification's protocol and gathers it into a single string.
-  String findProtocolWithCertification(int certification) {
-    String protocol = "";
-    _protocols.forEach((element) {
-      if (element.Certification == certification) {
-        if (element.PatientType == 0) {
-          protocol += "<p><b>Adult</b></p>";
-        } else if (element.PatientType == 1) {
-          protocol += "<p><b>Pediatric</b></p>";
-        } else if (element.PatientType == 2) {
-          protocol += "<p><b>All Ages</b></p>";
-        }
-        if (element.TreatmentPlan != Null) {
-          protocol += ("<p><b>Treatment Plan</b></p>" +
-              element.TreatmentPlan.toString() +
-              "<p></p>");
-        }
-        if (element.OtherInformation != Null) {
-          protocol += ("<p><b>Other Information</b></p>" +
-              element.OtherInformation.toString() +
-              "<p></p>");
-        }
-      }
-    });
-    return protocol;
-  }
-
-  List displayAllCharts() {
-    List<Widget> ret = [];
-    for (Chart chart in _charts) {
-      ret.add(
-        Text(chart.Name),
-      );
-      ret.add(InteractiveViewer(
-        child: Image.memory(chart.Photo),
-        maxScale: 5.0,
-      ));
-    }
-    return ret;
   }
 
   /// Adds a medication to the current log database entry
@@ -342,151 +307,5 @@ class _ProtocolState extends State<ProtocolPage> {
             child: CircularProgressIndicator(),
           );
         });
-  }
-
-  /// The loaded Protocol page for the specified protocol
-  Widget specificPage() {
-    return CertificationTabBar();
-    // return DefaultTabController(
-    //     initialIndex: 1,
-    //     length: 5,
-    //     child: Scaffold(
-    //       floatingActionButton: PhoneButton(context),
-    //       bottomNavigationBar: LogBar(),
-    //       appBar: AppBar(
-    //           backgroundColor: Color(0xFFFFFF),
-    //           title: Text(widget.name),
-    //           bottom: new TabBar(
-    //             isScrollable: true,
-    //             labelColor: Colors.black,
-    //             unselectedLabelColor: Colors.black,
-    //             tabs: <Widget>[
-    //               Tab(
-    //                 child: new Container(
-    //                   color: Colors.yellow,
-    //                   child: Text("General"),
-    //                 ),
-    //               ),
-    //               new Container(
-    //                 color: Colors.blue,
-    //                 child: new Tab(
-    //                   child: Text("EMT"),
-    //                 ),
-    //               ),
-    //               new Container(
-    //                 color: Colors.green,
-    //                 child: new Tab(
-    //                   child: Text("AEMT"),
-    //                 ),
-    //               ),
-    //               new Container(
-    //                 color: Colors.red,
-    //                 child: new Tab(
-    //                   child: Text("Paramedic"),
-    //                 ),
-    //               ),
-    //               new Container(
-    //                 color: Colors.grey,
-    //                 child: new Tab(
-    //                   child: Text("Charts"),
-    //                 ),
-    //               ),
-    //             ],
-    //           )),
-    //       body: TabBarView(
-    //         children: <Widget>[
-    //           Scaffold(
-    //               endDrawer: MedDrawer(3),
-    //               appBar: AppBar(
-    //                 automaticallyImplyLeading: false,
-    //                 backgroundColor: Colors.yellow,
-    //                 foregroundColor: Colors.black,
-    //                 title: Text(
-    //                   "General",
-    //                   style: TextStyle(color: Colors.black),
-    //                 ),
-    //               ),
-    //               body: new Container(
-    //                 child: new SingleChildScrollView(
-    //                   scrollDirection: Axis.vertical, //.horizontal
-    //                   child: Html(
-    //                     data: findProtocolWithCertification(3),
-    //                   ),
-    //                 ),
-    //               )),
-    //           Scaffold(
-    //               endDrawer: MedDrawer(0),
-    //               appBar: AppBar(
-    //                 automaticallyImplyLeading: false,
-    //                 backgroundColor: Colors.blue,
-    //                 foregroundColor: Colors.black,
-    //                 title: Text(
-    //                   "EMT",
-    //                   style: TextStyle(color: Colors.black),
-    //                 ),
-    //               ),
-    //               body: new Container(
-    //                 child: new SingleChildScrollView(
-    //                   scrollDirection: Axis.vertical, //.horizontal
-    //                   child: Html(data: findProtocolWithCertification(0)),
-    //                 ),
-    //               )),
-    //           Scaffold(
-    //               endDrawer: MedDrawer(1),
-    //               appBar: AppBar(
-    //                 automaticallyImplyLeading: false,
-    //                 backgroundColor: Colors.green,
-    //                 foregroundColor: Colors.black,
-    //                 title: Text(
-    //                   "AEMT",
-    //                   style: TextStyle(color: Colors.black),
-    //                 ),
-    //               ),
-    //               body: new Container(
-    //                 child: new SingleChildScrollView(
-    //                   scrollDirection: Axis.vertical, //.horizontal
-    //                   child: Html(data: findProtocolWithCertification(1)),
-    //                 ),
-    //               )),
-    //           Scaffold(
-    //               endDrawer: MedDrawer(2),
-    //               appBar: AppBar(
-    //                 automaticallyImplyLeading: false,
-    //                 backgroundColor: Colors.red,
-    //                 foregroundColor: Colors.black,
-    //                 title: Text(
-    //                   "Paramedic",
-    //                   style: TextStyle(color: Colors.black),
-    //                 ),
-    //               ),
-    //               body: new Container(
-    //                 child: new SingleChildScrollView(
-    //                   scrollDirection: Axis.vertical, //.horizontal
-    //                   child: Html(data: findProtocolWithCertification(2)),
-    //                 ),
-    //               )),
-    //           Scaffold(
-    //             endDrawer: MedDrawer(-1),
-    //             appBar: AppBar(
-    //               automaticallyImplyLeading: false,
-    //               backgroundColor: Colors.grey,
-    //               foregroundColor: Colors.black,
-    //               title: Text(
-    //                 "Charts",
-    //                 style: TextStyle(color: Colors.black),
-    //               ),
-    //             ),
-    //             body: new SingleChildScrollView(
-    //               scrollDirection: Axis.vertical, //.horizontal
-    //               child: Column(
-    //                 children: <Widget>[
-    //                   ...displayAllCharts(),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ));
   }
 }

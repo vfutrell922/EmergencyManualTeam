@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
+import 'db/handbookdb_handler.dart';
+import 'model/protocol.dart';
+import 'model/chart.dart';
+import 'model/medication.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class CertificationTabBar extends StatefulWidget {
-  createState() => _CertificationTabBarState();
+  final String protocolname;
+
+  final List<Protocol> protocols;
+  final List<Chart> charts;
+  final List<Medication> medications;
+
+  CertificationTabBar(@required this.protocolname, @required this.protocols,
+      @required this.charts, @required this.medications);
+
+  @override
+  _CertificationTabBarState createState() => _CertificationTabBarState(
+      protocolname: protocolname,
+      protocols: protocols,
+      charts: charts,
+      medications: medications);
 }
 
 class _CertificationTabBarState extends State<CertificationTabBar>
     with SingleTickerProviderStateMixin {
+  final String protocolname;
+  final List<Protocol> protocols;
+  final List<Chart> charts;
+  final List<Medication> medications;
+
+  _CertificationTabBarState(
+      {required this.protocolname,
+      required this.protocols,
+      required this.charts,
+      required this.medications});
+
   late TabController _controller;
   late List<TabData> _tabData;
   late List<Tab> _tabs = [];
@@ -16,11 +46,11 @@ class _CertificationTabBarState extends State<CertificationTabBar>
   void initState() {
     super.initState();
     _tabData = [
-      TabData(title: 'General', color: Colors.yellow),
-      TabData(title: 'EMT', color: Colors.blue),
-      TabData(title: 'AEMT', color: Colors.green),
-      TabData(title: 'Paramedic', color: Colors.red),
-      TabData(title: 'Charts', color: Colors.grey),
+      TabData(title: 'General', certification: 3, color: Colors.yellow),
+      TabData(title: 'EMT', certification: 0, color: Colors.blue),
+      TabData(title: 'AEMT', certification: 1, color: Colors.green),
+      TabData(title: 'Paramedic', certification: 2, color: Colors.red),
+      TabData(title: 'Charts', certification: -1, color: Colors.grey),
     ];
     _activeColor = _tabData.first.color;
     _tabData.forEach((data) {
@@ -35,7 +65,12 @@ class _CertificationTabBarState extends State<CertificationTabBar>
       );
       _tabs.add(tab);
 
-      final widget = Scaffold(backgroundColor: data.color);
+      final widget = new Container(
+        child: new SingleChildScrollView(
+          scrollDirection: Axis.vertical, //.horizontal
+          child: findViewWithCertification(data.certification),
+        ),
+      );
       _tabViews.add(widget);
     });
     _controller = TabController(vsync: this, length: _tabData.length)
@@ -44,6 +79,54 @@ class _CertificationTabBarState extends State<CertificationTabBar>
           _activeColor = _tabData[_controller.index].color;
         });
       });
+  }
+
+  /// Parses the rich text information of the certification's protocol and gathers it into a single string.
+  Widget findViewWithCertification(int certification) {
+    if (certification == -1) {
+      return new Column(
+        children: <Widget>[
+          ...displayAllCharts(),
+        ],
+      );
+    }
+    String protocol = "";
+    protocols.forEach((element) {
+      if (element.Certification == certification) {
+        if (element.PatientType == 0) {
+          protocol += "<p><b>Adult</b></p>";
+        } else if (element.PatientType == 1) {
+          protocol += "<p><b>Pediatric</b></p>";
+        } else if (element.PatientType == 2) {
+          protocol += "<p><b>All Ages</b></p>";
+        }
+        if (element.TreatmentPlan != Null) {
+          protocol += ("<p><b>Treatment Plan</b></p>" +
+              element.TreatmentPlan.toString() +
+              "<p></p>");
+        }
+        if (element.OtherInformation != Null) {
+          protocol += ("<p><b>Other Information</b></p>" +
+              element.OtherInformation.toString() +
+              "<p></p>");
+        }
+      }
+    });
+    return Html(data: protocol);
+  }
+
+  List displayAllCharts() {
+    List<Widget> ret = [];
+    for (Chart chart in charts) {
+      ret.add(
+        Text(chart.Name),
+      );
+      ret.add(InteractiveViewer(
+        child: Image.memory(chart.Photo),
+        maxScale: 5.0,
+      ));
+    }
+    return ret;
   }
 
   @override
@@ -57,9 +140,8 @@ class _CertificationTabBarState extends State<CertificationTabBar>
     return Theme(
       data: ThemeData(primaryColor: _activeColor),
       child: Scaffold(
-        backgroundColor: _activeColor,
         appBar: AppBar(
-          title: Text('Multi Colored Tab Bar'),
+          title: Text(protocolname),
           bottom: TabBar(
             indicatorColor: _activeColor,
             labelPadding: EdgeInsets.zero,
@@ -77,8 +159,10 @@ class _CertificationTabBarState extends State<CertificationTabBar>
 }
 
 class TabData {
-  TabData({required this.title, required this.color});
+  TabData(
+      {required this.title, required this.certification, required this.color});
 
   final String title;
+  final int certification;
   final Color color;
 }
