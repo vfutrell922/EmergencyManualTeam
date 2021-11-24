@@ -72,7 +72,7 @@ class _CertificationTabBarState extends State<CertificationTabBar>
           endDrawer: MedDrawer(data.certification, protocols, medications),
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.yellow,
+            backgroundColor: data.color,
             foregroundColor: Colors.black,
             title: Text(
               data.title,
