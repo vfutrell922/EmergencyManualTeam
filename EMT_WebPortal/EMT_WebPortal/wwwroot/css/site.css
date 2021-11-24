@@ -96,3 +96,8 @@ body {
 .olmc-check{
    margin-top: 30px;
 }
+
+.aboutus-div{
+    margin-bottom: 50px;
+    justify-content:space-between;
+}

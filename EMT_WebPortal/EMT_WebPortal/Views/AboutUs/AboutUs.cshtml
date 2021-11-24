@@ -2,32 +2,76 @@
 @{
     ViewData["Title"] = "AboutUs";
 }
-    <div>
-        <div class="col-12">
-            <p>
-                The Emergency Manual Team is developing a mobile solution that provides EMTs with quick navigation of their protocol handbook and patient care logging functionality while in the field. 
+    <div class="container">
+        <div class="row aboutus-div">
+            <img src="~/Images/TeamLogo.jpg" alt="Team Logo" class="col-3" />
+            <img src="~/Images/Plus.png" alt="Plus Sign" class="col-3" />
+            <img src="~/Images/MWALogo.PNG" alt="MWA Logo" class="col-3" />
+        </div>
+        <h4>Our Project</h4>
+        <div class="row aboutus-div">
+            <p class="col-12">
+                The Emergency Manual Team has developed a mobile solution that provides EMTs with quick navigation of their protocol handbook and patient care logging functionality while in the field.
                 The protocol data will be uploaded and maintained by the Mountain West Ambulance service administrators through the web portal.
-                The goal of our design is minimal user interaction.
-                The emergency responder environment requires an easy and intuitive UI, allowing access to the data with no issues and keeping users’ focus on the patient and not the system.
+                The goal of our design is minimal user interaction to keeping users’ focus on the patient and not the system.
+                To meet the needs of the emergency responder environment our system uses a simple but intuitive UI, allowing access to the data as fast as possible.
             </p>
         </div>
-        <div class="col-12">
-            <div id="aboutUsCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="Team Logo">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
+        <h4>The Team</h4>
+        <div class="row aboutus-div">
+            <div class="col-3 profile-card">
+                <img src="~/Images/Andrew.PNG" alt="Andrew Photo" class="row aboutus-photo" />
+                <div class="row">
+                    <h4>Andrew Stender</h4><br />
+                    <h5>Mobile Developer</h5><br />
+                    <p>
+                        Andrew was responsible for the initial database design. He created the persistent log database within the mobile app.
+                        He also implemented the log bar, medication drawer, and the overall logging functionality.
+                        The technologies he used were Flutter, Dart, and SQLflite.
+                    </p>
                 </div>
             </div>
-        </div>
-        <div>
-
+            <div class="col-3 profile-card">
+                <img src="~/Images/Molly.PNG" alt="Molly Photo" class="row aboutus-photo" />
+                <div class="row">
+                    <h4>Molly Clare</h4><br />
+                    <h5>Mobile/Backend Developer</h5><br />
+                    <p>
+                        Molly took care of the handbook integration of the app, which included writing the HTTP service
+                        within the app, creating the persistent SQLflite database for the handbook in the app, and helping
+                        to write the API. She implemented the protocol page, search functionality, the quick links page,
+                        and the editing functionality of logs. She also handled communications with Mountain West Ambulance.
+                        The technologies she used were Flutter and Dart, C#, and SQLflite.
+                    </p>
+                </div>
+            </div>
+            <div class="col-3 profile-card">
+                <img src="~/Images/Vincent.PNG" alt="Vincent Photo" class="row aboutus-photo" />
+                <div class="row">
+                    <h4>Vincent Futrell</h4><br />
+                    <h5>Full-Stack Web Developer</h5><br />
+                    <p>
+                        Vincent was responsible for development of the web portal, setting up the server,
+                        and implementing the website security plan.
+                        He also cowrote the API and participated in designing the database.
+                        The technologies he worked with are ASP.NET Core, MySQL, JavaScript, HTML/CSS , C#, and AWS microservices for .NET .
+                    </p>
+                </div>
+            </div>
+            <div class="col-3">
+                <img src="~/Images/Sierra.PNG" alt="Sierra Photo" class="row aboutus-photo" />
+                <div class="row">
+                    <h4>Sierra Johnson</h4><br />
+                    <h5>Mobile/Backend Developer</h5><br />
+                    <p>
+                        Sierra took charge of the initial app design, viewing/editing old logs as well as assisting with the design
+                        and integration of the persistent log database.  She implemented the old logs viewing page as well as the viewing,
+                        editing and deleting a given log by manipulating the data input and retrieval regarding the persistent log database.
+                        She was in charge of getting the app prepared and launched on the Apple Store. The technologies she used were
+                        Flutter, Dart, SQLflite, and XCode.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
