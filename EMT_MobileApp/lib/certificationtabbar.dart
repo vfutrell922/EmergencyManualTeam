@@ -3,6 +3,9 @@ import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
+import 'logbar.dart';
+import 'phonepage.dart';
+import 'meddrawer.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class CertificationTabBar extends StatefulWidget {
@@ -65,12 +68,23 @@ class _CertificationTabBarState extends State<CertificationTabBar>
       );
       _tabs.add(tab);
 
-      final widget = new Container(
-        child: new SingleChildScrollView(
-          scrollDirection: Axis.vertical, //.horizontal
-          child: findViewWithCertification(data.certification),
-        ),
-      );
+      final widget = new Scaffold(
+          endDrawer: MedDrawer(data.certification, protocols, medications),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.yellow,
+            foregroundColor: Colors.black,
+            title: Text(
+              data.title,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          body: new Container(
+            child: new SingleChildScrollView(
+              scrollDirection: Axis.vertical, //.horizontal
+              child: findViewWithCertification(data.certification),
+            ),
+          ));
       _tabViews.add(widget);
     });
     _controller = TabController(vsync: this, length: _tabData.length)
@@ -140,6 +154,8 @@ class _CertificationTabBarState extends State<CertificationTabBar>
     return Theme(
       data: ThemeData(primaryColor: _activeColor),
       child: Scaffold(
+        floatingActionButton: PhoneButton(context),
+        bottomNavigationBar: LogBar(),
         appBar: AppBar(
           title: Text(protocolname),
           bottom: TabBar(
