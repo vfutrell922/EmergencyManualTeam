@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'db/handbookdb_handler.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
@@ -130,22 +129,46 @@ class _CertificationTabBarState extends State<CertificationTabBar>
   }
 
   List displayAllCharts() {
-    List<Widget> ret = [];
-    for (Chart chart in charts) {
-      ret.add(
-        Text(chart.Name),
-      );
-      ret.add(InteractiveViewer(
+    List<Widget> ret = charts
+        .map((chart) => GestureDetector(
+            onTap: () {},
+            child: GestureDetector(
+              child: Container(
+                  padding: const EdgeInsets.all(16),
+                  color: Colors.teal[200],
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(chart.Name,
+                            style: TextStyle(fontSize: 22, color: Colors.black),
+                            textAlign: TextAlign.center)
+                      ],
+                    ),
+                  )),
+              onTap: () {
+                showDialog(
+                    context: context, builder: (_) => ImageDialog(chart));
+              },
+            )))
+        .toList();
+    return ret;
+  }
+
+  /// The displayed chart as a pop up dialog.
+  Widget ImageDialog(Chart chart) {
+    debugPrint("getting the image dialog");
+    return Dialog(
+        child: Center(
+      child: InteractiveViewer(
         child: Image.memory(chart.Photo),
         maxScale: 5.0,
-      ));
-    }
-    return ret;
+      ),
+    ));
   }
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 

@@ -71,18 +71,24 @@ class _MedDrawerState extends State<MedDrawer>
         medIDs = t;
       }
     });
-
-    List<Medication> medications = [];
-
-    medications.forEach((element) async {
-      if (medIDs.contains(element.ID.toString())) {
-        Medication validMedication =
-            await HandbookDatabase.instance.readMedication(element.ID);
-        medications.add(validMedication);
+    HandbookDatabase.instance
+        .readAllMedications()
+        .then((List<Medication> bmedications) async {
+      for (var i = 0; i < bmedications.length; i++) {
+        debugPrint(
+            "Medication Entry >>> " + bmedications[i].toJson().toString());
       }
     });
 
-    return medications;
+    List<Medication> meds = [];
+
+    medications.forEach((element) async {
+      if (medIDs.contains(element.ID.toString())) {
+        meds.add(element);
+      }
+    });
+
+    return meds;
   }
 
   @override
@@ -104,7 +110,8 @@ class _MedDrawerState extends State<MedDrawer>
 
               // if we got our data
             } else if (snapshot.hasData) {
-              List<Medication> medications = snapshot.data as List<Medication>;
+              List<Medication> certificationMeds =
+                  snapshot.data as List<Medication>;
               String dosage = "";
               String _myRoute = '';
               final _formKey = GlobalKey<FormState>();
@@ -113,10 +120,10 @@ class _MedDrawerState extends State<MedDrawer>
                   // through the options in the drawer if there isn't enough vertical
                   // space to fit everything.
                   child: ListView.builder(
-                      itemCount: medications.length,
+                      itemCount: certificationMeds.length,
                       itemBuilder: (BuildContext context, int index) {
                         return new ListTile(
-                            title: Text('${medications[index].Name}'),
+                            title: Text('${certificationMeds[index].Name}'),
                             onTap: () {
                               if (globals.currentLogID != -1) {
                                 showDialog(
@@ -200,7 +207,7 @@ class _MedDrawerState extends State<MedDrawer>
                                                               .currentState!
                                                               .validate()) {
                                                             addMedication(
-                                                                '${medications[index].Name}',
+                                                                '${certificationMeds[index].Name}',
                                                                 dosage,
                                                                 _myRoute);
                                                           }
