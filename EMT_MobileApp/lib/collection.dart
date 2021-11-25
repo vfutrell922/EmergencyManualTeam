@@ -45,7 +45,7 @@ Future<bool> collectHandbook() async {
   // debugPrint("Getting medication");
   httpService.getMedications().then((List<Medication> medications) async {
     for (var i = 0; i < medications.length; i++) {
-      debugPrint("Medication Entry >>> " + medications[i].toJson().toString());
+      // debugPrint("Medication Entry >>> " + medications[i].toJson().toString());
       await HandbookDatabase.instance.addMedication(medications[i]);
     }
   });

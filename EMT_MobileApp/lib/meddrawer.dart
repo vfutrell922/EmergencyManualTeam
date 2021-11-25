@@ -71,14 +71,6 @@ class _MedDrawerState extends State<MedDrawer>
         medIDs = t;
       }
     });
-    HandbookDatabase.instance
-        .readAllMedications()
-        .then((List<Medication> bmedications) async {
-      for (var i = 0; i < bmedications.length; i++) {
-        debugPrint(
-            "Medication Entry >>> " + bmedications[i].toJson().toString());
-      }
-    });
 
     List<Medication> meds = [];
 
