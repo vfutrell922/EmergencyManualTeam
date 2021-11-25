@@ -72,17 +72,15 @@ class _MedDrawerState extends State<MedDrawer>
       }
     });
 
-    List<Medication> medications = [];
+    List<Medication> meds = [];
 
     medications.forEach((element) async {
       if (medIDs.contains(element.ID.toString())) {
-        Medication validMedication =
-            await HandbookDatabase.instance.readMedication(element.ID);
-        medications.add(validMedication);
+        meds.add(element);
       }
     });
 
-    return medications;
+    return meds;
   }
 
   @override
@@ -104,7 +102,8 @@ class _MedDrawerState extends State<MedDrawer>
 
               // if we got our data
             } else if (snapshot.hasData) {
-              List<Medication> medications = snapshot.data as List<Medication>;
+              List<Medication> certificationMeds =
+                  snapshot.data as List<Medication>;
               String dosage = "";
               String _myRoute = '';
               final _formKey = GlobalKey<FormState>();
@@ -113,10 +112,10 @@ class _MedDrawerState extends State<MedDrawer>
                   // through the options in the drawer if there isn't enough vertical
                   // space to fit everything.
                   child: ListView.builder(
-                      itemCount: medications.length,
+                      itemCount: certificationMeds.length,
                       itemBuilder: (BuildContext context, int index) {
                         return new ListTile(
-                            title: Text('${medications[index].Name}'),
+                            title: Text('${certificationMeds[index].Name}'),
                             onTap: () {
                               if (globals.currentLogID != -1) {
                                 showDialog(
@@ -200,7 +199,7 @@ class _MedDrawerState extends State<MedDrawer>
                                                               .currentState!
                                                               .validate()) {
                                                             addMedication(
-                                                                '${medications[index].Name}',
+                                                                '${certificationMeds[index].Name}',
                                                                 dosage,
                                                                 _myRoute);
                                                           }

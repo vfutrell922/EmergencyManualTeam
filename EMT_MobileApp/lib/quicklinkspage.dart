@@ -106,13 +106,19 @@ class _QuickLinksState extends State<QuickLinksPage> {
 
   /// The displayed chart as a pop up dialog.
   Widget ImageDialog(Chart chart) {
-    debugPrint("getting the image dialog");
-    return Dialog(
-        child: Center(
-      child: InteractiveViewer(
-        child: Image.memory(chart.Photo),
-        maxScale: 5.0,
-      ),
-    ));
+    TransformationController _controller = TransformationController();
+    return AlertDialog(title: Text(chart.Name), actions: <Widget>[
+      new Center(
+        child: InteractiveViewer(
+          boundaryMargin: EdgeInsets.all(20.0),
+          maxScale: 5.0,
+          transformationController: _controller,
+          onInteractionEnd: (value) {
+            _controller.value = Matrix4.identity();
+          },
+          child: Image.memory(chart.Photo),
+        ),
+      )
+    ]);
   }
 }
