@@ -1,16 +1,17 @@
 ﻿<!--
  Author: Vincent Futrell
- Date Last Modified: 11/16/2021
-    This file contains the HTMl for the Charts Index page
+ Date Last Modified: 11/26/2021
+    This file contains the HTMl for the Protocols Index page
 -->
 @section Head{ 
     <link rel="stylesheet" type="text/css" href="~/css/ProtocolCards.css"/>
 }
-<h1>Index</h1>
+<h1>Protocols</h1>
 
-<input type="text" placeholder="Type to search..." class="col-3" onkeydown="cardSearch(this)" onkeyup="cardSearch(this)"/>
-
-<input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
+<div class="row" style="justify-content:center">
+    <input type="text" placeholder="Type to search..." class="col-6" onkeydown="cardSearch(this)" onkeyup="cardSearch(this)" />
+    <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success col-2" />
+</div>
 <div id="tableContainer" class="container card-table">
     <div id="cardTable" class="row"></div>
 </div>

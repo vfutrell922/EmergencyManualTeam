@@ -1,12 +1,14 @@
-﻿
+﻿<!--
+    Author: Vincent Futrell
+    Date Last Modified: 11/24/2021
+    This file containes the view code for the About Us page
+-->
 @{
-    ViewData["Title"] = "AboutUs";
+    ViewData["Title"] = "About Us";
 }
     <div class="container">
         <div class="row aboutus-div">
-            <img src="~/Images/TeamLogo.jpg" alt="Team Logo" class="col-3" />
-            <img src="~/Images/Plus.png" alt="Plus Sign" class="col-3" />
-            <img src="~/Images/MWALogo.PNG" alt="MWA Logo" class="col-3" />
+            <img src="~/Images/AboutUs_Banner.png" alt="Team Logo" class="col-12" />
         </div>
         <h4>Our Project</h4>
         <div class="row aboutus-div">
@@ -19,58 +21,56 @@
         </div>
         <h4>The Team</h4>
         <div class="row aboutus-div">
-            <div class="col-3 profile-card">
+            <div class="col-5 profile-card">
                 <img src="~/Images/Andrew.PNG" alt="Andrew Photo" class="row aboutus-photo" />
-                <div class="row">
-                    <h4>Andrew Stender</h4><br />
-                    <h5>Mobile Developer</h5><br />
-                    <p>
-                        Andrew was responsible for the initial database design. He created the persistent log database within the mobile app.
-                        He also implemented the log bar, medication drawer, and the overall logging functionality.
-                        The technologies he used were Flutter, Dart, and SQLflite.
-                    </p>
-                </div>
+                <h4 class="row">Andrew Stender</h4><br />
+                <h5 class="row">Mobile Developer</h5><br />
+                <p class="row">
+                    Andrew was responsible for the initial database design. He created the persistent log database within the mobile app.
+                    He also implemented the log bar, medication drawer, and the overall logging functionality.
+                    The technologies he used were Flutter, Dart, and SQLflite.
+                </p>
+                
             </div>
-            <div class="col-3 profile-card">
+            <div class="col-5 profile-card">
                 <img src="~/Images/Molly.PNG" alt="Molly Photo" class="row aboutus-photo" />
-                <div class="row">
-                    <h4>Molly Clare</h4><br />
-                    <h5>Mobile/Backend Developer</h5><br />
-                    <p>
-                        Molly took care of the handbook integration of the app, which included writing the HTTP service
-                        within the app, creating the persistent SQLflite database for the handbook in the app, and helping
-                        to write the API. She implemented the protocol page, search functionality, the quick links page,
-                        and the editing functionality of logs. She also handled communications with Mountain West Ambulance.
-                        The technologies she used were Flutter and Dart, C#, and SQLflite.
-                    </p>
-                </div>
+                <h4 class="row">Molly Clare</h4><br />
+                <h5 class="row">Mobile/Backend Developer</h5><br />
+                <p class="row">
+                    Molly took care of the handbook integration of the app, which included writing the HTTP service
+                    within the app, creating the persistent SQLflite database for the handbook in the app, and helping
+                    to write the API. She implemented the protocol page, search functionality, the quick links page,
+                    and the editing functionality of logs. She also handled communications with Mountain West Ambulance.
+                    The technologies she used were Flutter and Dart, C#, and SQLflite.
+                </p>
+                
             </div>
-            <div class="col-3 profile-card">
+        </div>
+        <div class="row aboutus-div">
+            <div class="col-5 profile-card">
                 <img src="~/Images/Vincent.PNG" alt="Vincent Photo" class="row aboutus-photo" />
-                <div class="row">
-                    <h4>Vincent Futrell</h4><br />
-                    <h5>Full-Stack Web Developer</h5><br />
-                    <p>
-                        Vincent was responsible for development of the web portal, setting up the server,
-                        and implementing the website security plan.
-                        He also cowrote the API and participated in designing the database.
-                        The technologies he worked with are ASP.NET Core, MySQL, JavaScript, HTML/CSS , C#, and AWS microservices for .NET .
-                    </p>
-                </div>
+                <h4 class="row">Vincent Futrell</h4><br />
+                <h5 class="row">Full-Stack Web Developer</h5><br />
+                <p class="row">
+                    Vincent was responsible for development of the web portal, setting up the server,
+                    and implementing the website security plan.
+                    He also cowrote the API and participated in designing the database.
+                    The technologies he worked with are ASP.NET Core, MySQL, JavaScript, HTML/CSS , C#, and AWS microservices for .NET .
+                </p>
+            
             </div>
-            <div class="col-3">
+            <div class="col-5 profile-card">
                 <img src="~/Images/Sierra.PNG" alt="Sierra Photo" class="row aboutus-photo" />
-                <div class="row">
-                    <h4>Sierra Johnson</h4><br />
-                    <h5>Mobile/Backend Developer</h5><br />
-                    <p>
-                        Sierra took charge of the initial app design, viewing/editing old logs as well as assisting with the design
-                        and integration of the persistent log database.  She implemented the old logs viewing page as well as the viewing,
-                        editing and deleting a given log by manipulating the data input and retrieval regarding the persistent log database.
-                        She was in charge of getting the app prepared and launched on the Apple Store. The technologies she used were
-                        Flutter, Dart, SQLflite, and XCode.
-                    </p>
-                </div>
+                <h4 class="row">Sierra Johnson</h4><br />
+                <h5 class="row">Mobile/Backend Developer</h5><br />
+                <p class="row">
+                    Sierra took charge of the initial app design, viewing/editing old logs as well as assisting with the design
+                    and integration of the persistent log database.  She implemented the old logs viewing page as well as the viewing,
+                    editing and deleting a given log by manipulating the data input and retrieval regarding the persistent log database.
+                    She was in charge of getting the app prepared and launched on the Apple Store. The technologies she used were
+                    Flutter, Dart, SQLflite, and XCode.
+                </p>
+                
             </div>
         </div>
     </div>
