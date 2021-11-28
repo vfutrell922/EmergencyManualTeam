@@ -1,12 +1,15 @@
+import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:emergencymanual/phonepage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 import 'db/handbookdb_handler.dart';
+import 'db/logdb_handler.dart';
+import 'logbar.dart';
+import 'meddrawer.dart';
 import 'model/protocol.dart';
 import 'model/chart.dart';
 import 'model/medication.dart';
-import 'logbar.dart';
-import 'phonepage.dart';
-import 'meddrawer.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class CertificationTabBar extends StatefulWidget {
   final String protocolname;
@@ -74,6 +77,16 @@ class _CertificationTabBarState extends State<CertificationTabBar>
             automaticallyImplyLeading: false,
             backgroundColor: data.color,
             foregroundColor: Colors.black,
+            actions: [
+              Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.medication),
+                  onPressed: () => Scaffold.of(context).openEndDrawer(),
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                ),
+              ),
+            ],
             title: Text(
               data.title,
               style: TextStyle(color: Colors.black),
@@ -145,7 +158,7 @@ class _CertificationTabBarState extends State<CertificationTabBar>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
