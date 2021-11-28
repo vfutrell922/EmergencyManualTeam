@@ -169,20 +169,40 @@ class _MedDrawerState extends State<MedDrawer>
                                                     },
                                                     dataSource: [
                                                       {
+                                                        "display": "IV",
+                                                        "value": "IV",
+                                                      },
+                                                      {
                                                         "display": "IM",
                                                         "value": "IM",
                                                       },
                                                       {
-                                                        "display": "IV",
-                                                        "value": "IV",
+                                                        "display": "IN",
+                                                        "value": "IN",
+                                                      },
+                                                      {
+                                                        "display": "SL",
+                                                        "value": "SL",
                                                       },
                                                       {
                                                         "display": "IO",
                                                         "value": "IO",
                                                       },
                                                       {
-                                                        "display": "NEB",
-                                                        "value": "NEB",
+                                                        "display": "PO",
+                                                        "value": "PO",
+                                                      },
+                                                      {
+                                                        "display": "Buccal",
+                                                        "value": "Buccal",
+                                                      },
+                                                      {
+                                                        "display": "Nebulized",
+                                                        "value": "Nebulized",
+                                                      },
+                                                      {
+                                                        "display": "Rectal",
+                                                        "value": "Rectal",
                                                       },
                                                     ],
                                                     textField: 'display',
@@ -357,15 +377,27 @@ class _MedDrawerState extends State<MedDrawer>
                                                                     dataSource: [
                                                                       {
                                                                         "display":
+                                                                            "IV",
+                                                                        "value":
+                                                                            "IV",
+                                                                      },
+                                                                      {
+                                                                        "display":
                                                                             "IM",
                                                                         "value":
                                                                             "IM",
                                                                       },
                                                                       {
                                                                         "display":
-                                                                            "IV",
+                                                                            "IN",
                                                                         "value":
-                                                                            "IV",
+                                                                            "IN",
+                                                                      },
+                                                                      {
+                                                                        "display":
+                                                                            "SL",
+                                                                        "value":
+                                                                            "SL",
                                                                       },
                                                                       {
                                                                         "display":
@@ -375,9 +407,27 @@ class _MedDrawerState extends State<MedDrawer>
                                                                       },
                                                                       {
                                                                         "display":
-                                                                            "NEB",
+                                                                            "PO",
                                                                         "value":
-                                                                            "NEB",
+                                                                            "PO",
+                                                                      },
+                                                                      {
+                                                                        "display":
+                                                                            "Buccal",
+                                                                        "value":
+                                                                            "Buccal",
+                                                                      },
+                                                                      {
+                                                                        "display":
+                                                                            "Nebulized",
+                                                                        "value":
+                                                                            "Nebulized",
+                                                                      },
+                                                                      {
+                                                                        "display":
+                                                                            "Rectal",
+                                                                        "value":
+                                                                            "Rectal",
                                                                       },
                                                                     ],
                                                                     textField:
