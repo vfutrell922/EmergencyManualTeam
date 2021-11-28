@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 11/27/2021
+ * This file contains the class declaration for the MedicationProtocols model
+ * This class is a weak entity to track the many-to-many relationship between medications and protocols
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

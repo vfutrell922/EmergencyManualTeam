@@ -7,10 +7,15 @@
     <link rel="stylesheet" type="text/css" href="~/css/ProtocolCards.css"/>
 }
 <h1>Protocols</h1>
-
-<div class="row" style="justify-content:center">
-    <input type="text" placeholder="Type to search..." class="col-6" onkeydown="cardSearch(this)" onkeyup="cardSearch(this)" />
-    <input type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success col-2" />
+<div class="container">
+    <div class="row" style="justify-content:left">
+        <div class="col-6">
+            <input style="width:100%" type="text" placeholder="Type to search..." onkeydown="cardSearch(this)" onkeyup="cardSearch(this)" />
+        </div>
+        <div class="col-3">
+            <input style="width:100%" type="button" onclick="location.href='@Url.Action("Create", "Protocols")'" value="Create New" class="btn btn-outline-success" />
+        </div>
+    </div>
 </div>
 <div id="tableContainer" class="container card-table">
     <div id="cardTable" class="row"></div>

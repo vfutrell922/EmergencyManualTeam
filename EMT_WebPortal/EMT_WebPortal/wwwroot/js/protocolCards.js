@@ -1,7 +1,7 @@
 ﻿/*
  * Author: Vincent Futrell
  * Date Last Modified: 11/12/2021
- * 
+ * This file contains the declarations for the Protocol Cards
  */
 $(document).ready(populateCards());
 

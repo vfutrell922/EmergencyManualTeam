@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 11/27/2021
+ * This file contains the class declaration for the Medications model
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,26 +20,26 @@ namespace EMT_WebPortal.Models
         [Key]
         public int ID { get; set; }
         [Required]
-        //       [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string Name { get; set; }
         [Required]
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string Action { get; set; }
         [Required]
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string Indication { get; set; }
         [Required]
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string Contraindication { get; set; }
         [Required]
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string Precaution { get; set; }
         [Required]
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string AdverseEffects { get; set; }
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+        
         public string AdultDosage { get; set; }
-        //        [RegularExpression("^[\\s\\d\\w\"/,@$:;+().=#%*-]*", ErrorMessage = "Only standard characters allowed")]
+     
         public string ChildDosage { get; set; }
         [JsonIgnore]
         public virtual ICollection<MedicationProtocol> Protocols {get; set;}

@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 11/27/2021
+ * This file containe the code for building the medications list in the Protocol Details view
+ */
+$(document).ready(function () {
     var hasMedication = document.getElementById("hasMedsBool");
     var hasOLMC = document.getElementById("hasOLMCBool");
     var hasMedsDiv = document.getElementById("hasMedsDiv");
@@ -31,6 +36,11 @@
 });
 
 
+/**
+ * Builds and populates a ul on the DOM. Contents are a list of medication names 
+ * associated the protocol{id}
+ * @param {any} idNumber
+ */
 function buildMedicationList(idNumber) {
     let apiUrl = "/api/protocolsget/getmedicationnames/" + idNumber;
     $.ajax({
