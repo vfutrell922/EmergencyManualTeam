@@ -101,3 +101,7 @@ body {
     margin-bottom: 50px;
     justify-content:space-between;
 }
+
+.detail-row{
+    margin-bottom: 20px;
+}

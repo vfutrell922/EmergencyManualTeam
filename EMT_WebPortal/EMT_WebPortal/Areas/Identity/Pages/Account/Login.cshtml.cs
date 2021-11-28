@@ -72,7 +72,7 @@ namespace EMT_WebPortal.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = "./")
+        public async Task<IActionResult> OnPostAsync(string returnUrl = "~/Protocols/Index")
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 

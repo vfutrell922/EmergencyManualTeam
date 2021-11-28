@@ -1,66 +1,79 @@
-﻿@model EMT_WebPortal.Models.Protocol
+﻿<!--
+ Author: Vincent Futrell
+ Date Last Modified: 11/26/2021
+    This file contains the HTMl for the Protocols Details page
+-->
+@model EMT_WebPortal.Models.Protocol
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h3>Details</h3><br />
+<h4>@Model.Name : @Model.Certification : @Model.PatientType</h4>
 
-<div>
-    <h4>Protocol</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Certification)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Certification)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PatientType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PatientType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HasAssociatedMedication)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HasAssociatedMedication)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OtherInformation)
-        </dt>
-        <dd class = "col-sm-10">
+<div class="container">
+
+
+    <div class="row detail-row">
+        <div class="col-12">
+            <h5>Other Information</h5>
+        </div>
+        <div class="col-12">
             @Html.Raw(Model.OtherInformation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TreatmentPlan)
-        </dt>
-        <dd class = "col-sm-10">
+        </div>
+    </div>
+
+    <div class="row detail-row">
+        <div class="col-12">
+            <h5>Treatment Plan</h5>
+        </div>
+        <div class="col-12">
             @Html.Raw(Model.TreatmentPlan)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Guideline)
-        </dt>
-        <dd class = "col-sm-10">
+        </div>
+    </div>
+
+    <div class="row detail-row">
+        <div class="col-12">
+            <h5>Guideline: </h5>
             @Html.DisplayFor(model => model.Guideline)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OLMCRequired)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OLMCRequired)
-        </dd>
-    </dl>
+        </div>
+    </div>
+
+    <!--These are placed on the page but not displayed for the JS code to read the boolean values-->
+    <p id="hasOLMCBool" style="display:none">@Model.OLMCRequired</p>
+    <p id="hasMedsBool" style="display:none">@Model.HasAssociatedMedication</p>
+    <p id="protocolId" style="display:none">@Model.Id</p>
+
+    <div class="row detail-row">
+        <div id="hasMedsDiv" class="col-6 row" style="display:none">
+            <h5>This protocol has associated medications.</h5><br />
+            <div id="medsList">
+
+            </div>
+        </div>
+        <div id="noMedsDiv" class="col-6 row" style="display:none">
+            <h5>This protocol has no associated medications.</h5><br />
+        </div>
+    </div>
+
+    <div class="row detail-row">
+        <div id="hasOLMCDiv" class="col-6 row" style="display:none">
+            <h5>Some treatments in this protocol require OLMC approval</h5><br />
+        </div>
+        <div id="noOLMCDiv" class="col-6 row" style="display:none">
+            <h5>Treatments in this protocol Do Not require OLMC approval</h5><br />
+        </div>
+    </div>
+
+    <div class="row" style="justify-content:left">
+        <div class="col-2">
+            <input style="width:100%" type="button" value="Edit" class="btn btn-primary" onclick="location.href='@Url.Action("Edit","Protocols", new{ id = Model.Id})'" />
+        </div>
+        <div class="col-2">
+            <input style="width:100%" type="button" value="Back To List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Protocols")'" />
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script type="text/javascript" src="~/js/ProtocolDetails.js"></script>

@@ -19,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a href="/Home/Index">
+                <a href="/Protocols/Index">
                 <input class="navbar-brand" type="image" style="width:75px; height:100px" src="~/Images/MWALogo.png"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -49,7 +49,15 @@
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
                         {
                             <li>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AccountManager" asp-action="Main">Admin Controls</a>
+                                <div class="dropdown">
+                                    <button class="btn btn-link text-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin Controls
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a id="RoleManage" class="dropdown-item" asp-area="" asp-controller="AccountManager" asp-action="AccountManager">Account Manager</a>
+                                        <a id="CreateAccount" class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create New Account</a>
+                                    </div>
+                                </div>
                             </li>
                         }
                     </ul>

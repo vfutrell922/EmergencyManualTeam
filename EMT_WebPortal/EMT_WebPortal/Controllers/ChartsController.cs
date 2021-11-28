@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 11/27/2021
+ * This file contains the controller class for the Charts pages
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

@@ -25,6 +25,9 @@ namespace EMT_WebPortal.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
+
+            //Tells the program how to connect to the database, use context.Configuration... when developing. Use GetUserDBConnectionString() in production to the 
+            //database connections string from AWS Secrets Manager
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<EMT_WebPortalUserContext>(options =>
                     options.UseSqlServer(context.Configuration.GetConnectionString("EMT_WebPortalUserContextConnection")/*GetUserDBConnectionString()*/));

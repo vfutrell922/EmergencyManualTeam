@@ -1,6 +1,7 @@
 ﻿/*
  * Author: Vincent Futrell
- * Date last Modified: 11/12/2021
+ * Date Last Modified: 11/27/2021
+ * This file contains the controller class for the Protocols methods in the API
  */
 
 using System;
@@ -90,6 +91,43 @@ namespace EMT_WebPortal.Controllers
 
             string protocol = JsonConvert.SerializeObject(p);
             return JsonConvert.SerializeObject(medications) + protocol;
+        }
+
+        /// <summary>
+        /// Returns a list of names of associated medications
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getmedicationnames/{id}")]
+        public string getMedicationNames(int? id)
+        {
+            if(id == null)
+            {
+                return "404 Id Cannot be null";
+            }
+
+            Protocol protocol = _context.Protocols.Find(id);
+
+            var query = from mp in _context.Medications_Protocols where (mp.Protocol.Equals(protocol)) select mp;
+            List<MedicationProtocol> medications = query.ToList();
+            string[] names = new string[medications.Count];
+
+            int i = 0;
+            foreach(MedicationProtocol mp in medications)
+            {
+                Medication medication = _context.Medications.Find(mp.MedicationId);
+                if(medication != null)
+                {
+                    names[i] = medication.Name;
+                    
+                }
+                else
+                {
+                    names[i] = "Error: This medication longer exists";
+                }
+                i++;
+            }
+
+            return JsonConvert.SerializeObject(names);
         }
 
         /// <summary>

@@ -286,6 +286,7 @@ class _MedDrawerState extends State<MedDrawer>
                                             '${medications[index].Name}',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(fontSize: 15.0),
+
                                           ),
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(

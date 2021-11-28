@@ -6,17 +6,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-<form asp-controller="Charts" asp-action="Index">
-    <p>
-        Name: <input type="text" name="search" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
-
-<p>
-    <input type="button" onclick="location.href='@Url.Action("Create", "Charts")'" value="Create New" class="btn btn-outline-success"/>
-</p>
+<h1>Charts</h1>
+<div class="row" style="justify-content:left">
+    <div class="col-6">
+        <form asp-controller="Charts" asp-action="Index">
+            <p>
+                Name: <input type="text" name="search" />
+                <input type="submit" value="Search" />
+            </p>
+        </form>
+    </div>
+    <div class="col-3">
+        <p>
+            <input type="button" onclick="location.href='@Url.Action("Create", "Charts")'" value="Create New" class="btn btn-outline-success" />
+        </p>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>

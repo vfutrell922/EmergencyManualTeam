@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Author: Vincent Futrell
+ * Date Last Modified: 11/27/2021
+ * This file contains the class declaration for the Protocols model
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -93,16 +93,6 @@ namespace EMT_WebPortal.Data
             context.Protocols.AddRange(protocols);
             context.SaveChanges();
 
-            //Seed User table
-            var users = new User[] 
-            {
-                new User{Name="Test User", Admin=false, Certification="EMT" },
-                new User{Name="Test Admin", Admin=true, Certification="None"},
-                new User{Name="Test Team Lead", Admin=false, Certification="PARA"}
-            };
-            context.Users.AddRange(users);
-            context.SaveChanges();
-
             var phoneNumbers = new PhoneNumber[]
             {
                 new PhoneNumber{hospitalName="General Hospital", numberString="555-555-5555"}

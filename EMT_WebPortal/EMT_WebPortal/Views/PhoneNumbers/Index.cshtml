@@ -6,24 +6,30 @@
 
 <h1>Index</h1>
 
-<form asp-controller="PhoneNumbers" asp-action="Index">
-    <p>
-        Name: <input type="text" name="search" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
+<div class="row" style="justify-content:left">
+    <div class="col-6">
+        <form asp-controller="PhoneNumbers" asp-action="Index">
+            <p>
+                Name: <input type="text" name="search" />
+                <input type="submit" value="Search" />
+            </p>
+        </form>
+    </div>
+    <div class="col-3">
+        <p>
+            <input type="button" onclick="location.href='@Url.Action("Create", "PhoneNumbers")'" value="Create New" class="btn btn-outline-success" />
+        </p>
+    </div>
+</div>
 
-<p>
-    <input type="button" onclick="location.href='@Url.Action("Create", "PhoneNumbers")'" value="Create New" class="btn btn-outline-success" />
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.hospitalName)
+                Hospital Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.numberString)
+                Phone Number
             </th>
             <th></th>
         </tr>
@@ -39,7 +45,6 @@
                     @Html.DisplayFor(modelItem => item.numberString)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", "PhoneNumbers", new { id = item.Id }, new { @class = "btn btn-outline-info", @style = "width:120px;" })
                     @if (User.IsInRole("Administrator") || User.IsInRole("Director"))
                     {
                         @Html.ActionLink("Edit", "Edit", "PhoneNumbers", new { id = item.Id }, new { @class = "btn btn-outline-primary", @style = "width:120px;" })

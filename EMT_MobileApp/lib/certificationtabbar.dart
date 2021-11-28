@@ -143,17 +143,45 @@ class _CertificationTabBarState extends State<CertificationTabBar>
   }
 
   List displayAllCharts() {
-    List<Widget> ret = [];
-    for (Chart chart in charts) {
-      ret.add(
-        Text(chart.Name),
-      );
-      ret.add(InteractiveViewer(
-        child: Image.memory(chart.Photo),
-        maxScale: 5.0,
-      ));
-    }
+    List<Widget> ret = charts
+        .map((chart) => GestureDetector(
+            onTap: () {},
+            child: GestureDetector(
+              child: Container(
+                  padding: const EdgeInsets.all(16),
+                  color: Colors.teal[200],
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Image.memory(chart.Photo),
+                      ],
+                    ),
+                  )),
+              onTap: () {
+                showDialog(
+                    context: context, builder: (_) => ImageDialog(chart));
+              },
+            )))
+        .toList();
     return ret;
+  }
+
+  /// The displayed chart as a pop up dialog.
+  Widget ImageDialog(Chart chart) {
+    TransformationController _controller = TransformationController();
+    return AlertDialog(title: Text(chart.Name), actions: <Widget>[
+      new Center(
+        child: InteractiveViewer(
+          boundaryMargin: EdgeInsets.all(20.0),
+          maxScale: 5.0,
+          transformationController: _controller,
+          onInteractionEnd: (value) {
+            _controller.value = Matrix4.identity();
+          },
+          child: Image.memory(chart.Photo),
+        ),
+      )
+    ]);
   }
 
   @override

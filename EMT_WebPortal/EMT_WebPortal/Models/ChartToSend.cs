@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿/*
+ * Author: Molly Clare
+ * Date Last Modified: 10/26/2021
+ * This file contains the class declaration for the ChartsToSend model
+ */
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
