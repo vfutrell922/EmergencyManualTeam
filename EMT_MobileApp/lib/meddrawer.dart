@@ -520,7 +520,12 @@ class _MedDrawerState extends State<MedDrawer>
                           ));
                         }));
               } else {
-                return Drawer(child: Text('No Associated Medication'));
+                return Drawer(
+                    child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+                  child: Text('No Associated Medications',
+                      style: TextStyle(fontSize: 22)),
+                ));
               }
             }
           }

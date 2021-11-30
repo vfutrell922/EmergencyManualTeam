@@ -45,7 +45,6 @@ class _LogState extends State<LogBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.preview_outlined),
             label: 'Review Logs',
-            backgroundColor: Colors.blue[400],
           ),
         ],
         currentIndex: _selectedIndex,
