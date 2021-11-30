@@ -9,68 +9,92 @@
         tinymce.init({ selector: '#PrecautionArea' });
         tinymce.init({ selector: '#AdverseArea' });
         tinymce.init({ selector: '#ActionArea' });
+        tinymce.init({ selector: '#AdultDoseArea' });
+        tinymce.init({ selector: '#ChildDoseArea' });
 </script>
 
 
-<h1>Edit</h1>
+<h1>Edit: @Model.Name</h1>
 
-<h4>Medication</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
+<div class="container">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="Action" class="control-label"></label>
                 <input id="ActionArea" asp-for="Action" class="form-control" />
                 <span asp-validation-for="Action" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="Indication" class="control-label"></label>
                 <input id="IndicationArea" asp-for="Indication" class="form-control" />
                 <span asp-validation-for="Indication" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="Contraindication" class="control-label"></label>
                 <input id="ContraindicationArea" asp-for="Contraindication" class="form-control" />
                 <span asp-validation-for="Contraindication" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="Precaution" class="control-label"></label>
                 <input id="PrecautionArea" asp-for="Precaution" class="form-control" />
                 <span asp-validation-for="Precaution" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="AdverseEffects" class="control-label"></label>
                 <input id="AdverseArea" asp-for="AdverseEffects" class="form-control" />
                 <span asp-validation-for="AdverseEffects" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="AdultDosage" class="control-label"></label>
-                <input asp-for="AdultDosage" class="form-control" />
+                <input id="AdultDoseArea" asp-for="AdultDosage" class="form-control" />
                 <span asp-validation-for="AdultDosage" class="text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+
+        <div class="row field-row">
+            <div class="col-12">
                 <label asp-for="ChildDosage" class="control-label"></label>
-                <input asp-for="ChildDosage" class="form-control" />
+                <input id="ChildDoseArea" asp-for="ChildDosage" class="form-control" />
                 <span asp-validation-for="ChildDosage" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+        <div class="row" style="justify-content:left">
+            <div class="col-2">
+                <input style="width:100%" type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </form>
-    </div>
+            <div class="col-2">
+                <input style="width:100%" type="button" value="Back To List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Medications")'" />
+            </div>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
