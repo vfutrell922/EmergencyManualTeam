@@ -5,30 +5,52 @@
 }
 
 <h1>Create New Chart</h1>
+<div class="container">
+    @using (Html.BeginForm("Create", "Charts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row field-row">
+            <div class="col-12">
+                <label for="fileName">File Name</label>
+            </div>
+            <div class="col-12">
+                <input type="text" name="Name" id="fileName" required />
+            </div>
+        </div>
 
-@using (Html.BeginForm("Create", "Charts", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <label for="fileName">File Name</label>
-    <input type="text" name="Name" id="fileName" required/>
-    <br />
-    <br />
-    <label for="file">Upload Image:</label>
-    <input type="file" name="file" id="file" accept="image/png, image/jpeg" />
-    <br />
-    <br />
-    <label for="quicklink">Is this a quick link image?</label>
-    <input type="checkbox" name="IsQuickLink" id="quicklink" value="true" />
-    <br />
-    <br />
-    <div class="form-group">
-        <label asp-for="Protocol" class="control-label"></label>
-        <select asp-for="Protocol" class="form-control" asp-items="ViewBag.ProtocolNames"></select>
-    </div>
-    <button type="submit" class="btn btn-outline-success" button>Upload Image</button>
-    <br />
-    <br />
-    @ViewBag.Message
-}
+        <div class="row field-row">
+            <div class="col-12">
+                <label for="file">Upload Image:</label>
+            </div>
+            <div class="col-12">
+                <input type="file" name="file" id="file" accept="image/png, image/jpeg" />
+            </div>
+        </div>
+
+        <div class="row field-row" style="justify-content:left">
+            <div col-5>
+                <label for="quicklink">Is this a quick link image?</label>
+                <input type="checkbox" name="IsQuickLink" id="quicklink" value="true" />
+            </div>
+
+            <div class="col-5">
+                <div class="form-group">
+                    <label asp-for="Protocol" class="control-label"></label>
+                    <select asp-for="Protocol" class="form-control" asp-items="ViewBag.ProtocolNames"></select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row field-row">
+            <div class="col-2">
+                <button style="width:100%" type="submit" class="btn btn-success" button>Upload Image</button>
+            </div>
+            <div class="col-2">
+                <input style="width:100%" type="button" value="Back To List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Medications")'" />
+            </div>
+        </div>
+        @ViewBag.Message
+    }
+</div>
 <script type="text/javascript" src="~/js/ChartCreate.js"></script>
 <div>
     <a asp-action="Index">Back to List</a>

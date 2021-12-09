@@ -3,7 +3,7 @@ using Xunit;
 
 namespace EMT_Manual_Tests
 {
-    public class UnitTest1
+    public class ProtocolControllerTests
     {
         [Fact]
         public void Test1()
