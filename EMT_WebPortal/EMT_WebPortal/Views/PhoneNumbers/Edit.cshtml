@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit: @Model.hospitalName</h1>
 
-<h4>PhoneNumber</h4>
 <hr />
 <div class="row">
     <div class="col-12">
@@ -23,15 +22,20 @@
                 <input asp-for="numberString" class="form-control" />
                 <span asp-validation-for="numberString" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="row form-group">
+                <div class="col-2">
+                    <input type="submit" style="width:100%" value="Save" class="btn btn-primary" />
+                </div>
+                <div class="col-2">
+                    <input type="button" style="width:100%" value="Back to List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","PhoneNumbers")'" />
+                </div>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <input type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index","PhoneNumbers")'" />
+    
 </div>
 
 @section Scripts {
