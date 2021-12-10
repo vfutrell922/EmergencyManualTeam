@@ -36,7 +36,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    <input type="button" class="btn btn-outline-primary" data- asp-action="Edit" asp-route-id="@Model.ID">Edit</input> |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-2">
+        <input style="width:100%" type="button" value="Back To List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Charts")'" />
+    </div>
 </div>

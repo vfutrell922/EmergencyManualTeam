@@ -45,16 +45,14 @@
                 <button style="width:100%" type="submit" class="btn btn-success" button>Upload Image</button>
             </div>
             <div class="col-2">
-                <input style="width:100%" type="button" value="Back To List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Medications")'" />
+                <input style="width:100%" type="button" value="Back To List" class="btn btn-danger" onclick="location.href='@Url.Action("Index","Charts")'" />
             </div>
         </div>
         @ViewBag.Message
     }
 </div>
 <script type="text/javascript" src="~/js/ChartCreate.js"></script>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
