@@ -2,12 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\EMT_MobileApp",
+    "\\EMT_WebPortal",
     "\\EMT_WebPortal\\EMT_WebPortal",
     "\\EMT_WebPortal\\EMT_WebPortal\\Views",
     "\\EMT_WebPortal\\EMT_WebPortal\\Views\\Protocols",
     "\\EMT_WebPortal\\EMT_WebPortal\\wwwroot",
     "\\EMT_WebPortal\\EMT_WebPortal\\wwwroot\\js"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\EMT_WebPortal\\EMT_WebPortal.sln",
   "PreviewInSolutionExplorer": false
 }
