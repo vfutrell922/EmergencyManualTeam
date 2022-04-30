@@ -9,7 +9,8 @@ import {
 
 class ProtocolCard extends HTMLElement {
 
-    constructor(title, patientType) {
+    constructor(title, patientType)
+    {
 
         super();
 
@@ -21,6 +22,11 @@ class ProtocolCard extends HTMLElement {
 
         this.appendChild(this.titleBar);
         this.appendChild(this.TabArea);
+    }
+
+    addTab(protocol)
+    {
+        this.tabArea.addTab(protocol.id, protocol.certificationLevel);
     }
 }
 
