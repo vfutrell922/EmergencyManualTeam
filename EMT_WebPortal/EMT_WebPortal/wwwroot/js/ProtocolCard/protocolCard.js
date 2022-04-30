@@ -13,18 +13,14 @@ class ProtocolCard extends HTMLElement {
 
         super();
 
+        this.id = title + '-' + patientType + '-protocolCard';
+        this.classList = ('protocol-card');
+
         this.titleBar = new TitleBar(title, patientType);
-        this.tabArea = new TabArea();
-        this._title = title;
-        this._patientType = patientType;
+        this.tabArea = new TabArea(title, patientType);
 
-        let protocolCard = document.createElement("div");
-
-
-        protocolCard.appendChild(this.titleBar);
-        protocolCard.appendChild(this.TabArea);
-
-        return ProtocolCard;
+        this.appendChild(this.titleBar);
+        this.appendChild(this.TabArea);
     }
 }
 
