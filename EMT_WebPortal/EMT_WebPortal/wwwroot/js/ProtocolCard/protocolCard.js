@@ -16,6 +16,8 @@ class ProtocolCard extends HTMLElement {
 
         this.id = title + '-' + patientType + '-protocolCard';
         this.classList = ('protocol-card');
+        this.title = title;
+        this.patientType = patientType;
 
         this.titleBar = new TitleBar(title, patientType);
         this.tabArea = new TabArea(title, patientType);

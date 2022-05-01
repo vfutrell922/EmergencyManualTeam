@@ -12,9 +12,9 @@ class CardTable extends HTMLElement
 
         let protocols = [
             { id: 0, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
-            { id: 1, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
-            { id: 2, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
-            { id: 3, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
+            { id: 1, title: 'title1', patientType: 'Adult', certificationLevel: 'EMT' },
+            { id: 2, title: 'title1', patientType: 'Adult', certificationLevel: 'AEMT' },
+            { id: 3, title: 'title1', patientType: 'Adult', certificationLevel: 'PARA' },
         ];
         this.cardFactory.setProtocolList(protocols);
         this.cardFactory.populateTable();
@@ -39,9 +39,8 @@ class CardTable extends HTMLElement
      */
     getCard(title)
     {
-        return this.cardList.find(card => {
-            return card.title === title;
-        });
+        let theCard = this.cardList.find(card => card.title === title);
+        return theCard;
     }
 }
 

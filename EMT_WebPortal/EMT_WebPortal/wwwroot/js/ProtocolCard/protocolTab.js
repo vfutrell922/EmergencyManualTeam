@@ -11,19 +11,19 @@ class ProtocolTab extends HTMLElement
         this.id = protocol.title + '-' + protocol.patientType + '-' + protocol.certificationLevel + '-protocol-tab';
         this.classList = ('protocol-tab');
 
-        let buttonArea = new TabButtonArea(protocol);
+        this.buttonArea = new TabButtonArea(protocol);
 
-        let titleArea = document.createElement("div");
-        titleArea.classList = ('title-area');
+        this.titleArea = document.createElement("div");
+        this.titleArea.classList = ('title-area');
 
-        let certLevel = document.createElement("p");
-        certLevel.innerHTML = protocol.certificationLevel;
-        certLevel.classList = ('certification-level-title');
+        this.certLevel = document.createElement("p");
+        this.certLevel.innerHTML = protocol.certificationLevel;
+        this.certLevel.classList = ('certification-level-title');
 
-        titleArea.appendChild(this.certLevel);
+        this.titleArea.appendChild(this.certLevel);
 
-        this.appendChild(titleArea);
-        this.appendChild(buttonArea);
+        this.appendChild(this.titleArea);
+        this.appendChild(this.buttonArea);
     }
 }
 

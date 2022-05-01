@@ -23,22 +23,22 @@ class TabArea extends HTMLElement
     addTab(protocol) {
         switch (protocol.certificationLevel)
         {
-            case 3:
+            case "ALL":
                 if (this._hasAll) break;
                 this.createTab(protocol);
                 this._hasAll = true;
                 break;
-            case 0:
+            case "EMT":
                 if (this._hasEMT) break;
                 this.createTab(protocol);
                 this._hasEMT = true;
                 break;
-            case 1:
+            case "AEMT":
                 if (this._hasAEMT) break;
                 this.createTab(protocol);
                 this._hasAEMT = true;
                 break;
-            case 2:
+            case "PARA":
                 if (this._hasPARA) break;
                 this.createTab(protocol);
                 this._hasPARA = true;
@@ -52,7 +52,7 @@ class TabArea extends HTMLElement
     createTab(protocol)
     {
         let newTab = new ProtocolTab(protocol);
-        this.tabArea.appendChild(newTab);
+        this.appendChild(newTab);
     }
 }
 
