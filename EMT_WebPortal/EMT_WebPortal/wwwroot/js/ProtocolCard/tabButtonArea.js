@@ -9,14 +9,17 @@
 
         this.detailButton = document.createElement('button');
         this.detailButton.classList = ('detail-button card-button');
+        this.detailButton.value = "Details"
         this.detailButton.addEventListener('click', this.onDetailButtonPress);
 
         this.editButton = document.createElement('button');
         this.editButton.classList = ('edit-button card-button');
+        this.editButton.value = "Edit";
         this.editButton.addEventListener('click', this.onEditButtonPress);
 
         this.deleteButton = document.createElement('button');
         this.deleteButton.classList = ('delete-button card-button'); 
+        this.deleteButton.value = "Delete";
         this.deleteButton.addEventListener('click', this.onDeleteButtonPress);
 
         this.appendChild(this.detailButton);

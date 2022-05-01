@@ -39,7 +39,7 @@ class CardFactory {
      */
     addProtocol(x)
     {
-        let oldCard = this.cardTable.getCard(x.title);
+        let oldCard = this.cardTable.getCard(x.title, x.patientType);
 
         // If a card for the related protocol does not exist,
         // create both a card and tab.

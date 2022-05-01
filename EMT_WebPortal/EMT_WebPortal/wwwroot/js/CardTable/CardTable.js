@@ -11,10 +11,14 @@ class CardTable extends HTMLElement
         this.cardList = [];
 
         let protocols = [
-            { id: 0, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
+            { id: 0, title: 'title1', patientType: 'Adult', certificationLevel: 'ALL' },
             { id: 1, title: 'title1', patientType: 'Adult', certificationLevel: 'EMT' },
             { id: 2, title: 'title1', patientType: 'Adult', certificationLevel: 'AEMT' },
             { id: 3, title: 'title1', patientType: 'Adult', certificationLevel: 'PARA' },
+            { id: 0, title: 'title1', patientType: 'Pediatric', certificationLevel: 'ALL' },
+            { id: 1, title: 'title1', patientType: 'Pediatric', certificationLevel: 'EMT' },
+            { id: 2, title: 'title1', patientType: 'Pediatric', certificationLevel: 'AEMT' },
+            { id: 3, title: 'title1', patientType: 'Pediatric', certificationLevel: 'PARA' },
         ];
         this.cardFactory.setProtocolList(protocols);
         this.cardFactory.populateTable();
@@ -37,9 +41,9 @@ class CardTable extends HTMLElement
      * Returns the card with a matching title, or undefined.
      * @param {any} title
      */
-    getCard(title)
+    getCard(title, patientType)
     {
-        let theCard = this.cardList.find(card => card.title === title);
+        let theCard = this.cardList.find(card => (card.title === title && card.patientType === patientType));
         return theCard;
     }
 }

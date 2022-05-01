@@ -10,7 +10,7 @@ class TabArea extends HTMLElement
 
         this.title = title;
         this.patientType = patientType;
-        this.hasAll = false;
+        this.hasALL = false;
         this.hasEMT = false;
         this.hasAEMT = false;
         this.hasPARA = false;
@@ -24,22 +24,22 @@ class TabArea extends HTMLElement
         switch (protocol.certificationLevel)
         {
             case "ALL":
-                if (this._hasAll) break;
+                if (this.hasALL) break;
                 this.createTab(protocol);
                 this._hasAll = true;
                 break;
             case "EMT":
-                if (this._hasEMT) break;
+                if (this.hasEMT) break;
                 this.createTab(protocol);
                 this._hasEMT = true;
                 break;
             case "AEMT":
-                if (this._hasAEMT) break;
+                if (this.hasAEMT) break;
                 this.createTab(protocol);
                 this._hasAEMT = true;
                 break;
             case "PARA":
-                if (this._hasPARA) break;
+                if (this.hasPARA) break;
                 this.createTab(protocol);
                 this._hasPARA = true;
                 break;
