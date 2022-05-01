@@ -1,0 +1,14 @@
+﻿.card-table
+{
+    display:inline-flex;
+    width: 100%;
+}
+
+.protocol-card
+{
+    display:inline-flex;
+    width: 47.5%;
+    height: 250px;
+    margin: 1.25%;
+    background-color:aqua;
+}

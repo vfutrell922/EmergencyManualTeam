@@ -21,12 +21,12 @@ class ProtocolCard extends HTMLElement {
         this.tabArea = new TabArea(title, patientType);
 
         this.appendChild(this.titleBar);
-        this.appendChild(this.TabArea);
+        this.appendChild(this.tabArea);
     }
 
     addTab(protocol)
     {
-        this.tabArea.addTab(protocol.id, protocol.certificationLevel);
+        this.tabArea.addTab(protocol);
     }
 }
 

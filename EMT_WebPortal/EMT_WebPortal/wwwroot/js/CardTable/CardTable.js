@@ -1,5 +1,5 @@
-﻿import { CardFactory } from './cardFactory';
-import { WebWorker } from '../WebWorker/webWorker';
+﻿import { CardFactory } from './cardFactory.js';
+//import { WebWorker } from '../WebWorker/webWorker';
 
 class CardTable extends HTMLElement
 {
@@ -7,8 +7,17 @@ class CardTable extends HTMLElement
         super();
 
         this.cardFactory = new CardFactory(this);
-        this.webWorker = new WebWorker();
+        // this.webWorker = new WebWorker();
         this.cardList = [];
+
+        let protocols = [
+            { id: 0, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
+            { id: 1, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
+            { id: 2, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
+            { id: 3, title: 'title1', patientType: 'Adult', certificationLevel: 'All' },
+        ];
+        this.cardFactory.setProtocolList(protocols);
+        this.cardFactory.populateTable();
 
         this.id = 'CardTable';
         this.classList = ('card-table');
@@ -31,7 +40,11 @@ class CardTable extends HTMLElement
     getCard(title)
     {
         return this.cardList.find(card => {
-            return card.title === tile;
+            return card.title === title;
         });
     }
 }
+
+customElements.define('card-table', CardTable);
+
+export { CardTable };

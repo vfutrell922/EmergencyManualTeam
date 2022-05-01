@@ -1,10 +1,10 @@
 ﻿class TabButtonArea extends HTMLElement
 {
-    constructor(title, patientType, certificationLevel)
+    constructor(protocol)
     {
         super();
 
-        this.id = title + '-' + patientType + '-' + certificationLevel + 'button-area';
+        this.id = protocol.title + '-' + protocol.patientType + '-' + protocol.certificationLevel + 'button-area';
         this.classList = ('tab-button-area');
 
         this.detailButton = document.createElement('button');

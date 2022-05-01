@@ -1,4 +1,4 @@
-﻿import { ProtocolCard } from '../ProtocolCard/protocolCard';
+﻿import { ProtocolCard } from '../ProtocolCard/protocolCard.js';
 
 
 /**
@@ -18,23 +18,12 @@ class CardFactory {
     populateTable() {
         this.sortProtocols();
 
-        this.protocolList.forEach(x => (x) => {
-            let oldCard = this.cardTable.getCard(x.title);
+        this.protocolList.forEach(x => this.addProtocol(x));
+    }
 
-            // If a card for the related protocol does not exist,
-            // create both a card and tab.
-            if (oldCard === null) {
-                let newCard = new ProtocolCard(x.title, x.patientType);
-                newCard.addTab(x);
-                this.cardTable.addCard(newCard)
-            }
-             //Otherwise, only create a tab.
-            else
-            {
-                oldCard.addTab(x);
-            }
-            
-        });
+    setProtocolList(protocolList)
+    {
+        this.protocolList = protocolList;
     }
 
     /**
@@ -48,9 +37,21 @@ class CardFactory {
      * Adds the protocol to the list
      * @param {any} protocol
      */
-    addProtocol(protocol)
+    addProtocol(x)
     {
-        this.protocolList.push(protocol);
+        let oldCard = this.cardTable.getCard(x.title);
+
+        // If a card for the related protocol does not exist,
+        // create both a card and tab.
+        if (oldCard == null) {
+            let newCard = new ProtocolCard(x.title, x.patientType);
+            newCard.addTab(x);
+            this.cardTable.addCard(newCard)
+        }
+        //Otherwise, only create a tab.
+        else {
+            oldCard.addTab(x);
+        }
     }
 
     /**
